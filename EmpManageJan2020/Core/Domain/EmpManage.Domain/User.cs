@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace EmpManage.Domain
+﻿namespace EmpManage.Domain
 {
+    using System;
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class User
     {
         public long UserId { get; set; }

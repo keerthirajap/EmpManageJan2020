@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace EmpManage.WebAppMVC.Infrastructure.CustomFilters
+﻿namespace EmpManage.WebAppMVC.Infrastructure.CustomFilters
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc.Filters;
+    using Microsoft.Extensions.Logging;
+    using NLog;
+
     public class LoggingActionFilter : IAsyncActionFilter
     {
         private readonly Microsoft.Extensions.Logging.ILogger _logger;
@@ -37,17 +37,14 @@ namespace EmpManage.WebAppMVC.Infrastructure.CustomFilters
                 }
                 else
                 {
-                    this._nlogger.Error(
-                          "Error Occured on Executing Method - "
-                          + resultContext.Exception.Message
-                          , resultContext.Exception);
+                    this._nlogger.Error("Error Occured on Executing Method - " + resultContext.Exception.Message, resultContext.Exception);
 
                     throw resultContext.Exception;
                 }
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }
