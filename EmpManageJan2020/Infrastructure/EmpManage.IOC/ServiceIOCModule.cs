@@ -24,15 +24,18 @@
         {
             if (this._lifeTime == "InstancePerLifetimeScope")
             {
-                builder.RegisterType<AuthenticationService>().As<IAuthenticationService>()
-                                .InstancePerLifetimeScope()
-                                .EnableInterfaceInterceptors()
-                                .InterceptedBy(typeof(LogInterceptor));
+                builder
+                    .RegisterType<AuthenticationService>().As<IAuthenticationService>()
+                    .InstancePerLifetimeScope()
+                    .EnableInterfaceInterceptors()
+                    .InterceptedBy(typeof(LogInterceptor));
             }
             else
             {
-                builder.RegisterType<AuthenticationService>().As<IAuthenticationService>()
-                     .EnableClassInterceptors();
+                builder
+                    .RegisterType<AuthenticationService>().As<IAuthenticationService>()
+                    .EnableInterfaceInterceptors()
+                    .InterceptedBy(typeof(LogInterceptor));
             }
 
             base.Load(builder);

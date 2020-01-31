@@ -17,7 +17,7 @@
 
         public string LastName { get; set; }
 
-        public string Email { get; set; }
+        public string EmailId { get; set; }
 
         public short? UserGenderId { get; set; }
 

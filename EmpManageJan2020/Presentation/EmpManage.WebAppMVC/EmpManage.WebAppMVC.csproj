@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.1.46.23761</AssemblyVersion>
-    <FileVersion>1.1.46.23761</FileVersion>
+    <AssemblyVersion>1.1.49.28388</AssemblyVersion>
+    <FileVersion>1.1.49.28388</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Authentication\Data\" />
-    <Folder Include="Areas\Authentication\Models\" />
     <Folder Include="Areas\UserAccount\Controllers\" />
     <Folder Include="Areas\UserAccount\Data\" />
     <Folder Include="Areas\UserAccount\Models\" />

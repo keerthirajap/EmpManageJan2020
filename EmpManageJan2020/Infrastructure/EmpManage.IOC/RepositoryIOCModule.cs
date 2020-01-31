@@ -7,6 +7,7 @@
     using System.Text;
     using Autofac;
     using Autofac.Extras.DynamicProxy;
+    using EmpManage.CrossCutting.Logging;
     using EmpManage.RepositoryInterface;
     using Insight.Database;
 
@@ -30,12 +31,16 @@
             {
                 builder
                     .Register(b => this._sqlConnection.AsParallel<IAuthenticationRepository>())
-                    .InstancePerLifetimeScope();
+                    .InstancePerLifetimeScope()
+                    .EnableInterfaceInterceptors()
+                    .InterceptedBy(typeof(LogInterceptor));
             }
             else
             {
-                builder.Register(b => this._sqlConnection.AsParallel<IAuthenticationRepository>())
-                            ;
+                builder
+                    .Register(b => this._sqlConnection.AsParallel<IAuthenticationRepository>())
+                    .EnableInterfaceInterceptors()
+                    .InterceptedBy(typeof(LogInterceptor));
             }
 
             base.Load(builder);
