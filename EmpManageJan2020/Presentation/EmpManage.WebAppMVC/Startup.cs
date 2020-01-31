@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ElmahCore.Mvc;
+using EmpManage.WebAppMVC.Infrastructure.CustomFilters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,12 +29,53 @@ namespace EmpManage.WebAppMVC
         {
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(typeof(LoggingActionFilter));
+            });
+
+            services.AddElmah();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.Use(
+                next =>
+                {
+                    return async context =>
+                    {
+                        var stopWatch = new Stopwatch();
+                        stopWatch.Start();
+                        context.Response.OnStarting(
+                            () =>
+                            {
+                                context.Response.Headers.Add("RequestId", context.TraceIdentifier);
+                                stopWatch.Stop();
+
+                                context.Response.Headers.Add("X-ResponseTime-Ms", stopWatch.ElapsedMilliseconds.ToString());
+                                return Task.CompletedTask;
+                            });
+
+                        await next(context);
+                    };
+                });
+
+            app.UseWhen(context => context.Request.Path.StartsWithSegments("/elmah", StringComparison.OrdinalIgnoreCase), appBuilder =>
+            {
+                appBuilder.Use(next =>
+                {
+                    return async ctx =>
+                    {
+                        ctx.Features.Get<IHttpBodyControlFeature>().AllowSynchronousIO = true;
+
+                        await next(ctx);
+                    };
+                });
+            });
+
+            app.UseElmah();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
