@@ -2,7 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyVersion>1.1.7.20512</AssemblyVersion>
+    <FileVersion>1.1.7.20512</FileVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="nLogInternal\**" />
+    <Content Remove="nLogInternal\**" />
+    <EmbeddedResource Remove="nLogInternal\**" />
+    <None Remove="nLogInternal\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Authentication\Controllers\" />

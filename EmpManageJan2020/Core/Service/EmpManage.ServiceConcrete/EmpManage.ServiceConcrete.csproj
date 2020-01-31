@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>1.1.5.20448</AssemblyVersion>
+    <FileVersion>1.1.5.20448</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,6 +11,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Repository\EmpManage.RepositoryInterface\EmpManage.RepositoryInterface.csproj" />
+    <ProjectReference Include="..\EmpManage.ServiceInterface\EmpManage.ServiceInterface.csproj" />
   </ItemGroup>
 
 </Project>

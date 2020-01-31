@@ -1,0 +1,6 @@
+2020-01-31 16:53:55.2611 Info Message Template Auto Format enabled
+2020-01-31 16:53:55.2760 Info Loading assembly: NLog.Web.AspNetCore
+2020-01-31 16:53:55.3689 Info Adding target AsyncTargetWrapper(Name=LogFileAsync)
+2020-01-31 16:53:55.3832 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-01-31 16:53:55.3832 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: dbAsync
+2020-01-31 16:53:55.4086 Info Found 34 configuration items

@@ -2,13 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>1.1.5.20448</AssemblyVersion>
+    <FileVersion>1.1.5.20448</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\EmpManage.CrossCutting\EmpManage.CrossCutting.csproj" />
+    <ProjectReference Include="..\..\Domain\EmpManage.Domain\EmpManage.Domain.csproj" />
   </ItemGroup>
 
 </Project>

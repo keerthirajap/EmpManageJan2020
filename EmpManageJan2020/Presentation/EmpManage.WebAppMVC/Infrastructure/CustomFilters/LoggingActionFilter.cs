@@ -8,6 +8,7 @@
     using Microsoft.Extensions.Logging;
     using NLog;
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class LoggingActionFilter : IAsyncActionFilter
     {
         private readonly Microsoft.Extensions.Logging.ILogger _logger;
@@ -37,7 +38,9 @@
                 }
                 else
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     this._nlogger.Error("Error Occured on Executing Method - " + resultContext.Exception.Message, resultContext.Exception);
+#pragma warning restore CS0618 // Type or member is obsolete
 
                     throw resultContext.Exception;
                 }
