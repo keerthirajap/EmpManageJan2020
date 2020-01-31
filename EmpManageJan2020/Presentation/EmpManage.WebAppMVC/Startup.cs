@@ -19,6 +19,8 @@ namespace EmpManage.WebAppMVC
     using EmpManage.IOC;
     using Castle.DynamicProxy;
     using Autofac.Extensions.DependencyInjection;
+    using AutoMapper;
+    using EmpManage.WebAppMVC.Infrastructure.AutoMapper;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class Startup
@@ -44,7 +46,7 @@ namespace EmpManage.WebAppMVC
             {
                 options.Filters.Add(typeof(LoggingActionFilter));
             });
-
+            services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddElmah();
             services.AddOptions();
         }
@@ -52,7 +54,7 @@ namespace EmpManage.WebAppMVC
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.Register(c => new LogInterceptor(this.logger)).SingleInstance();
-            builder.RegisterModule(new RepositoryIOCModule("", "InstancePerLifetimeScope"));
+            builder.RegisterModule(new RepositoryIOCModule("Data Source=.;Initial Catalog=EmpManage;Integrated Security=True", "InstancePerLifetimeScope"));
             builder.RegisterModule(new ServiceIOCModule("InstancePerLifetimeScope"));
         }
 
@@ -117,6 +119,10 @@ namespace EmpManage.WebAppMVC
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                   name: "areas",
+                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

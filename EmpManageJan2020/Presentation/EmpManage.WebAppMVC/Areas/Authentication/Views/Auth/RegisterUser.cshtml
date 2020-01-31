@@ -1,0 +1,86 @@
+﻿@model EmpManage.WebAppMVC.Areas.Authentication.Models.RegisterUserViewModel
+
+@{
+    ViewData["Title"] = "Register User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text-center">
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+    </div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="card bg-primary  mb-3">
+            <div class="card-header  text-white"> <h3>New User Register</h3></div>
+            <form id="formRegister" 
+                  asp-area="Authentication" asp-controller="Auth" asp-action="RegisterUser"
+                  method="post" data-ajax="true"
+                  data-ajax-begin="authController.registerUserOnBegin"
+                  data-ajax-complete="authController.registerUserOnComplete"
+                  data-ajax-success="authController.registerUserOnSuccess"
+                  data-ajax-failure="authController.registerUserOnfailure">
+
+                <div class="card-body bg-light text-left">
+                    <div id="ajaxRegisterUserResult">
+
+                        <div class="form-group">
+                            <label asp-for="UserName"></label>
+                            <input type="text" asp-for="UserName"
+                                   class="form-control" id="txtUserName"
+                                   placeholder="Enter User Name">
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="EmailId"></label>
+                            <input type="text" asp-for="EmailId"
+                                   class="form-control" id="txtEmailId"
+                                   placeholder="Enter Email Id">
+                            <span asp-validation-for="EmailId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Password"></label>
+                            <input type="text" asp-for="Password"
+                                   class="form-control" id="txtPassword"
+                                   placeholder="Enter Password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ConfirmPassword"></label>
+                            <input type="text" asp-for="ConfirmPassword"
+                                   class="form-control" id="txtConfirmPassword"
+                                   placeholder="Re-Enter Password">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        @*<div class="form-group">
+            <label for="exampleInputPassword1">Email Id</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Email Id">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Confirm Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">
+        </div>*@
+                    </div>
+                </div>
+
+                <div class="card-footer bg-light">
+                    <button type="submit" class="btn btn-primary mr-3">
+                        <i class="fas fa-user-plus"></i>Register
+                    </button>
+                    <button type="button" class="btn btn-info">
+                        <i class="fas fa-sign-in-alt"></i>Go To Login
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+    </div>
+    <script src="~/jsControllers/Authentication/authController.js"></script>
+</div>

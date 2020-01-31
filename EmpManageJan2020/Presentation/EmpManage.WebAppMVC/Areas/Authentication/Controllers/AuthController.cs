@@ -4,10 +4,14 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using AutoMapper;
+    using EmpManage.Domain;
     using EmpManage.ServiceInterface;
+    using EmpManage.WebAppMVC.Areas.Authentication.Models;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json.Linq;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     [AutoValidateAntiforgeryToken]
@@ -15,13 +19,16 @@
     public class AuthController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IMapper _mapper;
 
         private readonly IAuthenticationService _authenticationService;
 
         public AuthController(
+                               IMapper mapper,
                                IHttpContextAccessor httpContextAccessor,
                                IAuthenticationService authenticationService)
         {
+            this._mapper = mapper;
             this._httpContextAccessor = httpContextAccessor;
             this._authenticationService = authenticationService;
         }
@@ -29,10 +36,26 @@
         [Route("")]
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> Register()
+        public async Task<IActionResult> RegisterUser()
         {
-            var vvv = await this._authenticationService.RegisterUserAsync(new Domain.User());
-            return await Task.Run(() => this.View());
+            RegisterUserViewModel registerUserViewModel = new RegisterUserViewModel();
+            return await Task.Run(() => this.View(registerUserViewModel));
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<IActionResult> RegisterUser([FromForm] RegisterUserViewModel registerUserViewModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return await Task.Run(() => this.View(registerUserViewModel));
+            }
+
+            dynamic ajaxReturn = new JObject();
+            var user = this._mapper.Map<User>(registerUserViewModel);
+
+            return this.Json(ajaxReturn);
         }
     }
 }
