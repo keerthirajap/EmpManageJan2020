@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.1.7.20512</AssemblyVersion>
-    <FileVersion>1.1.7.20512</FileVersion>
+    <AssemblyVersion>1.1.46.23761</AssemblyVersion>
+    <FileVersion>1.1.46.23761</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,10 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Authentication\Controllers\" />
     <Folder Include="Areas\Authentication\Data\" />
     <Folder Include="Areas\Authentication\Models\" />
-    <Folder Include="Areas\Authentication\Views\" />
     <Folder Include="Areas\UserAccount\Controllers\" />
     <Folder Include="Areas\UserAccount\Data\" />
     <Folder Include="Areas\UserAccount\Models\" />
@@ -26,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="5.0.0" />
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
@@ -47,6 +45,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Service\EmpManage.ServiceInterface\EmpManage.ServiceInterface.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EmpManage.IOC\EmpManage.IOC.csproj" />
   </ItemGroup>
 
   <ItemGroup>

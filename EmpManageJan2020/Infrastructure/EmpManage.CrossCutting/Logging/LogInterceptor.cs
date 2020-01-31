@@ -1,17 +1,21 @@
 ﻿namespace EmpManage.CrossCutting.Logging
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Diagnostics.CodeAnalysis;
+    using System.Reflection;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
     using Castle.DynamicProxy;
     using NLog;
 
-    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
+    //Follow anti-pattern only
     public class LogInterceptor : IInterceptor
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger _logger;
+
+        public LogInterceptor(ILogger logger)
+        {
+            this._logger = logger;
+        }
 
         public void Intercept(IInvocation invocation)
         {
@@ -43,67 +47,70 @@
             }
         }
 
-        private static async Task InterceptAsync(Task task, ILogger logger, string invocationTarget, string methodName, string codeBase)
+        private static async Task InterceptAsync(Task task, ILogger _logger, string invocationTarget, string methodName, string codeBase)
         {
             try
             {
                 await task.ConfigureAwait(false);
 
-                LogMethodEvent("MethodEnd", codeBase, logger, invocationTarget, methodName);
+                LogMethodEvent("MethodEnd", codeBase, _logger, invocationTarget, methodName);
             }
             catch (Exception ex)
             {
-                LogMethodEvent("MethodError", codeBase, logger, invocationTarget, methodName, ex);
+                LogMethodEvent("MethodError", codeBase, _logger, invocationTarget, methodName, ex);
 
                 throw;
             }
         }
 
-        private static async Task<T> InterceptAsync<T>(Task<T> task, ILogger logger, string invocationTarget, string methodName, string codeBase)
+        private static async Task<T> InterceptAsync<T>(Task<T> task, ILogger _logger, string invocationTarget, string methodName, string codeBase)
         {
             try
             {
                 T result = await task.ConfigureAwait(false);
-                LogMethodEvent("MethodEnd", codeBase, logger, invocationTarget, methodName);
+                LogMethodEvent("MethodEnd", codeBase, _logger, invocationTarget, methodName);
 
                 return result;
             }
             catch (Exception ex)
             {
-                LogMethodEvent("MethodError", codeBase, logger, invocationTarget, methodName, ex);
+                LogMethodEvent("MethodError", codeBase, _logger, invocationTarget, methodName, ex);
 
                 throw;
             }
         }
 
-        private static void LogMethodEvent(string logEvent, string codeBase, ILogger logger, string invocationTarget, string methodName, Exception ex = null)
+        private static void LogMethodEvent(string logEvent, string codeBase
+        , ILogger _logger, string invocationTarget
+        , string methodName, Exception ex = null)
         {
             var logMethodEvent = new LogEventInfo();
 
             if (logEvent == "MethodStart")
             {
-                logMethodEvent = LogEventInfo.Create(LogLevel.Info, invocationTarget, "Executing Method - " + methodName + " | Class - " + invocationTarget);
+                logMethodEvent = LogEventInfo.Create(LogLevel.Info,
+                 invocationTarget,
+                 "Executing Method - " + methodName
+                + " | Class - " + invocationTarget);
             }
             else if (logEvent == "MethodEnd")
             {
-                logMethodEvent = LogEventInfo.Create(LogLevel.Info, invocationTarget, "Successfuly Executed Method - " + methodName + " | Class - " + invocationTarget);
+                logMethodEvent = LogEventInfo.Create(LogLevel.Info, invocationTarget,
+                 "Successfuly Executed Method - " + methodName
+                + " | Class - " + invocationTarget);
             }
             else if (logEvent == "MethodError")
             {
-                logMethodEvent = LogEventInfo.Create(
-                    LogLevel.Error,
-                    invocationTarget,
-                    ex,
-                    null,
-                    "Error Occured on Executing Method - " + methodName + " | Class - " + invocationTarget + " | Trace - " + ex.InnerException + ex.Message + ex.StackTrace);
+                logMethodEvent = LogEventInfo.Create(LogLevel.Error, invocationTarget,
+                 ex, null, "Error Occured on Executing Method - " + methodName
+                 + " | Class - " + invocationTarget +
+                 " | Trace - " + ex.InnerException + ex.Message + ex.StackTrace);
             }
 
-            logMethodEvent.SetCallerInfo(
-                invocationTarget,
-                methodName + " - ",
-                codeBase,
-                0);
-            logger.Log(logMethodEvent);
+            logMethodEvent.SetCallerInfo(invocationTarget,
+            methodName + " - ",
+            codeBase, 0);
+            _logger.Log(logMethodEvent);
         }
     }
 }

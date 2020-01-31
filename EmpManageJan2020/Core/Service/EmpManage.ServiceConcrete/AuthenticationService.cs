@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Text;
     using System.Threading.Tasks;
+    using Autofac.Extras.DynamicProxy;
+    using EmpManage.CrossCutting.Logging;
     using EmpManage.Domain;
     using EmpManage.RepositoryInterface;
     using EmpManage.ServiceInterface;
@@ -20,7 +22,7 @@
 
         public async Task<long> RegisterUserAsync(User user)
         {
-            return await this._authenticationRepository.RegisterUserAsync(user);
+            return 123;
         }
     }
 }
