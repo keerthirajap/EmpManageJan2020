@@ -16,7 +16,11 @@ namespace EmpManage.WebAppMVC
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class Program
     {
+#pragma warning disable SA1306 // Field names should begin with lower-case letter
+#pragma warning disable SA1310 // Field names should not contain underscore
         private static string ASPNETCORE_ENVIRONMENT;
+#pragma warning restore SA1310 // Field names should not contain underscore
+#pragma warning restore SA1306 // Field names should begin with lower-case letter
 
         public static void Main(string[] args)
         {

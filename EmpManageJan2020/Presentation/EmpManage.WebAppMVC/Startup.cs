@@ -22,6 +22,8 @@ namespace EmpManage.WebAppMVC
     using AutoMapper;
     using EmpManage.WebAppMVC.Infrastructure.AutoMapper;
     using EmpManage.CrossCutting.Configuration;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Http;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class Startup
@@ -42,6 +44,14 @@ namespace EmpManage.WebAppMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                     .AddCookie(options =>
+                     {
+                         options.LoginPath = "/RegisterUser";
+                         options.AccessDeniedPath = "/AccessDenied";
+                         options.Cookie.SameSite = SameSiteMode.Strict;
+                     });
+
             this.Configuration.Bind("AppSetting", this.AppSetting);
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
@@ -119,8 +129,9 @@ namespace EmpManage.WebAppMVC
             });
             app.UseElmah();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCookiePolicy();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
