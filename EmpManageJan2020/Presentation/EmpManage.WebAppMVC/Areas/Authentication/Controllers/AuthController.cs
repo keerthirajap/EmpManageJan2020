@@ -54,9 +54,6 @@
 
             dynamic ajaxReturn = new JObject();
             var user = this._mapper.Map<User>(registerUserViewModel);
-            user.Password = "123";
-            user.PasswordHash = "123";
-            user.PasswordSalt = "123";
 
             var userCreationSuccess = await this._authenticationService.RegisterUserAsync(user);
 

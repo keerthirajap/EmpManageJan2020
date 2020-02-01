@@ -10,7 +10,7 @@
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public interface IAuthenticationRepository
     {
-        [Sql("[dbo].[P_RegisterUser1]")]
+        [Sql("[dbo].[P_RegisterUser]")]
         Task<long> RegisterUserAsync(User user);
     }
 }

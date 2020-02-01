@@ -5,6 +5,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using Autofac.Extras.DynamicProxy;
+    using Effortless.Net.Encryption;
     using EmpManage.CrossCutting.Logging;
     using EmpManage.Domain;
     using EmpManage.RepositoryInterface;
@@ -22,6 +23,10 @@
 
         public async Task<long> RegisterUserAsync(User user)
         {
+            user.PasswordSalt = Strings.CreateSalt(20);
+            user.Password = user.Password + user.PasswordSalt;
+            user.PasswordHash = Hash.Create(HashType.SHA512, user.Password, string.Empty, false);
+            user.Password = null;
             return await this._authenticationRepository.RegisterUserAsync(user);
         }
     }

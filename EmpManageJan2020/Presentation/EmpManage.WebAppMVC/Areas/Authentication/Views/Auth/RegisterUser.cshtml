@@ -11,7 +11,7 @@
     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
         <div class="card bg-primary  mb-3">
             <div class="card-header  text-white"> <h3>New User Register</h3></div>
-            <form id="formRegister" 
+            <form id="formRegister"
                   asp-area="Authentication" asp-controller="Auth" asp-action="RegisterUser"
                   method="post" data-ajax="true"
                   data-ajax-begin="authController.registerUserOnBegin"
@@ -40,32 +40,18 @@
 
                         <div class="form-group">
                             <label asp-for="Password"></label>
-                            <input type="text" asp-for="Password"
+                            <input type="password" asp-for="Password"
                                    class="form-control" id="txtPassword"
                                    placeholder="Enter Password">
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="ConfirmPassword"></label>
-                            <input type="text" asp-for="ConfirmPassword"
+                            <input type="password" asp-for="ConfirmPassword"
                                    class="form-control" id="txtConfirmPassword"
                                    placeholder="Re-Enter Password">
                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
-                        @*<div class="form-group">
-            <label for="exampleInputPassword1">Email Id</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Email Id">
-        </div>
-
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-
-        <div class="form-group">
-            <label for="exampleInputPassword1">Confirm Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">
-        </div>*@
                     </div>
                 </div>
 
