@@ -33,7 +33,7 @@
             this._authenticationService = authenticationService;
         }
 
-        [Route("")]
+        [Route("RegisterUser")]
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> RegisterUser()
@@ -56,6 +56,15 @@
             var user = this._mapper.Map<User>(registerUserViewModel);
 
             var userCreationSuccess = await this._authenticationService.RegisterUserAsync(user);
+
+            if (userCreationSuccess > 0)
+            {
+                ajaxReturn.Status = "Success";
+                ajaxReturn.Message = registerUserViewModel.UserName + " - user sucessfully created. Redirecting to home page.";
+                ajaxReturn.UserId = userCreationSuccess;
+                ajaxReturn.UserName = registerUserViewModel.UserName;
+                ajaxReturn.Title = "Congratulations";
+            }
 
             return this.Json(ajaxReturn);
         }

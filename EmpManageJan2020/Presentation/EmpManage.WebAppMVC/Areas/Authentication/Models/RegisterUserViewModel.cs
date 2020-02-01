@@ -12,10 +12,12 @@
     {
         [Required(ErrorMessage = "The {0} field is required.")]
         [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+
         //[Remote(
         //        action: "IsUserNameExists",
         //        controller: "Validatations",
         //        ErrorMessage = "User Name already exists. Please try again.")]
+
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 

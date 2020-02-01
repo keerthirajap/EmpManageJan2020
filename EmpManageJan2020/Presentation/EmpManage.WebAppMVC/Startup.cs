@@ -46,7 +46,7 @@ namespace EmpManage.WebAppMVC
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(typeof(LoggingActionFilter));
-            });
+            }).AddNewtonsoftJson();
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddOptions();
         }

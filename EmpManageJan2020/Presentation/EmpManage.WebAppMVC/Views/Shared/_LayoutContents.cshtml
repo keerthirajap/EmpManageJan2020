@@ -1,0 +1,57 @@
+﻿<input type="hidden" id="refresh" value="no">
+
+
+<div id="myNav" class="overlay d-flex justify-content-center align-items-center flex-column" style="height:100%">
+    <div class="row bd-highlight">
+        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div class="row bd-highlight">
+        <span style="color:white; font-size:25px; padding-top: 10px;">Processing, Please Wait...</span>
+    </div>
+</div>
+
+<!-- The overlay -->
+
+<style>
+
+    .overlay {
+        height: 0%;
+        width: 100%;
+        position: fixed;
+        z-index: 99999;
+        top: 0;
+        left: 0;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0, 0, 0, 0.67);
+        overflow-y: hidden;
+        transition: 0.5s;
+    }
+
+    .overlay-content {
+        position: relative;
+        top: 25%;
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .overlay a {
+        padding: 8px;
+        text-decoration: none;
+        font-size: 36px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+        .overlay a:hover, .overlay a:focus {
+            color: #f1f1f1;
+        }
+
+    .overlay .closebtn {
+        position: absolute;
+        top: 20px;
+        right: 45px;
+        font-size: 60px;
+    }
+</style>
