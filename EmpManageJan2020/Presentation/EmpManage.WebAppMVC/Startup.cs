@@ -42,12 +42,12 @@ namespace EmpManage.WebAppMVC
         {
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
+            services.AddElmah();
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(typeof(LoggingActionFilter));
             });
             services.AddAutoMapper(typeof(AutoMapperProfile));
-            services.AddElmah();
             services.AddOptions();
         }
 
@@ -84,21 +84,6 @@ namespace EmpManage.WebAppMVC
                     };
                 });
 
-            app.UseWhen(context => context.Request.Path.StartsWithSegments("/elmah", StringComparison.OrdinalIgnoreCase), appBuilder =>
-            {
-                appBuilder.Use(next =>
-                {
-                    return async ctx =>
-                    {
-                        ctx.Features.Get<IHttpBodyControlFeature>().AllowSynchronousIO = true;
-
-                        await next(ctx);
-                    };
-                });
-            });
-
-            app.UseElmah();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -114,6 +99,20 @@ namespace EmpManage.WebAppMVC
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseWhen(context => context.Request.Path.StartsWithSegments("/elmah", StringComparison.OrdinalIgnoreCase), appBuilder =>
+            {
+                appBuilder.Use(next =>
+                {
+                    return async ctx =>
+                    {
+                        ctx.Features.Get<IHttpBodyControlFeature>().AllowSynchronousIO = true;
+
+                        await next(ctx);
+                    };
+                });
+            });
+            app.UseElmah();
 
             app.UseAuthorization();
 

@@ -22,7 +22,7 @@
 
         public async Task<long> RegisterUserAsync(User user)
         {
-            return 123;
+            return await this._authenticationRepository.RegisterUserAsync(user);
         }
     }
 }
