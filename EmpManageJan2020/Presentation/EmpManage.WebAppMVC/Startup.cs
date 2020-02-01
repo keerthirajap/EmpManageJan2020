@@ -21,6 +21,7 @@ namespace EmpManage.WebAppMVC
     using Autofac.Extensions.DependencyInjection;
     using AutoMapper;
     using EmpManage.WebAppMVC.Infrastructure.AutoMapper;
+    using EmpManage.CrossCutting.Configuration;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class Startup
@@ -29,9 +30,10 @@ namespace EmpManage.WebAppMVC
 
         public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder();
-            this.Configuration = builder.Build();
+            this.Configuration = configuration;
         }
+
+        public AppSetting AppSetting { get; set; } = new AppSetting();
 
         public IConfiguration Configuration { get; }
 
@@ -40,6 +42,8 @@ namespace EmpManage.WebAppMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            this.Configuration.Bind("AppSetting", this.AppSetting);
+
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
             services.AddElmah();
@@ -53,6 +57,7 @@ namespace EmpManage.WebAppMVC
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            builder.RegisterInstance(this.AppSetting).SingleInstance();
             builder.Register(c => new LogInterceptor(this.logger)).SingleInstance();
             builder.RegisterModule(new RepositoryIOCModule("Data Source=.;Initial Catalog=EmpManage;Integrated Security=True", "InstancePerLifetimeScope"));
             builder.RegisterModule(new ServiceIOCModule("InstancePerLifetimeScope"));

@@ -2,6 +2,7 @@ namespace EmpManage.WebAppMVC
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using Autofac.Extensions.DependencyInjection;
@@ -9,16 +10,23 @@ namespace EmpManage.WebAppMVC
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json.Linq;
     using NLog.Web;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class Program
     {
+        private static string ASPNETCORE_ENVIRONMENT;
+
         public static void Main(string[] args)
         {
             var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             try
             {
+                var envSettingsPath = Path.Combine(Directory.GetCurrentDirectory(), "enviromentSettings.json");
+                var envSettings = JObject.Parse(File.ReadAllText(envSettingsPath));
+                ASPNETCORE_ENVIRONMENT = envSettings["ASPNETCORE_ENVIRONMENT"].ToString();
+
                 logger.Debug("init main");
                 CreateHostBuilder(args).Build().Run();
             }
@@ -40,6 +48,17 @@ namespace EmpManage.WebAppMVC
                  .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    //Make sure envsettings.json is setup with Debug | Development | UAT | Production
+                    // If none is set it use Operative System hosting enviroment
+                    if (!string.IsNullOrWhiteSpace(ASPNETCORE_ENVIRONMENT))
+                    {
+                        webBuilder.UseEnvironment(ASPNETCORE_ENVIRONMENT);
+                    }
+                    else
+                    {
+                        webBuilder.UseEnvironment("Debug");
+                    }
+
                     webBuilder.UseStartup<Startup>();
                 }).ConfigureLogging(logging =>
                 {

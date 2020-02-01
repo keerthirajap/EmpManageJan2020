@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
+    using EmpManage.CrossCutting.Configuration;
     using EmpManage.Domain;
     using EmpManage.ServiceInterface;
     using EmpManage.WebAppMVC.Areas.Authentication.Models;
@@ -21,15 +22,19 @@
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
 
+        private readonly AppSetting _appSetting;
+
         private readonly IAuthenticationService _authenticationService;
 
         public AuthController(
                                IMapper mapper,
                                IHttpContextAccessor httpContextAccessor,
+                               AppSetting appSetting,
                                IAuthenticationService authenticationService)
         {
-            this._mapper = mapper;
             this._httpContextAccessor = httpContextAccessor;
+            this._mapper = mapper;
+            this._appSetting = appSetting;
             this._authenticationService = authenticationService;
         }
 

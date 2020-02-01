@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using Autofac.Extras.DynamicProxy;
     using Effortless.Net.Encryption;
+    using EmpManage.CrossCutting.Configuration;
     using EmpManage.CrossCutting.Logging;
     using EmpManage.Domain;
     using EmpManage.RepositoryInterface;
@@ -14,16 +15,22 @@
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class AuthenticationService : IAuthenticationService
     {
+        private readonly AppSetting _appSetting;
+
         private readonly IAuthenticationRepository _authenticationRepository;
 
-        public AuthenticationService(IAuthenticationRepository authenticationRepository)
+        public AuthenticationService(
+                        AppSetting appSetting,
+                        IAuthenticationRepository authenticationRepository)
         {
+            this._appSetting = appSetting;
+
             this._authenticationRepository = authenticationRepository;
         }
 
         public async Task<long> RegisterUserAsync(User user)
         {
-            user.PasswordSalt = Strings.CreateSalt(20);
+            user.PasswordSalt = Strings.CreateSalt(this._appSetting.AuthenticationSetting.PasswordSaltLength);
             user.Password = user.Password + user.PasswordSalt;
             user.PasswordHash = Hash.Create(HashType.SHA512, user.Password, string.Empty, false);
             user.Password = null;
