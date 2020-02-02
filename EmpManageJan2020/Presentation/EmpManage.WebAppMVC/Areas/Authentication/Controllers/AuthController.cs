@@ -8,6 +8,7 @@
     using AutoMapper;
     using EmpManage.CrossCutting.Configuration;
     using EmpManage.Domain;
+    using EmpManage.Domain.Authentication;
     using EmpManage.ServiceInterface;
     using EmpManage.WebAppMVC.Areas.Authentication.Models;
     using Microsoft.AspNetCore.Authentication;
@@ -15,6 +16,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
@@ -73,14 +75,25 @@
                 ajaxReturn.UserName = registerUserViewModel.UserName;
                 ajaxReturn.Title = "Congratulations";
 
+                UserAuthenticationModel userAuthenticationModel = new UserAuthenticationModel();
+                userAuthenticationModel.UserName = "";
+                userAuthenticationModel.UserId = userCreationSuccess;
+                userAuthenticationModel.LoggedOn = DateTime.Now;
+                userAuthenticationModel.AuthenticationExpiresOn = DateTime.Now.AddHours(1);
+                userAuthenticationModel.AuthenticationGUID = new Guid().ToString();
+
+                string userData = JsonConvert.SerializeObject(userAuthenticationModel);
+
                 var identity = (ClaimsIdentity)this.HttpContext.User.Identity;
 
                 List<Claim> claims = new List<Claim>
                                     {
-                                        new Claim("http://example.org/claims/UserName", "UserName", user.UserName),
-                                        new Claim(ClaimTypes.Name, user.UserName),
+                                        new Claim(ClaimTypes.NameIdentifier, user.UserName),
                                         new Claim(ClaimTypes.Authentication, "Authenticated"),
-                                        new Claim("http://example.org/claims/LoggedInTime", "LoggedInTime", DateTime.Now.ToString()),
+                                        new Claim("http://example.org/claims/AuthenticationGUID", "AuthenticationGUID",  userAuthenticationModel.AuthenticationGUID),
+                                        new Claim("http://example.org/claims/LoggedOn", "LoggedOn",  userAuthenticationModel.LoggedOn.ToString()),
+                                        new Claim("http://example.org/claims/AuthenticationExpiresOn", "AuthenticationExpiresOn",  userAuthenticationModel.AuthenticationExpiresOn.ToString()),
+                                        new Claim(ClaimTypes.UserData, userData),
                                     };
                 var identityClaims = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -91,7 +104,7 @@
                                             principal,
                                             new AuthenticationProperties
                                             {
-                                                ExpiresUtc = DateTime.UtcNow.AddYears(1),
+                                                ExpiresUtc = userAuthenticationModel.AuthenticationExpiresOn,
                                                 IsPersistent = true,
                                             });
             }

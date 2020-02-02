@@ -24,6 +24,7 @@ namespace EmpManage.WebAppMVC
     using EmpManage.CrossCutting.Configuration;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.CookiePolicy;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class Startup
@@ -44,14 +45,24 @@ namespace EmpManage.WebAppMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                     .AddCookie(options =>
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+                     .AddCookie(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                options =>
                      {
                          options.LoginPath = "/RegisterUser";
                          options.AccessDeniedPath = "/AccessDenied";
+                         options.SlidingExpiration = true;
+                         options.Cookie.Name = "EmployeeManage";
                          options.Cookie.SameSite = SameSiteMode.Strict;
                      });
 
+            services.AddAuthorization();
             this.Configuration.Bind("AppSetting", this.AppSetting);
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
@@ -131,7 +142,12 @@ namespace EmpManage.WebAppMVC
 
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCookiePolicy();
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                HttpOnly = HttpOnlyPolicy.None,
+                Secure = CookieSecurePolicy.None,
+                MinimumSameSitePolicy = SameSiteMode.None,
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
