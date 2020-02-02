@@ -64,6 +64,11 @@
                 }, 500);
         }
 
+        publicMethod.redirectToUrl = function (url) {
+            sharedController.showLoadingIndicator();
+            window.location.href = url;
+        },
+
         publicMethod.redirectToHomePage = function () {
             sharedController.showLoadingIndicator();
             var url = "/";

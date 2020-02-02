@@ -72,10 +72,55 @@
                 ajaxReturn.UserId = user.UserId;
                 ajaxReturn.UserName = registerUserViewModel.UserName;
 
-                //await this.AuthneticateUserWithCookies(user);
+                UserLogin userLogin = new UserLogin();
+                userLogin.UserName = registerUserViewModel.UserName;
+                userLogin.Password = registerUserViewModel.Password;
+                userLogin.LoggingIpAddress = this._httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+                userLogin.LoggingBrowser = this._httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
+                userLogin.CreatedOn = DateTime.Now;
+                userLogin = await this._authenticationService.ValidateUserLoginAsync(userLogin);
+
+                if (userLogin.IsUserAuthenticated)
+                {
+                    await this.AuthenticateUserWithCookie(userLogin);
+                }
             }
 
             return this.Json(ajaxReturn);
+        }
+
+        public async Task<IActionResult> IsUserNameExists(string userName)
+        {
+            User user = new User();
+            bool isUserNameExists = false;
+
+            isUserNameExists = await this._authenticationService.IsUserNameExists(userName);
+
+            if (isUserNameExists)
+            {
+                return this.Json(false);
+            }
+            else
+            {
+                return this.Json(true);
+            }
+        }
+
+        public async Task<IActionResult> IsEmailIdExists(string emailId)
+        {
+            User user = new User();
+            bool isEmailIdExists = false;
+
+            isEmailIdExists = await this._authenticationService.IsEmailIdExists(emailId);
+
+            if (isEmailIdExists)
+            {
+                return this.Json(false);
+            }
+            else
+            {
+                return this.Json(true);
+            }
         }
 
         [Route("Login")]
@@ -97,6 +142,7 @@
             UserLogin userLogin = new UserLogin();
 
             userLogin = this._mapper.Map<UserLogin>(loginViewModel);
+
             userLogin.LoggingIpAddress = this._httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
             userLogin.LoggingBrowser = this._httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
             userLogin.CreatedOn = DateTime.Now;
@@ -104,14 +150,19 @@
 
             if (userLogin.IsUserAuthenticated)
             {
-                var option = new CookieOptions();
-                option.Expires = DateTime.Now.AddMinutes(1);
-                this._httpContextAccessor.HttpContext.Response.Cookies.Append("EmployeeManage.UserAuthenticated", "true", option);
-
                 await this.AuthenticateUserWithCookie(userLogin);
+            }
 
+            if (userLogin.IsUserAuthenticated)
+            {
                 ajaxReturn.Status = "Success";
                 ajaxReturn.Message = userLogin.UserName + " - user authenticated successfully";
+            }
+            else if (userLogin.IsUserAccountLocked)
+            {
+                ajaxReturn.Status = "Warning";
+                ajaxReturn.Message = "User account locked. Please contact system adminstrator.";
+                ajaxReturn.Title = "Sorry";
             }
             else if (userLogin.IsUserAccountNotFound)
             {
@@ -119,11 +170,21 @@
                 ajaxReturn.Message = "User account not found. Please try again.";
                 ajaxReturn.Title = "Sorry";
             }
+            else if (!userLogin.IsUserAuthenticated)
+            {
+                ajaxReturn.Status = "Warning";
+                ajaxReturn.Message = "User Name or Password in-correct. Please try again.";
+                ajaxReturn.Title = "Sorry";
+            }
             return this.Json(ajaxReturn);
         }
 
         private async Task AuthenticateUserWithCookie(UserLogin userLogin)
         {
+            var option = new CookieOptions();
+            option.Expires = DateTime.Now.AddMinutes(1);
+            this._httpContextAccessor.HttpContext.Response.Cookies.Append("EmployeeManage.UserAuthenticated", "true", option);
+
             UserAuthentication userAuthenticationModel = new UserAuthentication();
             userAuthenticationModel.UserName = userLogin.UserName;
             userAuthenticationModel.UserId = userLogin.UserId;

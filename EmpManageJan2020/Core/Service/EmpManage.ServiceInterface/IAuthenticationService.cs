@@ -15,5 +15,9 @@
         Task<User> RegisterUserAsync(User user);
 
         Task<UserLogin> ValidateUserLoginAsync(UserLogin userLogin);
+
+        Task<bool> IsUserNameExists(string userName);
+
+        Task<bool> IsEmailIdExists(string emailId);
     }
 }

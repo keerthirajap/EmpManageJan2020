@@ -12,18 +12,22 @@
     {
         [Required(ErrorMessage = "The {0} field is required.")]
         [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-
-        //[Remote(
-        //        action: "IsUserNameExists",
-        //        controller: "Validatations",
-        //        ErrorMessage = "User Name already exists. Please try again.")]
-
+        [Remote(
+                action: "IsUserNameExists",
+                controller: "Auth",
+                areaName: "Authentication",
+                ErrorMessage = "User Name already exists.")]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "The {0} field is required.")]
         [Display(Name = "Email Id")]
         [EmailAddress(ErrorMessage = "Invalid Email Id")]
+        [Remote(
+                action: "IsEmailIdExists",
+                controller: "Auth",
+                areaName: "Authentication",
+                ErrorMessage = "Email Id already exists.")]
         public string EmailId { get; set; }
 
         [Required(ErrorMessage = "The {0} field is required.")]

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
     using Autofac.Extras.DynamicProxy;
@@ -41,21 +42,34 @@
         public async Task<UserLogin> ValidateUserLoginAsync(UserLogin userLogin)
         {
             string passwordHash = string.Empty;
+            bool isInCorrectLogging = false;
+
             var userDetailsForLoginValidation = await this._authenticationRepository.GetUserDetailsForLoginValidation(userLogin.UserName);
 
             if (userDetailsForLoginValidation != null)
             {
                 userLogin.Password = userLogin.Password + userDetailsForLoginValidation.PasswordSalt;
+                userLogin.UserName = userDetailsForLoginValidation.UserName;
+                userLogin.UserId = userDetailsForLoginValidation.UserId;
+
                 passwordHash = Hash.Create(HashType.SHA512, userLogin.Password, string.Empty, false);
+
+                if (userDetailsForLoginValidation.IsLocked)
+                {
+                    isInCorrectLogging = true;
+                    userLogin.IsUserAccountLocked = true;
+                }
 
                 if (passwordHash == userDetailsForLoginValidation.PasswordHash)
                 {
-                    userLogin.UserName = userDetailsForLoginValidation.UserName;
-                    userLogin.UserId = userDetailsForLoginValidation.UserId;
-                    if (userDetailsForLoginValidation.IsActive)
+                    if (userDetailsForLoginValidation.IsActive && !userDetailsForLoginValidation.IsLocked)
                     {
                         userLogin.IsUserAuthenticated = true;
                     }
+                }
+                else
+                {
+                    isInCorrectLogging = true;
                 }
             }
             else
@@ -63,9 +77,33 @@
                 userLogin.IsUserAccountNotFound = true;
             }
 
-            await this._authenticationRepository.SaveUserLoggingDetails(userLogin);
+            await this._authenticationRepository.SaveUserLoggingDetails(userLogin, isInCorrectLogging);
 
             return userLogin;
+        }
+
+        public async Task<bool> IsUserNameExists(string userName)
+        {
+            var userNames = await this._authenticationRepository.GetUserNameForNewUserValidation(userName);
+
+            if (userNames != null && userNames.Any(x => x == userName))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> IsEmailIdExists(string emailId)
+        {
+            var emailIds = await this._authenticationRepository.GetEmailIdForNewUserValidation(emailId);
+
+            if (emailIds != null && emailIds.Any(x => x == emailId))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
