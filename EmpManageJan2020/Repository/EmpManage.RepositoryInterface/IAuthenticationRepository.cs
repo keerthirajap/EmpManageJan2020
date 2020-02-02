@@ -11,6 +11,9 @@
     public interface IAuthenticationRepository
     {
         [Sql("[dbo].[P_RegisterUser]")]
-        Task<long> RegisterUserAsync(User user);
+        Task<User> RegisterUserAsync(User user);
+
+        [Sql("[dbo].[P_RegisterUser]")]
+        Task<User> GetUserDetailsForLoginValidation(string userName);
     }
 }

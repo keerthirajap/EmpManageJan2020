@@ -57,36 +57,66 @@
         [Route("[action]")]
         public async Task<IActionResult> RegisterUser([FromForm] RegisterUserViewModel registerUserViewModel)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return await Task.Run(() => this.View(registerUserViewModel));
-            }
-
             dynamic ajaxReturn = new JObject();
             var user = this._mapper.Map<User>(registerUserViewModel);
 
-            var userCreationSuccess = await this._authenticationService.RegisterUserAsync(user);
+            user = await this._authenticationService.RegisterUserAsync(user);
 
-            if (userCreationSuccess > 0)
+            if (user.UserId > 0)
             {
                 ajaxReturn.Status = "Success";
                 ajaxReturn.Message = registerUserViewModel.UserName + " - user sucessfully created. Redirecting to home page.";
-                ajaxReturn.UserId = userCreationSuccess;
+                ajaxReturn.UserId = user.UserId;
                 ajaxReturn.UserName = registerUserViewModel.UserName;
                 ajaxReturn.Title = "Congratulations";
 
-                UserAuthenticationModel userAuthenticationModel = new UserAuthenticationModel();
-                userAuthenticationModel.UserName = "";
-                userAuthenticationModel.UserId = userCreationSuccess;
-                userAuthenticationModel.LoggedOn = DateTime.Now;
-                userAuthenticationModel.AuthenticationExpiresOn = DateTime.Now.AddHours(1);
-                userAuthenticationModel.AuthenticationGUID = new Guid().ToString();
+                await this.AuthneticateUserWithCookies(user);
+            }
 
-                string userData = JsonConvert.SerializeObject(userAuthenticationModel);
+            return this.Json(ajaxReturn);
+        }
 
-                var identity = (ClaimsIdentity)this.HttpContext.User.Identity;
+        [Route("Login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login()
+        {
+            LoginViewModel loginViewModel = new LoginViewModel();
+            return await Task.Run(() => this.View(loginViewModel));
+        }
 
-                List<Claim> claims = new List<Claim>
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<IActionResult> Login([FromForm] LoginViewModel loginViewModel)
+        {
+            dynamic ajaxReturn = new JObject();
+            UserLogin userLogin = new UserLogin();
+            userLogin.Password = loginViewModel.Password;
+            userLogin.UserName = loginViewModel.UserName;
+
+            userLogin = await this._authenticationService.ValidateUserLoginAsync(userLogin);
+
+            if (userLogin.IsUserAuthenticated)
+            {
+            }
+
+            return this.Json(ajaxReturn);
+        }
+
+        private async Task AuthneticateUserWithCookies(User user)
+        {
+            UserAuthentication userAuthenticationModel = new UserAuthentication();
+            userAuthenticationModel.UserName = user.UserName;
+            userAuthenticationModel.UserId = user.UserId;
+            userAuthenticationModel.LoggedOn = DateTime.Now;
+            userAuthenticationModel.AuthenticationExpiresOn = DateTime.Now.AddHours(1);
+            userAuthenticationModel.AuthenticationGUID = new Guid().ToString();
+
+            string userData = JsonConvert.SerializeObject(userAuthenticationModel);
+
+            var identity = (ClaimsIdentity)this.HttpContext.User.Identity;
+
+            List<Claim> claims = new List<Claim>
                                     {
                                         new Claim(ClaimTypes.NameIdentifier, user.UserName),
                                         new Claim(ClaimTypes.Authentication, "Authenticated"),
@@ -95,21 +125,18 @@
                                         new Claim("http://example.org/claims/AuthenticationExpiresOn", "AuthenticationExpiresOn",  userAuthenticationModel.AuthenticationExpiresOn.ToString()),
                                         new Claim(ClaimTypes.UserData, userData),
                                     };
-                var identityClaims = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var identityClaims = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                // create principal
-                ClaimsPrincipal principal = new ClaimsPrincipal(identityClaims);
-                await this.HttpContext.SignInAsync(
-                                            CookieAuthenticationDefaults.AuthenticationScheme,
-                                            principal,
-                                            new AuthenticationProperties
-                                            {
-                                                ExpiresUtc = userAuthenticationModel.AuthenticationExpiresOn,
-                                                IsPersistent = true,
-                                            });
-            }
-
-            return this.Json(ajaxReturn);
+            // create principal
+            ClaimsPrincipal principal = new ClaimsPrincipal(identityClaims);
+            await this.HttpContext.SignInAsync(
+                                        CookieAuthenticationDefaults.AuthenticationScheme,
+                                        principal,
+                                        new AuthenticationProperties
+                                        {
+                                            ExpiresUtc = userAuthenticationModel.AuthenticationExpiresOn,
+                                            IsPersistent = true,
+                                        });
         }
     }
 }
