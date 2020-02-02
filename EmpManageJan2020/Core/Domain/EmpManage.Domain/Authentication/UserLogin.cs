@@ -13,11 +13,11 @@
 
         public string Password { get; set; }
 
+        public string PasswordSalt { get; set; }
+
         public string LoggingIpAddress { get; set; }
 
         public string LoggingBrowser { get; set; }
-
-        public string IsLogginSuccess { get; set; }
 
         public bool IsUserAuthenticated { get; set; }
 

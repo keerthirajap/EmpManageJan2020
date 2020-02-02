@@ -43,7 +43,7 @@ AS
                       ,@TodaysDate
                       ,@CreatedBy
 
-        DECLARE @ID BIGINT= SCOPE_IDENTITY()
+        DECLARE @UserId BIGINT= SCOPE_IDENTITY()
 
     --    INSERT INTO [dbo].[UserRoles]
 				--([UserId], 
@@ -65,5 +65,10 @@ AS
     --                  @CreatedBy
 
         COMMIT TRANSACTION;
-       SELECT @ID AS UserId;
+		     
+	   SELECT  [UserId]
+			  ,[UserName]      
+		FROM [dbo].[User]
+		WHERE [UserId] = @UserId
+
     END;

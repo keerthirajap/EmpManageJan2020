@@ -6,10 +6,12 @@
     [LoggingBrowser]   NVARCHAR (MAX) NOT NULL,
     [IsLogginSuccess]  BIT            NOT NULL,
     [CreatedOn]        DATETIME       NOT NULL,
-    [CreatedBy]        BIGINT         NOT NULL,
+    [CreatedBy]        BIGINT         NULL,
     [ModifiedOn]       DATETIME       NOT NULL,
-    [ModifiedBy]       BIGINT         NOT NULL,
+    [ModifiedBy]       BIGINT         NULL,
     CONSTRAINT [PK_dbo.UserLoggingLog] PRIMARY KEY CLUSTERED ([UserLoggingLogId] ASC),
     FOREIGN KEY ([UserId]) REFERENCES [dbo].[User] ([UserId])
 );
+
+
 

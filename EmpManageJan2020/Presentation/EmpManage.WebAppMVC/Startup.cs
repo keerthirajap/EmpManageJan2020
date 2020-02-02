@@ -55,10 +55,10 @@ namespace EmpManage.WebAppMVC
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 options =>
                      {
-                         options.LoginPath = "/RegisterUser";
+                         options.LoginPath = "/Login";
                          options.AccessDeniedPath = "/AccessDenied";
                          options.SlidingExpiration = true;
-                         options.Cookie.Name = "EmployeeManage";
+                         options.Cookie.Name = "EmployeeManage.AuthCookie";
                          options.Cookie.SameSite = SameSiteMode.Strict;
                      });
 
@@ -99,6 +99,7 @@ namespace EmpManage.WebAppMVC
                         context.Response.OnStarting(
                             () =>
                             {
+                                context.Response.Headers.Add("RequestTime", DateTime.Now.ToString());
                                 context.Response.Headers.Add("RequestId", context.TraceIdentifier);
                                 stopWatch.Stop();
 
@@ -110,16 +111,7 @@ namespace EmpManage.WebAppMVC
                     };
                 });
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-
-                app.UseHsts();
-            }
+            app.UseExceptionHandler("/Home/Error");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -42,22 +42,28 @@
         {
             string passwordHash = string.Empty;
             var userDetailsForLoginValidation = await this._authenticationRepository.GetUserDetailsForLoginValidation(userLogin.UserName);
-            userLogin.Password = userLogin.Password + userDetailsForLoginValidation.PasswordSalt;
-            passwordHash = Hash.Create(HashType.SHA512, userLogin.Password, string.Empty, false);
 
-            if (passwordHash == userDetailsForLoginValidation.Password)
+            if (userDetailsForLoginValidation != null)
             {
-                userLogin.UserName = userDetailsForLoginValidation.UserName;
-                userLogin.UserId = userDetailsForLoginValidation.UserId;
-                if (userDetailsForLoginValidation.IsActive)
+                userLogin.Password = userLogin.Password + userDetailsForLoginValidation.PasswordSalt;
+                passwordHash = Hash.Create(HashType.SHA512, userLogin.Password, string.Empty, false);
+
+                if (passwordHash == userDetailsForLoginValidation.PasswordHash)
                 {
-                    userLogin.IsUserAuthenticated = true;
+                    userLogin.UserName = userDetailsForLoginValidation.UserName;
+                    userLogin.UserId = userDetailsForLoginValidation.UserId;
+                    if (userDetailsForLoginValidation.IsActive)
+                    {
+                        userLogin.IsUserAuthenticated = true;
+                    }
                 }
             }
             else
             {
                 userLogin.IsUserAccountNotFound = true;
             }
+
+            await this._authenticationRepository.SaveUserLoggingDetails(userLogin);
 
             return userLogin;
         }

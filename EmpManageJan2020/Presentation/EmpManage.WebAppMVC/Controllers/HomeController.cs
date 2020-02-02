@@ -8,7 +8,9 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using EmpManage.WebAppMVC.Models;
+    using System.Net;
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -32,7 +34,8 @@
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+            this.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier, RequestTime = DateTime.Now });
         }
     }
 }

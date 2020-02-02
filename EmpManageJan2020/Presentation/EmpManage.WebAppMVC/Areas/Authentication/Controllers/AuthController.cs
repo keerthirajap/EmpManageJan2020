@@ -48,6 +48,8 @@
         [HttpGet]
         public async Task<IActionResult> RegisterUser()
         {
+            this._httpContextAccessor.HttpContext.Response.Cookies.Delete("EmployeeManage.AuthCookie");
+
             RegisterUserViewModel registerUserViewModel = new RegisterUserViewModel();
             return await Task.Run(() => this.View(registerUserViewModel));
         }
@@ -66,11 +68,11 @@
             {
                 ajaxReturn.Status = "Success";
                 ajaxReturn.Message = registerUserViewModel.UserName + " - user sucessfully created. Redirecting to home page.";
+                ajaxReturn.Title = "Congratulations";
                 ajaxReturn.UserId = user.UserId;
                 ajaxReturn.UserName = registerUserViewModel.UserName;
-                ajaxReturn.Title = "Congratulations";
 
-                await this.AuthneticateUserWithCookies(user);
+                //await this.AuthneticateUserWithCookies(user);
             }
 
             return this.Json(ajaxReturn);
@@ -80,6 +82,8 @@
         [AllowAnonymous]
         public async Task<IActionResult> Login()
         {
+            this._httpContextAccessor.HttpContext.Response.Cookies.Delete("EmployeeManage.AuthCookie");
+
             LoginViewModel loginViewModel = new LoginViewModel();
             return await Task.Run(() => this.View(loginViewModel));
         }
@@ -91,23 +95,38 @@
         {
             dynamic ajaxReturn = new JObject();
             UserLogin userLogin = new UserLogin();
-            userLogin.Password = loginViewModel.Password;
-            userLogin.UserName = loginViewModel.UserName;
 
+            userLogin = this._mapper.Map<UserLogin>(loginViewModel);
+            userLogin.LoggingIpAddress = this._httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            userLogin.LoggingBrowser = this._httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
+            userLogin.CreatedOn = DateTime.Now;
             userLogin = await this._authenticationService.ValidateUserLoginAsync(userLogin);
 
             if (userLogin.IsUserAuthenticated)
             {
-            }
+                var option = new CookieOptions();
+                option.Expires = DateTime.Now.AddMinutes(1);
+                this._httpContextAccessor.HttpContext.Response.Cookies.Append("EmployeeManage.UserAuthenticated", "true", option);
 
+                await this.AuthenticateUserWithCookie(userLogin);
+
+                ajaxReturn.Status = "Success";
+                ajaxReturn.Message = userLogin.UserName + " - user authenticated successfully";
+            }
+            else if (userLogin.IsUserAccountNotFound)
+            {
+                ajaxReturn.Status = "Warning";
+                ajaxReturn.Message = "User account not found. Please try again.";
+                ajaxReturn.Title = "Sorry";
+            }
             return this.Json(ajaxReturn);
         }
 
-        private async Task AuthneticateUserWithCookies(User user)
+        private async Task AuthenticateUserWithCookie(UserLogin userLogin)
         {
             UserAuthentication userAuthenticationModel = new UserAuthentication();
-            userAuthenticationModel.UserName = user.UserName;
-            userAuthenticationModel.UserId = user.UserId;
+            userAuthenticationModel.UserName = userLogin.UserName;
+            userAuthenticationModel.UserId = userLogin.UserId;
             userAuthenticationModel.LoggedOn = DateTime.Now;
             userAuthenticationModel.AuthenticationExpiresOn = DateTime.Now.AddHours(1);
             userAuthenticationModel.AuthenticationGUID = new Guid().ToString();
@@ -118,7 +137,7 @@
 
             List<Claim> claims = new List<Claim>
                                     {
-                                        new Claim(ClaimTypes.NameIdentifier, user.UserName),
+                                        new Claim(ClaimTypes.NameIdentifier, userLogin.UserName),
                                         new Claim(ClaimTypes.Authentication, "Authenticated"),
                                         new Claim("http://example.org/claims/AuthenticationGUID", "AuthenticationGUID",  userAuthenticationModel.AuthenticationGUID),
                                         new Claim("http://example.org/claims/LoggedOn", "LoggedOn",  userAuthenticationModel.LoggedOn.ToString()),
@@ -127,7 +146,6 @@
                                     };
             var identityClaims = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            // create principal
             ClaimsPrincipal principal = new ClaimsPrincipal(identityClaims);
             await this.HttpContext.SignInAsync(
                                         CookieAuthenticationDefaults.AuthenticationScheme,

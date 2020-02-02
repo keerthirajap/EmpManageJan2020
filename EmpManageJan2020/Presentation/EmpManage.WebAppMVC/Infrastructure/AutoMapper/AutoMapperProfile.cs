@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using EmpManage.Domain;
+    using EmpManage.Domain.Authentication;
     using EmpManage.WebAppMVC.Areas.Authentication.Models;
     using global::AutoMapper;
 
@@ -21,6 +22,7 @@
             #region RegisterUser
 
             CreateMap<RegisterUserViewModel, User>().ReverseMap();
+            CreateMap<LoginViewModel, UserLogin>().ReverseMap();
 
             #endregion RegisterUser
         }
