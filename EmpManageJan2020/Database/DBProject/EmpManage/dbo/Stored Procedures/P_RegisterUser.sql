@@ -45,30 +45,18 @@ AS
 
         DECLARE @UserId BIGINT= SCOPE_IDENTITY()
 
-    --    INSERT INTO [dbo].[UserRoles]
-				--([UserId], 
-				-- [RoleId], 
-				-- [RoleName], 
-				-- [IsActive], 
-				-- [CreatedOn], 
-				-- [CreatedBy], 
-				-- [ModifiedOn], 
-				-- [ModifiedBy]
-				--)
-    --           SELECT @ID, 
-    --                  4, 
-    --                  'User', 
-    --                  1, 
-    --                  @TodaysDate, 
-    --                  @CreatedBy, 
-    --                  @TodaysDate, 
-    --                  @CreatedBy
 
         COMMIT TRANSACTION;
-		     
+
+
+UPDATE [dbo].[User]
+   SET [CreatedBy] = @UserId  
+      ,[ModifiedBy] = @UserId
+ WHERE [UserId] = @UserId
+ 		     
 	   SELECT  [UserId]
 			  ,[UserName]      
 		FROM [dbo].[User]
 		WHERE [UserId] = @UserId
 
-    END;
+END;

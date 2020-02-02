@@ -14,6 +14,7 @@
 
             else {
                 swalWithBootstrapButtons.fire({
+                    icon: 'success',
                     title: data.Title,
                     text: data.Message,
                     timer: 4000,

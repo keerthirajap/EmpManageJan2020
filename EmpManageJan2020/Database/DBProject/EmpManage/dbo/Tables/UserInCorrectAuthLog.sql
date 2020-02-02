@@ -6,10 +6,13 @@
     [LoggingIpAddress]       NVARCHAR (500) NOT NULL,
     [LoggingBrowser]         NVARCHAR (MAX) NOT NULL,
     [IsUserAuthenticated]    BIT            NOT NULL,
+    [IsActive]               BIT            NOT NULL,
     [CreatedOn]              DATETIME       NOT NULL,
     [CreatedBy]              BIGINT         NULL,
     [ModifiedOn]             DATETIME       NOT NULL,
     [ModifiedBy]             BIGINT         NULL,
     CONSTRAINT [PK_dbo.UserInCorrectAuthLog] PRIMARY KEY CLUSTERED ([UserInCorrectAuthLogId] ASC)
 );
+
+
 

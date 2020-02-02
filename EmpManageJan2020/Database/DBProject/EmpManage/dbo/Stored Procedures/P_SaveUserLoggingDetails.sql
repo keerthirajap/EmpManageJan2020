@@ -39,10 +39,15 @@ AS
                 ,@UserId 
 	
 	DECLARE @InCorrectLoggingCount [BIGINT]
+	DECLARE @IsUserAccountLocked BIT
+
+	SELECT @IsUserAccountLocked  = IsLocked
+	FROM  [dbo].[User] 
+	WHERE [UserId] = @UserId 
 
 	SELECT @InCorrectLoggingCount  = [InCorrectLoggingCount]
 	FROM  [dbo].[UserInCorrectAuthLog] 
-	WHERE [UserId] = @UserId
+	WHERE [UserId] = @UserId AND [IsActive] = 1
 
 	IF @InCorrectLoggingCount = 2
 		BEGIN
@@ -54,17 +59,17 @@ AS
 			WHERE [UserId] = @UserId
 		END
 
-	IF @IsInCorrectLogging = 1 AND @UserId > 0 AND @InCorrectLoggingCount > 0
+	IF @IsInCorrectLogging = 1 AND @UserId > 0 AND @InCorrectLoggingCount > 0 AND @IsUserAccountLocked <> 1
 	BEGIN	
 			UPDATE [dbo].[UserInCorrectAuthLog]
 			   SET 
 				   [InCorrectLoggingCount] = @InCorrectLoggingCount + 1   
 				  ,[ModifiedOn] = @CreatedOn
 				  ,[ModifiedBy] = @UserId
-			 WHERE [UserId] = @UserId
+			 WHERE [UserId] = @UserId AND [IsActive] = 1
 		END
 		
-	ELSE IF @IsInCorrectLogging = 1 AND @UserId > 0 
+	ELSE IF @IsInCorrectLogging = 1 AND @UserId > 0  AND @IsUserAccountLocked <> 1
 		BEGIN
 			INSERT INTO [dbo].[UserInCorrectAuthLog]
 				   ([UserId]
@@ -73,6 +78,7 @@ AS
 				   ,[LoggingIpAddress]
 				   ,[LoggingBrowser]
 				   ,[IsUserAuthenticated]
+				   ,[IsActive]
 				   ,[CreatedOn]
 				   ,[CreatedBy]
 				   ,[ModifiedOn]
@@ -84,14 +90,23 @@ AS
 					,@LoggingIpAddress
 					,@LoggingBrowser
 					,@IsUserAuthenticated
+					,1
 					,@CreatedOn
 					,@UserId    
 					,@CreatedOn
 					,@UserId 
 		END	
-	ELSE IF @IsInCorrectLogging = 0 AND @UserId > 0
+	ELSE IF @IsInCorrectLogging = 0 AND @UserId > 0 AND @IsUserAccountLocked <> 1
 	BEGIN
-		DELETE FROM [dbo].[UserInCorrectAuthLog] WHERE [UserId] = @UserId
+
+		UPDATE [dbo].[UserInCorrectAuthLog]
+			   SET 
+				   [IsUserAuthenticated] = 1
+				  ,[IsActive] = 0 
+				  ,[ModifiedOn] = @CreatedOn
+				  ,[ModifiedBy] = @UserId
+			 WHERE [UserId] = @UserId AND [IsActive] = 1
+		
 	END
 
   END;

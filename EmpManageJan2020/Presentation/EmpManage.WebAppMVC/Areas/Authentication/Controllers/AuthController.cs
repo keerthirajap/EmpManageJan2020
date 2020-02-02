@@ -190,7 +190,7 @@
             dynamic ajaxReturn = new JObject();
             ajaxReturn.Status = "Success";
             ajaxReturn.Message = "You have been successfully logged out. " +
-                                    "Current window will be closed now";
+                                    "Redirecting to Login screen";
 
             return this.Json(ajaxReturn);
         }
