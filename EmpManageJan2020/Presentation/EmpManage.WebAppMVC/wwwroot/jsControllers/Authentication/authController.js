@@ -59,7 +59,10 @@
         }
 
         publicMethod.loginOnfailure = function (xMLHttpRequest, textStatus, errorThrown) {
-            sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
+            sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);          
         }
+
+        
+
     }(window.authController = window.authController || {}, jQuery)
 );

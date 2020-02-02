@@ -12,7 +12,9 @@ AS
 	  SELECT TOP 1 [UserId]
 		  ,[UserName]      
 		  ,[PasswordHash]
-		  ,[PasswordSalt]     
+		  ,[PasswordSalt]
+		  ,[IsActive]
+		  ,[IsLocked]     
 	  FROM [dbo].[User]
 	  WHERE [UserName] = @UserName
 

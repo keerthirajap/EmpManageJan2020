@@ -179,6 +179,22 @@
             return this.Json(ajaxReturn);
         }
 
+        [Route("LogOut")]
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> LogOut()
+        {
+            // await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await this.HttpContext.SignOutAsync();
+
+            dynamic ajaxReturn = new JObject();
+            ajaxReturn.Status = "Success";
+            ajaxReturn.Message = "You have been successfully logged out. " +
+                                    "Current window will be closed now";
+
+            return this.Json(ajaxReturn);
+        }
+
         private async Task AuthenticateUserWithCookie(UserLogin userLogin)
         {
             var option = new CookieOptions();
@@ -198,6 +214,7 @@
 
             List<Claim> claims = new List<Claim>
                                     {
+                                        new Claim(ClaimTypes.Name, userLogin.UserName),
                                         new Claim(ClaimTypes.NameIdentifier, userLogin.UserName),
                                         new Claim(ClaimTypes.Authentication, "Authenticated"),
                                         new Claim("http://example.org/claims/AuthenticationGUID", "AuthenticationGUID",  userAuthenticationModel.AuthenticationGUID),

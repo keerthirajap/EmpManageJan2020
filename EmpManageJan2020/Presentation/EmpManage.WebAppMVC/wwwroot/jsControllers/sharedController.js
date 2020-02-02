@@ -105,5 +105,37 @@
         publicMethod.eraseCookie = function (cookieName) {
             document.cookie = cookieName + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         }
+
+        publicMethod.onLogoutButtonClick = function (url) {
+            $.ajax({
+                async: true,
+                type: "GET",
+                url: url,
+                contentType: 'application/json;',
+                dataType: 'json',
+                begin: function () {
+                },
+                complete: function () {
+                },
+                success: function (data) {
+
+                    swalWithBootstrapButtons.fire({
+                        text: data.Message,                      
+                        icon: 'success',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                    });
+
+                    setTimeout(
+                        function () {
+                            location.reload();
+                        }, 3000);
+                },
+                error: function (xMLHttpRequest, textStatus, errorThrown) {
+                    sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
+                }
+            });
+        }
     }(window.sharedController = window.sharedController || {}, jQuery)
 );

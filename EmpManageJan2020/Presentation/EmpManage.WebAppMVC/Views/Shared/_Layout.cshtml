@@ -35,22 +35,53 @@
                 else
                 {
                     <ul class="navbar-nav mr-auto">
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Employees</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                </ul> 
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-item-Home" href="/">Home</a>
+                        </li>
+                        <li class="nav-item dropdown" id="nav-item-Employees">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Employees
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item"
+                                   asp-area="Employee" asp-controller="EmployeeManage" asp-action="CreateEmployee">
+                                    Create Employee
+                                </a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown" id="nav-item-Admin">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Admin
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item"
+                                   asp-area="Admin" asp-controller="UserManagement" asp-action="Index">
+                                    Manage Users
+                                </a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav ml-auto">
+                        <button type="button" onclick="sharedController.getUserDetails('@Url.Action( "LoadUserDetailsPartialViewAsync", "Auth" , new { Area="Authentication" , userName = @User.Identity.Name} )')"
+                                class="btn btn-outline-light" data-toggle="tooltip" data-placement="bottom" title="Click to see current user information">
+                            <h5 class="mb-0">Hello, <strong style="font-weight:bold">@User.Identity.Name</strong> </h5>
+                        </button>
+
+                        <button type="button" onclick="sharedController.onLogoutButtonClick('@Url.Action( "Logout", "Auth" , new { Area="Authentication" } )')"
+                                data-toggle="tooltip" data-placement="bottom" title="Logout Application"
+                                style="color:white;padding-right: 3px;margin-left: 9px;" class="btn btn-danger">
+                            <i style="font-size: 20px;margin-top: 6px;margin-left: 0px;margin-right: 0px;" class="fas fa-power-off"></i>
+                        </button>
+                    </ul>
                 }
-                               
             </div>
         </nav>
     </header>
