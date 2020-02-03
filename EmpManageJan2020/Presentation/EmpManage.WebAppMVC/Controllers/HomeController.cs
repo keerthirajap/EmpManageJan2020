@@ -5,10 +5,10 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Net;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using EmpManage.WebAppMVC.Models;
-    using System.Net;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class HomeController : Controller

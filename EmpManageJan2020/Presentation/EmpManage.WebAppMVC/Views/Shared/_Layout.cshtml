@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
-    @*<link href="~/lib/limonte-sweetalert2/sweetalert2.min.css" rel="stylesheet" />*@
-
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/jsControllers/sharedController.js"></script>
 </head>
@@ -75,7 +73,7 @@
                             <h5 class="mb-0">Hello, <strong style="font-weight:bold">@User.Identity.Name</strong> </h5>
                         </button>
 
-                        <button type="button" onclick="sharedController.onLogoutButtonClick('@Url.Action( "Logout", "Auth" , new { Area="Authentication" } )')"
+                        <button type="button" onclick="sharedController.onLogoutButtonClick('@Url.Action( "LogOut", "Auth" , new { Area="Authentication" } )')"
                                 data-toggle="tooltip" data-placement="bottom" title="Logout Application"
                                 style="color:white;padding-right: 3px;margin-left: 9px;" class="btn btn-danger">
                             <i style="font-size: 20px;margin-top: 6px;margin-left: 0px;margin-right: 0px;" class="fas fa-power-off"></i>
@@ -100,8 +98,7 @@
     <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
-    @*<script src="~/lib/limonte-sweetalert2/sweetalert2.all.min.js"></script>*@
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="~/lib/sweetalert2/dist/sweetalert2.all.min.js"></script>
     @RenderSection("Scripts", required: false)
     <script>
         //parsing the unobtrusive attributes when we get content via ajax

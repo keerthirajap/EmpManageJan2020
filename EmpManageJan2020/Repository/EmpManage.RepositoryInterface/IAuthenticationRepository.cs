@@ -16,15 +16,15 @@
         Task<User> RegisterUserAsync(User user);
 
         [Sql("[dbo].[P_GetUserDetailsForLoginValidation]")]
-        Task<User> GetUserDetailsForLoginValidation(string userName);
+        Task<User> GetUserDetailsForLoginValidationAsync(string userName);
 
         [Sql("[dbo].[P_SaveUserLoggingDetails]")]
-        Task SaveUserLoggingDetails(UserLogin userLogin, bool isInCorrectLogging);
+        Task SaveUserLoggingDetailsAsync(UserLogin userLogin, bool isInCorrectLogging);
 
         [Sql("SELECT UserName FROM dbo.[User] WHERE UserName = @userName")]
-        Task<List<string>> GetUserNameForNewUserValidation(string userName);
+        Task<List<string>> GetUserNameForNewUserValidationAsync(string userName);
 
         [Sql("SELECT  EmailId FROM dbo.[User] WHERE EmailId = @emailId")]
-        Task<List<string>> GetEmailIdForNewUserValidation(string emailId);
+        Task<List<string>> GetEmailIdForNewUserValidationAsync(string emailId);
     }
 }

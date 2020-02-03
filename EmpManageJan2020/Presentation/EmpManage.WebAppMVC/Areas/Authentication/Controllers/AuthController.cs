@@ -21,6 +21,7 @@
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     [AutoValidateAntiforgeryToken]
+    [AllowAnonymous]
     [Area("Authentication")]
     public class AuthController : Controller
     {
@@ -43,10 +44,8 @@
             this._authenticationService = authenticationService;
         }
 
-        [Route("RegisterUser")]
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<IActionResult> RegisterUser()
+        [HttpGet("RegisterUser")]
+        public async Task<IActionResult> RegisterUserAsync()
         {
             this._httpContextAccessor.HttpContext.Response.Cookies.Delete("EmployeeManage.AuthCookie");
 
@@ -54,10 +53,8 @@
             return await Task.Run(() => this.View(registerUserViewModel));
         }
 
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("[action]")]
-        public async Task<IActionResult> RegisterUser([FromForm] RegisterUserViewModel registerUserViewModel)
+        [HttpPost("RegisterUser")]
+        public async Task<IActionResult> RegisterUserAsync([FromForm] RegisterUserViewModel registerUserViewModel)
         {
             dynamic ajaxReturn = new JObject();
             var user = this._mapper.Map<User>(registerUserViewModel);
@@ -82,19 +79,20 @@
 
                 if (userLogin.IsUserAuthenticated)
                 {
-                    await this.AuthenticateUserWithCookie(userLogin);
+                    await this.AuthenticateUserWithCookieAsync(userLogin);
                 }
             }
 
             return this.Json(ajaxReturn);
         }
 
-        public async Task<IActionResult> IsUserNameExists(string userName)
+        [HttpGet("IsUserNameExists")]
+        public async Task<IActionResult> IsUserNameExistsAsync(string userName)
         {
             User user = new User();
             bool isUserNameExists = false;
 
-            isUserNameExists = await this._authenticationService.IsUserNameExists(userName);
+            isUserNameExists = await this._authenticationService.IsUserNameExistsAsync(userName);
 
             if (isUserNameExists)
             {
@@ -106,12 +104,13 @@
             }
         }
 
-        public async Task<IActionResult> IsEmailIdExists(string emailId)
+        [HttpGet("IsEmailIdExists")]
+        public async Task<IActionResult> IsEmailIdExistsAsync(string emailId)
         {
             User user = new User();
             bool isEmailIdExists = false;
 
-            isEmailIdExists = await this._authenticationService.IsEmailIdExists(emailId);
+            isEmailIdExists = await this._authenticationService.IsEmailIdExistsAsync(emailId);
 
             if (isEmailIdExists)
             {
@@ -123,9 +122,8 @@
             }
         }
 
-        [Route("Login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login()
+        [HttpGet("Login")]
+        public async Task<IActionResult> LoginAsync()
         {
             this._httpContextAccessor.HttpContext.Response.Cookies.Delete("EmployeeManage.AuthCookie");
 
@@ -133,10 +131,8 @@
             return await Task.Run(() => this.View(loginViewModel));
         }
 
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("[action]")]
-        public async Task<IActionResult> Login([FromForm] LoginViewModel loginViewModel)
+        [HttpPost("Login")]
+        public async Task<IActionResult> LoginAsync([FromForm] LoginViewModel loginViewModel)
         {
             dynamic ajaxReturn = new JObject();
             UserLogin userLogin = new UserLogin();
@@ -150,7 +146,7 @@
 
             if (userLogin.IsUserAuthenticated)
             {
-                await this.AuthenticateUserWithCookie(userLogin);
+                await this.AuthenticateUserWithCookieAsync(userLogin);
             }
 
             if (userLogin.IsUserAuthenticated)
@@ -176,15 +172,13 @@
                 ajaxReturn.Message = "User Name or Password in-correct. Please try again.";
                 ajaxReturn.Title = "Sorry";
             }
+
             return this.Json(ajaxReturn);
         }
 
-        [Route("LogOut")]
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<IActionResult> LogOut()
+        [HttpGet("LogOut")]
+        public async Task<IActionResult> LogOutAsync()
         {
-            // await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await this.HttpContext.SignOutAsync();
 
             dynamic ajaxReturn = new JObject();
@@ -195,7 +189,7 @@
             return this.Json(ajaxReturn);
         }
 
-        private async Task AuthenticateUserWithCookie(UserLogin userLogin)
+        private async Task AuthenticateUserWithCookieAsync(UserLogin userLogin)
         {
             var option = new CookieOptions();
             option.Expires = DateTime.Now.AddMinutes(1);

@@ -25,6 +25,8 @@ namespace EmpManage.WebAppMVC
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.CookiePolicy;
+    using Microsoft.AspNetCore.ResponseCompression;
+    using WebMarkupMin.AspNetCore3;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class Startup
@@ -63,16 +65,42 @@ namespace EmpManage.WebAppMVC
                      });
 
             services.AddAuthorization();
+
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<BrotliCompressionProvider>();
+                options.Providers.Add<GzipCompressionProvider>();
+                options.MimeTypes =
+                    ResponseCompressionDefaults.MimeTypes.Concat(
+                        new[] { "image/svg+xml" });
+            });
+
+            services.AddWebMarkupMin(options =>
+            {
+                options.AllowMinificationInDevelopmentEnvironment = true;
+                options.AllowCompressionInDevelopmentEnvironment = true;
+            })
+                .AddHtmlMinification(options =>
+                {
+                })
+
+               .AddXmlMinification()
+               .AddHttpCompression()
+               ;
+
             this.Configuration.Bind("AppSetting", this.AppSetting);
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
             services.AddElmah();
+
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(typeof(LoggingActionFilter));
             }).AddNewtonsoftJson();
+
             services.AddAutoMapper(typeof(AutoMapperProfile));
+
             services.AddOptions();
         }
 
@@ -114,6 +142,9 @@ namespace EmpManage.WebAppMVC
             app.UseExceptionHandler("/Home/Error");
 
             app.UseHttpsRedirection();
+
+            app.UseResponseCompression();
+            app.UseWebMarkupMin();
             app.UseStaticFiles();
 
             app.UseRouting();

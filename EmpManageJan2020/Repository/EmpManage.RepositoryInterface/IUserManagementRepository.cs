@@ -1,23 +1,18 @@
-﻿namespace EmpManage.ServiceInterface
+﻿namespace EmpManage.RepositoryInterface
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using System.Threading.Tasks;
     using Autofac.Extras.DynamicProxy;
     using EmpManage.CrossCutting.Logging;
     using EmpManage.Domain;
     using EmpManage.Domain.Authentication;
+    using Insight.Database;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
-    public interface IAuthenticationService
+    public interface IUserManagementRepository
     {
-        Task<User> RegisterUserAsync(User user);
-
-        Task<UserLogin> ValidateUserLoginAsync(UserLogin userLogin);
-
-        Task<bool> IsUserNameExistsAsync(string userName);
-
-        Task<bool> IsEmailIdExistsAsync(string emailId);
+        [Sql("SELECT  EmailId FROM dbo.[User] WHERE EmailId = @emailId")]
+        Task<List<User>> GetEmailIdForNewUserValidation();
     }
 }

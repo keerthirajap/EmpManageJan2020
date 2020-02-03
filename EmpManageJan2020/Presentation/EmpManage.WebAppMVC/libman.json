@@ -37,9 +37,12 @@
       "destination": "wwwroot/lib/font-awesome/"
     },
     {
-      "provider": "cdnjs",
-      "library": "limonte-sweetalert2@8.11.8",
-      "destination": "wwwroot/lib/limonte-sweetalert2/"
+      "provider": "jsdelivr",
+      "library": "sweetalert2@9.7.0",
+      "files": [
+        "dist/sweetalert2.all.min.js"
+      ],
+      "destination": "wwwroot/lib/sweetalert2"
     }
   ]
 }

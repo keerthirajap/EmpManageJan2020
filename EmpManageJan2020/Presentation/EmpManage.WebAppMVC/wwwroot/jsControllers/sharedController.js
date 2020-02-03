@@ -107,6 +107,7 @@
         }
 
         publicMethod.onLogoutButtonClick = function (url) {
+            sharedController.showLoadingIndicator();
             $.ajax({
                 async: true,
                 type: "GET",
@@ -116,6 +117,7 @@
                 begin: function () {
                 },
                 complete: function () {
+                    sharedController.hideLoadingIndicator();
                 },
                 success: function (data) {
 

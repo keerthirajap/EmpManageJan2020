@@ -13,7 +13,7 @@
     [Authorize]
     public class UserManagementController : Controller
     {
-        public IActionResult Index()
+        public IActionResult GetAllUserAccounts()
         {
             return this.View();
         }

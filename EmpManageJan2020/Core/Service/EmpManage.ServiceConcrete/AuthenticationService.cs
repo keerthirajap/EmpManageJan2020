@@ -44,7 +44,7 @@
             string passwordHash = string.Empty;
             bool isInCorrectLogging = false;
 
-            var userDetailsForLoginValidation = await this._authenticationRepository.GetUserDetailsForLoginValidation(userLogin.UserName);
+            var userDetailsForLoginValidation = await this._authenticationRepository.GetUserDetailsForLoginValidationAsync(userLogin.UserName);
 
             if (userDetailsForLoginValidation != null)
             {
@@ -77,14 +77,14 @@
                 userLogin.IsUserAccountNotFound = true;
             }
 
-            await this._authenticationRepository.SaveUserLoggingDetails(userLogin, isInCorrectLogging);
+            await this._authenticationRepository.SaveUserLoggingDetailsAsync(userLogin, isInCorrectLogging);
 
             return userLogin;
         }
 
-        public async Task<bool> IsUserNameExists(string userName)
+        public async Task<bool> IsUserNameExistsAsync(string userName)
         {
-            var userNames = await this._authenticationRepository.GetUserNameForNewUserValidation(userName);
+            var userNames = await this._authenticationRepository.GetUserNameForNewUserValidationAsync(userName);
 
             if (userNames != null && userNames.Any(x => x == userName))
             {
@@ -94,9 +94,9 @@
             return false;
         }
 
-        public async Task<bool> IsEmailIdExists(string emailId)
+        public async Task<bool> IsEmailIdExistsAsync(string emailId)
         {
-            var emailIds = await this._authenticationRepository.GetEmailIdForNewUserValidation(emailId);
+            var emailIds = await this._authenticationRepository.GetEmailIdForNewUserValidationAsync(emailId);
 
             if (emailIds != null && emailIds.Any(x => x == emailId))
             {
