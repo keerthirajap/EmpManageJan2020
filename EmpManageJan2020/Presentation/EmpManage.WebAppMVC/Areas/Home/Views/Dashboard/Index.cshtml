@@ -6,6 +6,7 @@
 <h1>Dash Board</h1>
 
 <script>
+
     $(document).ready(function () {
         var isUserAuthenticated = sharedController.readCookie("EmployeeManage.UserAuthenticated");
         if (isUserAuthenticated == "true") {
@@ -25,8 +26,11 @@
 
         }
 
+
+    });
+
+     $(window).on("load", function () {
         sharedController.navActiveColorChange("nav-item-Home");
-
-
+        sharedController.hideLoadingIndicator();
     });
 </script>

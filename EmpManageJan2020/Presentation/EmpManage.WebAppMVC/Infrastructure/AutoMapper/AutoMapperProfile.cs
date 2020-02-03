@@ -30,6 +30,7 @@
             #region Admin
 
             CreateMap<UserAccountViewModel, User>().ReverseMap();
+            CreateMap<UserLoginViewModel, UserLogin>().ReverseMap();
 
             #endregion Admin
         }

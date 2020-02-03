@@ -7,8 +7,10 @@
     using AutoMapper;
     using EmpManage.CrossCutting.Configuration;
     using EmpManage.Domain;
+    using EmpManage.Domain.Authentication;
     using EmpManage.ServiceInterface;
     using EmpManage.WebAppMVC.Areas.Admin.Models;
+    using EmpManage.WebAppMVC.Areas.Admin.Models.DTOs;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -37,8 +39,8 @@
         }
 
         [HttpGet]
-        [Route("[controller]/GetUserAccount")]
-        public async Task<IActionResult> GetUserAccountAsync()
+        [Route("[controller]/GetUserAccounts")]
+        public async Task<IActionResult> GetUserAccountsAsync()
         {
             return await Task.Run(() => this.View());
         }
@@ -54,6 +56,24 @@
             userAccountsViewModel = this._mapper.Map<List<UserAccountViewModel>>(users);
 
             return this.Json(new { data = userAccountsViewModel });
+        }
+
+        [HttpGet]
+        [Route("[controller]/GetUserAccountDetails")]
+        public async Task<IActionResult> GetUserAccountDetailsAsync(long userId)
+        {
+            User userDetails = new User();
+            List<UserLogin> userInCorrectAuthLogs = new List<UserLogin>();
+            List<UserLogin> userLoggingLogs = new List<UserLogin>();
+
+            var userAccountDetails = await this._userManagementService.GetUserAccountDetailsAsync(userId);
+            UserAccountDetailsDTO userAccountDetailsDTO = new UserAccountDetailsDTO();
+
+            userAccountDetailsDTO.UserDetails = this._mapper.Map<UserAccountViewModel>(userAccountDetails.userDetails);
+            userAccountDetailsDTO.UserInCorrectAuthLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userInCorrectAuthLogs);
+            userAccountDetailsDTO.UserLoggingLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userLoggingLogs);
+
+            return await Task.Run(() => this.View());
         }
     }
 }

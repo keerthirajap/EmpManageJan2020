@@ -33,28 +33,39 @@
     $(document).ready(function () {
 
         $('#example').dataTable({
-            "bLengthChange": false,
-              "processing": true, // for show progress bar  
+            "bLengthChange": false,             
             "ajax": {
                     "url": '@Url.Action("GetAllUserAccounts", "UserManagement", new { Area="Admin" })',
                     "type": "GET",
                     "datatype": "json"
             },
-             "ajax.dataSrc": "",
-             "columns": [  
-                    { "data": "UserId", "autoWidth": true },
+            "ajax.dataSrc": "",
+             "initComplete":function( settings, json){
+                   sharedController.hideLoadingIndicator();
+            },
+            "columns": [
+
+                 {
+                        "render": function (data, type, full, meta)
+                        { return '<u><a class="" href="@Url.Action("GetUserAccountDetails", "UserManagement", new { Area="Admin"})?userId=' + full.UserId + '"> ' + full.UserId +'</a></u>'; }
+                },
+
+                    //{ "data": "UserId", "autoWidth": true },
                     { "data": "UserName", "autoWidth": true },
                     { "data": "EmailId", "autoWidth": true },
                     { "data": "UserTitleDesc", "autoWidth": true },
                     { "data": "FullName", "autoWidth": true },
                     { "data": "UserGenderDesc", "autoWidth": true },
                     { "data": "IsActive", "autoWidth": true },
-                    { "data": "IsLocked", "autoWidth": true }                 
+                    { "data": "IsLocked", "autoWidth": true }
             ]
 
         });
 
-        sharedController.navActiveColorChange("nav-item-Admin");
 
+    });
+
+     $(window).on("load", function () {
+        sharedController.navActiveColorChange("nav-item-Admin");
     });
 </script>

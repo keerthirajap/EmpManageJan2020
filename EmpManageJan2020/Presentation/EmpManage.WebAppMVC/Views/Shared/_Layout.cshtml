@@ -58,7 +58,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item"
-                                   asp-area="Admin" asp-controller="UserManagement" asp-action="GetUserAccount">
+                                   asp-area="Admin" asp-controller="UserManagement" asp-action="GetUserAccounts">
                                     Manage Users
                                 </a>
                             </div>
@@ -118,11 +118,6 @@
                 allowOutsideClick: false
             },
             buttonsStyling: false,
-        });
-
-        $(window).on("load", function () {
-            sharedController.hideLoadingIndicator();
-
         });
     </script>
 </body>

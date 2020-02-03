@@ -13,5 +13,7 @@
     public interface IUserManagementService
     {
         Task<List<User>> GetAllUserAccountsAsync();
+
+        Task<(User userDetails, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId);
     }
 }

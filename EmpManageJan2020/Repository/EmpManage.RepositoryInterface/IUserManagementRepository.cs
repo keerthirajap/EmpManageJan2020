@@ -14,5 +14,9 @@
     {
         [Sql("[dbo].[P_GetAllUserAccounts]")]
         Task<List<User>> GetAllUserAccountsAsync();
+
+        [Sql("[dbo].[P_GetUserAccountDetails]")]
+
+        Task<Results<User, UserLogin, UserLogin>> GetUserAccountDetailsAsync(long userId);
     }
 }
