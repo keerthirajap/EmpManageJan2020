@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using EmpManage.Domain;
     using EmpManage.Domain.Authentication;
+    using EmpManage.WebAppMVC.Areas.Admin.Models;
     using EmpManage.WebAppMVC.Areas.Authentication.Models;
     using global::AutoMapper;
 
@@ -19,12 +20,18 @@
         {
             AllowNullDestinationValues = true;
 
-            #region RegisterUser
+            #region Authentication
 
             CreateMap<RegisterUserViewModel, User>().ReverseMap();
             CreateMap<LoginViewModel, UserLogin>().ReverseMap();
 
-            #endregion RegisterUser
+            #endregion Authentication
+
+            #region Admin
+
+            CreateMap<UserAccountViewModel, User>().ReverseMap();
+
+            #endregion Admin
         }
     }
 }

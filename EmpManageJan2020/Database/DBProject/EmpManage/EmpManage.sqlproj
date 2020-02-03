@@ -71,5 +71,7 @@
     <Build Include="dbo\Stored Procedures\P_SaveUserLoggingDetails.sql" />
     <Build Include="dbo\Stored Procedures\P_GetUserDetailsForLoginValidation.sql" />
     <Build Include="dbo\Tables\UserInCorrectAuthLog.sql" />
+    <Build Include="dbo\Stored Procedures\P_UpdateUserDetails.sql" />
+    <Build Include="dbo\Stored Procedures\P_GetAllUserAccounts.sql" />
   </ItemGroup>
 </Project>

@@ -11,6 +11,8 @@
     using EmpManage.RepositoryInterface;
     using Insight.Database;
 
+    //Follow anti-pattern only
+
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class RepositoryIOCModule : Module
     {
@@ -34,11 +36,22 @@
                     .InstancePerLifetimeScope()
                     .EnableInterfaceInterceptors()
                     .InterceptedBy(typeof(LogInterceptor));
+
+                builder
+                   .Register(b => this._sqlConnection.AsParallel<IUserManagementRepository>())
+                   .InstancePerLifetimeScope()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(LogInterceptor));
             }
             else
             {
                 builder
                     .Register(b => this._sqlConnection.AsParallel<IAuthenticationRepository>())
+                    .EnableInterfaceInterceptors()
+                    .InterceptedBy(typeof(LogInterceptor));
+
+                builder
+                    .Register(b => this._sqlConnection.AsParallel<IUserManagementRepository>())
                     .EnableInterfaceInterceptors()
                     .InterceptedBy(typeof(LogInterceptor));
             }

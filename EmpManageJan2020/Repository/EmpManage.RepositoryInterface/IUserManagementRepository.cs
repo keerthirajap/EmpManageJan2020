@@ -12,7 +12,7 @@
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public interface IUserManagementRepository
     {
-        [Sql("SELECT  EmailId FROM dbo.[User] WHERE EmailId = @emailId")]
-        Task<List<User>> GetEmailIdForNewUserValidation();
+        [Sql("[dbo].[P_GetAllUserAccounts]")]
+        Task<List<User>> GetAllUserAccountsAsync();
     }
 }

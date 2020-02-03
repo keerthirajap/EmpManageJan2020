@@ -39,10 +39,23 @@
     {
       "provider": "jsdelivr",
       "library": "sweetalert2@9.7.0",
-      "files": [
-        "dist/sweetalert2.all.min.js"
-      ],
       "destination": "wwwroot/lib/sweetalert2"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "datatables@1.10.19",
+      "files": [
+        "css/jquery.dataTables.min.css",
+        "css/dataTables.bootstrap4.min.css",
+        "js/jquery.dataTables.min.js",
+        "js/dataTables.bootstrap.min.js",
+        "images/sort_asc.png",
+        "images/sort_both.png",
+        "images/sort_asc_disabled.png",
+        "images/sort_desc.png",
+        "images/sort_desc_disabled.png"
+      ],
+      "destination": "wwwroot/lib/jquery-datatables"
     }
   ]
 }
