@@ -73,7 +73,7 @@
             userAccountDetailsDTO.UserInCorrectAuthLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userInCorrectAuthLogs);
             userAccountDetailsDTO.UserLoggingLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userLoggingLogs);
 
-            return await Task.Run(() => this.View());
+            return await Task.Run(() => this.View(userAccountDetailsDTO));
         }
     }
 }

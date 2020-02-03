@@ -73,5 +73,6 @@
     <Build Include="dbo\Tables\UserInCorrectAuthLog.sql" />
     <Build Include="dbo\Stored Procedures\P_UpdateUserDetails.sql" />
     <Build Include="dbo\Stored Procedures\P_GetAllUserAccounts.sql" />
+    <Build Include="dbo\Stored Procedures\P_GetUserAccountDetails.sql" />
   </ItemGroup>
 </Project>

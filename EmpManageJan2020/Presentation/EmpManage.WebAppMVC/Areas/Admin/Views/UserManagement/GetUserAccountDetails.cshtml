@@ -3,12 +3,32 @@
 @{
     ViewData["Title"] = "GetUserAccountDetailsAsync";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var dataSet1 = @Model.UserInCorrectAuthLogs;
 }
+
 
 <h1>GetUserAccountDetailsAsync</h1>
 
+<table id="example" class="display" width="100%"></table>
+
 <script>
     $(window).on("load", function () {
+
+
+        var vvv =  @Html.Raw(Json.Serialize(@Model.UserLoggingLogs));
+        console.log(vvv);
+    var dataSet = [       
+            ];
+
+        $('#example').DataTable({
+            data :vvv,
+             "columns": [
+                       { "data": "UserId", "autowidth": true }                      
+ 
+           ]
+        });
+
         sharedController.navActiveColorChange("nav-item-Admin");
         sharedController.hideLoadingIndicator();
 
