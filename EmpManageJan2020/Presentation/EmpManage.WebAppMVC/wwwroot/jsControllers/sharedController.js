@@ -122,17 +122,21 @@
                 success: function (data) {
 
                     swalWithBootstrapButtons.fire({
-                        text: data.Message,                      
                         icon: 'success',
+                        text: data.Message,
+                        timer: 4000,
+                        timerProgressBar: true,
                         showCancelButton: false,
                         showConfirmButton: false,
-                        allowOutsideClick: false,
-                    });
-
-                    setTimeout(
-                        function () {
+                        onBeforeOpen: () => {
+                        },
+                        onClose: () => {
+                        }
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.timer) {
                             location.reload();
-                        }, 3000);
+                        }
+                    })                   
                 },
                 error: function (xMLHttpRequest, textStatus, errorThrown) {
                     sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
