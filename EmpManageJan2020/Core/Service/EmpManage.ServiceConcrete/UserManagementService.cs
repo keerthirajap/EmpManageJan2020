@@ -10,6 +10,7 @@
     using EmpManage.CrossCutting.Configuration;
     using EmpManage.CrossCutting.Logging;
     using EmpManage.Domain;
+    using EmpManage.Domain.Admin;
     using EmpManage.Domain.Authentication;
     using EmpManage.RepositoryInterface;
     using EmpManage.ServiceInterface;
@@ -48,6 +49,15 @@
             userLoggingLogs = resultSets.Set3.ToList();
 
             return (userDetails, userInCorrectAuthLogs, userLoggingLogs);
+        }
+
+        public async Task<List<UserGender>> GetAllUserGenderDetailsAsync()
+        {
+            List<UserGender> userGenders = new List<UserGender>();
+
+            userGenders = await this._userManagementRepository.GetAllUserGenderDetailsAsync();
+
+            return userGenders;
         }
     }
 }

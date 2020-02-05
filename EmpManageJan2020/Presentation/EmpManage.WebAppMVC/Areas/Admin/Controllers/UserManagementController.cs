@@ -7,12 +7,14 @@
     using AutoMapper;
     using EmpManage.CrossCutting.Configuration;
     using EmpManage.Domain;
+    using EmpManage.Domain.Admin;
     using EmpManage.Domain.Authentication;
     using EmpManage.ServiceInterface;
     using EmpManage.WebAppMVC.Areas.Admin.Models;
     using EmpManage.WebAppMVC.Areas.Admin.Models.DTOs;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json.Linq;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     [AutoValidateAntiforgeryToken]
@@ -65,15 +67,29 @@
             User userDetails = new User();
             List<UserLogin> userInCorrectAuthLogs = new List<UserLogin>();
             List<UserLogin> userLoggingLogs = new List<UserLogin>();
+            List<UserGender> userGenders = new List<UserGender>();
+            List<UserGenderViewModel> userGendersViewModel = new List<UserGenderViewModel>();
 
+            userGenders = await this._userManagementService.GetAllUserGenderDetailsAsync();
+            userGendersViewModel = this._mapper.Map<List<UserGenderViewModel>>(userGenders);
             var userAccountDetails = await this._userManagementService.GetUserAccountDetailsAsync(userId);
             UserAccountDetailsDTO userAccountDetailsDTO = new UserAccountDetailsDTO();
 
-            userAccountDetailsDTO.UserDetails = this._mapper.Map<UserAccountViewModel>(userAccountDetails.userDetails);
+            userAccountDetailsDTO.UserDetails = this._mapper.Map<SaveUserAccountViewModel>(userAccountDetails.userDetails);
+            userAccountDetailsDTO.UserDetails.UserGenders = userGendersViewModel;
             userAccountDetailsDTO.UserInCorrectAuthLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userInCorrectAuthLogs);
             userAccountDetailsDTO.UserLoggingLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userLoggingLogs);
 
             return await Task.Run(() => this.View(userAccountDetailsDTO));
+        }
+
+        [HttpPost]
+        [Route("[controller]/SaveUserAccountDetails")]
+        public async Task<IActionResult> SaveUserAccountDetailsAsync(SaveUserAccountViewModel saveUserAccountViewModel)
+        {
+            dynamic ajaxReturn = new JObject();
+
+            return this.Json(ajaxReturn);
         }
     }
 }

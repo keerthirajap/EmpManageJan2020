@@ -7,6 +7,7 @@
     using Autofac.Extras.DynamicProxy;
     using EmpManage.CrossCutting.Logging;
     using EmpManage.Domain;
+    using EmpManage.Domain.Admin;
     using EmpManage.Domain.Authentication;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
@@ -15,5 +16,7 @@
         Task<List<User>> GetAllUserAccountsAsync();
 
         Task<(User userDetails, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId);
+
+        Task<List<UserGender>> GetAllUserGenderDetailsAsync();
     }
 }

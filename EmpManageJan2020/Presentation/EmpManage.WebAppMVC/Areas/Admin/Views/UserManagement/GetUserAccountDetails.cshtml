@@ -4,11 +4,11 @@
     ViewData["Title"] = "GetUserAccountDetailsAsync";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    var dataSet1 = @Model.UserInCorrectAuthLogs;
 }
 
+@await Html.PartialAsync("_UserAccountDetails", @Model.UserDetails)
 
-<div class="card">
+<div class="card mt-3">
     <div class="card-header lead blockquote">
         <strong>User Login Logs</strong>
     </div>
@@ -36,12 +36,10 @@
     </div>
 </div>
 
-
 <script>
     $(window).on("load", function () {
 
-
-        var userLoggingLogs =  @Html.Raw(Json.Serialize(@Model.UserLoggingLogs));        
+        var userLoggingLogs =  @Html.Raw(Json.Serialize(@Model.UserLoggingLogs));
 
         $('#tblUserLoggingLogs').DataTable({
             "bLengthChange": false,

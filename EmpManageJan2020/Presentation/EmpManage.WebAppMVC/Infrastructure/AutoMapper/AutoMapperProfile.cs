@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using EmpManage.Domain;
+    using EmpManage.Domain.Admin;
     using EmpManage.Domain.Authentication;
     using EmpManage.WebAppMVC.Areas.Admin.Models;
     using EmpManage.WebAppMVC.Areas.Authentication.Models;
@@ -29,8 +30,11 @@
 
             #region Admin
 
+            CreateMap<SaveUserAccountViewModel, User>().ReverseMap();
             CreateMap<UserAccountViewModel, User>().ReverseMap();
             CreateMap<UserLoginViewModel, UserLogin>().ReverseMap();
+
+            CreateMap<UserGenderViewModel, UserGender>().ReverseMap();
 
             #endregion Admin
         }

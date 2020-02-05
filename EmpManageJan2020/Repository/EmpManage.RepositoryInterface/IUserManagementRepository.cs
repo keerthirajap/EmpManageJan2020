@@ -6,6 +6,7 @@
     using Autofac.Extras.DynamicProxy;
     using EmpManage.CrossCutting.Logging;
     using EmpManage.Domain;
+    using EmpManage.Domain.Admin;
     using EmpManage.Domain.Authentication;
     using Insight.Database;
 
@@ -18,5 +19,8 @@
         [Sql("[dbo].[P_GetUserAccountDetails]")]
 
         Task<Results<User, UserLogin, UserLogin>> GetUserAccountDetailsAsync(long userId);
+
+        [Sql("SELECT [UserGenderId],[UserGenderDesc] FROM [dbo].[UserGender]")]
+        Task<List<UserGender>> GetAllUserGenderDetailsAsync();
     }
 }

@@ -8,7 +8,7 @@
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class UserAccountDetailsDTO
     {
-        public UserAccountViewModel UserDetails { get; set; }
+        public SaveUserAccountViewModel UserDetails { get; set; }
 
         public List<UserLoginViewModel> UserInCorrectAuthLogs { get; set; }
 
