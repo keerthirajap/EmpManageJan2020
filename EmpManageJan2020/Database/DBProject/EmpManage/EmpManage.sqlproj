@@ -71,8 +71,11 @@
     <Build Include="dbo\Stored Procedures\P_SaveUserLoggingDetails.sql" />
     <Build Include="dbo\Stored Procedures\P_GetUserDetailsForLoginValidation.sql" />
     <Build Include="dbo\Tables\UserInCorrectAuthLog.sql" />
-    <Build Include="dbo\Stored Procedures\P_UpdateUserDetails.sql" />
     <Build Include="dbo\Stored Procedures\P_GetAllUserAccounts.sql" />
     <Build Include="dbo\Stored Procedures\P_GetUserAccountDetails.sql" />
+    <Build Include="dbo\Stored Procedures\P_UpdateUserAccountPassword.sql" />
+    <Build Include="dbo\Stored Procedures\P_UpdateUserAccountLockedStatus.sql" />
+    <Build Include="dbo\Stored Procedures\P_UpdateUserAccountDetails.sql" />
+    <Build Include="dbo\Stored Procedures\P_UpdateUserAccountActiveStatus.sql" />
   </ItemGroup>
 </Project>

@@ -61,7 +61,7 @@
             setTimeout(
                 function () {
                     document.getElementById("myNav").style.height = "0%";
-                }, 500);
+                }, 100);
         }
 
         publicMethod.redirectToUrl = function (url) {
@@ -128,6 +128,7 @@
                         timerProgressBar: true,
                         showCancelButton: false,
                         showConfirmButton: false,
+                        allowOutsideClick: false,
                         onBeforeOpen: () => {
                         },
                         onClose: () => {

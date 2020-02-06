@@ -10,8 +10,8 @@
     using EmpManage.Domain.Admin;
     using EmpManage.Domain.Authentication;
     using EmpManage.ServiceInterface;
-    using EmpManage.WebAppMVC.Areas.Admin.Models;
-    using EmpManage.WebAppMVC.Areas.Admin.Models.DTOs;
+    using EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement;
+    using EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement.DTOs;
     using EmpManage.WebAppMVC.Infrastructure.Extensions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -83,7 +83,7 @@
             var userAccountDetails = await this._userManagementService.GetUserAccountDetailsAsync(userId);
             UserAccountDetailsDTO userAccountDetailsDTO = new UserAccountDetailsDTO();
 
-            userAccountDetailsDTO.UserDetails = this._mapper.Map<SaveUserAccountViewModel>(userAccountDetails.userDetails);
+            userAccountDetailsDTO.UserDetails = this._mapper.Map<UpdateUserAccountViewModel>(userAccountDetails.userDetails);
             userAccountDetailsDTO.UserDetails.UserGenders = userGendersViewModel;
             userAccountDetailsDTO.UserDetails.UserTitles = userTitlesViewModel;
 
@@ -94,26 +94,42 @@
         }
 
         [HttpPost]
-        [Route("[controller]/SaveUserAccountDetails")]
-        public async Task<IActionResult> SaveUserAccountDetailsAsync(SaveUserAccountViewModel saveUserAccountViewModel)
+        [Route("[controller]/UpdateUserAccountDetails")]
+        public async Task<IActionResult> UpdateUserAccountDetailsAsync(UpdateUserAccountViewModel updateUserAccountViewModel)
         {
             dynamic ajaxReturn = new JObject();
+            User user = new User();
+            var userAuthenticationModel = WebAppMVCExtensions.GetLoggedInUserDetails(this.User);
 
-            UserAuthentication userAuthenticationModel = new UserAuthentication();
-            userAuthenticationModel = WebAppMVCExtensions.GetLoggedInUserDetails(this.User);
+            user = this._mapper.Map<User>(updateUserAccountViewModel);
+            user.ModifiedBy = userAuthenticationModel.UserId;
+
+            var isUpdateSuccess = await this._userManagementService.UpdateUserAccountDetailsAsync(user);
+
+            if (isUpdateSuccess)
+            {
+                ajaxReturn.Status = "Success";
+                ajaxReturn.Message = "User details saved successfully";
+            }
+            else
+            {
+                ajaxReturn.Status = "Error";
+                ajaxReturn.Message = "Error occured";
+            }
+
             return this.Json(ajaxReturn);
         }
 
         [HttpPost]
         [Route("[controller]/UpdateUserAccountActiveStatus")]
-        public async Task<IActionResult> UpdateUserAccountActiveStatus(long userId, bool isActive)
+        public async Task<IActionResult> UpdateUserAccountActiveStatusAsync(long userId, bool isActive)
         {
             dynamic ajaxReturn = new JObject();
 
             UserAuthentication userAuthenticationModel = new UserAuthentication();
             userAuthenticationModel = WebAppMVCExtensions.GetLoggedInUserDetails(this.User);
 
-            var isUpdateSuccess = await this._userManagementService.UpdateUserAccountActiveStatus(userId, isActive, userAuthenticationModel.UserId);
+            var isUpdateSuccess = await this._userManagementService.UpdateUserAccountActiveStatusAsync(userId, isActive, userAuthenticationModel.UserId);
 
             if (isUpdateSuccess && isActive)
             {
@@ -130,6 +146,73 @@
                 ajaxReturn.Status = "Error";
                 ajaxReturn.Message = "Error occured";
             }
+
+            return this.Json(ajaxReturn);
+        }
+
+        [HttpPost]
+        [Route("[controller]/UpdateUserAccountLockedStatus")]
+        public async Task<IActionResult> UpdateUserAccountLockedStatusAsync(long userId, bool isLocked)
+        {
+            dynamic ajaxReturn = new JObject();
+
+            UserAuthentication userAuthenticationModel = new UserAuthentication();
+            userAuthenticationModel = WebAppMVCExtensions.GetLoggedInUserDetails(this.User);
+
+            var isUpdateSuccess = await this._userManagementService.UpdateUserAccountLockedStatusAsync(userId, isLocked, userAuthenticationModel.UserId);
+
+            if (isUpdateSuccess && isLocked)
+            {
+                ajaxReturn.Status = "Success";
+                ajaxReturn.Message = "User account locked successfully";
+            }
+            else if (isUpdateSuccess && !isLocked)
+            {
+                ajaxReturn.Status = "Success";
+                ajaxReturn.Message = "User account un-locked successfully";
+            }
+            else
+            {
+                ajaxReturn.Status = "Error";
+                ajaxReturn.Message = "Error occured";
+            }
+
+            return this.Json(ajaxReturn);
+        }
+
+        [HttpGet]
+        [Route("[controller]/LoadChangePasswordPartialView")]
+
+        public async Task<IActionResult> LoadChangePasswordPartialViewAsync(long userId, string userName)
+        {
+            ChangeUserAccountPasswordViewModel changeUserAccountPasswordVM = new ChangeUserAccountPasswordViewModel();
+            changeUserAccountPasswordVM.UserId = userId;
+            changeUserAccountPasswordVM.UserName = userName;
+
+            return await Task.Run(() => this.PartialView("_ChangeUserAccountPassword", changeUserAccountPasswordVM));
+        }
+
+        [HttpPost]
+        [Route("[controller]/ChangeUserAccountPassword")]
+        public async Task<IActionResult> ChangeUserAccountPasswordAsync([FromForm] ChangeUserAccountPasswordViewModel changeUserAccountPasswordVM)
+        {
+            dynamic ajaxReturn = new JObject();
+            User user = new User();
+            user = this._mapper.Map<User>(changeUserAccountPasswordVM);
+
+            var isUpdateSuccess = await this._userManagementService.ChangeUserAccountPasswordAsync(user);
+
+            if (isUpdateSuccess)
+            {
+                ajaxReturn.Status = "Success";
+                ajaxReturn.Message = "Password changed successfully";
+            }
+            else
+            {
+                ajaxReturn.Status = "Error";
+                ajaxReturn.Message = "Error occured";
+            }
+
             return this.Json(ajaxReturn);
         }
     }

@@ -9,7 +9,9 @@
     using EmpManage.Domain.Admin;
     using EmpManage.Domain.Authentication;
     using EmpManage.WebAppMVC.Areas.Admin.Models;
+    using EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement;
     using EmpManage.WebAppMVC.Areas.Authentication.Models;
+    using EmpManage.WebAppMVC.Areas.Authentication.Models.Auth;
     using global::AutoMapper;
 
     [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "Reviewed.")]
@@ -30,7 +32,9 @@
 
             #region Admin
 
-            CreateMap<SaveUserAccountViewModel, User>().ReverseMap();
+            CreateMap<UpdateUserAccountViewModel, User>().ReverseMap();
+            CreateMap<ChangeUserAccountPasswordViewModel, User>().ReverseMap();
+
             CreateMap<UserAccountViewModel, User>().ReverseMap();
             CreateMap<UserLoginViewModel, UserLogin>().ReverseMap();
 

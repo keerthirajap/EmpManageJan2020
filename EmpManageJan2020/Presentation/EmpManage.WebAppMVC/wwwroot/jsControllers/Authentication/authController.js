@@ -19,7 +19,8 @@
                     text: data.Message,
                     timer: 4000,
                     timerProgressBar: true,
-                    showCancelButton: false,
+                    showCancelButton: false,                  
+                    allowOutsideClick: false,
                     confirmButtonText: '<i class="fas fa-home"></i> Go to Home',
                     onBeforeOpen: () => {
                     },

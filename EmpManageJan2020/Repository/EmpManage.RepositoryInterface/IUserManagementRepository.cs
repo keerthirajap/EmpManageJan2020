@@ -17,7 +17,6 @@
         Task<List<User>> GetAllUserAccountsAsync();
 
         [Sql("[dbo].[P_GetUserAccountDetails]")]
-
         Task<Results<User, UserLogin, UserLogin>> GetUserAccountDetailsAsync(long userId);
 
         [Sql("SELECT [UserGenderId],[UserGenderDesc] FROM [dbo].[UserGender]")]
@@ -26,7 +25,16 @@
         [Sql("SELECT [UserTitleId], [UserTitleDesc]  FROM [dbo].[UserTitle]")]
         Task<List<UserTitle>> GetAllUserTitleDetailsAsync();
 
+        [Sql("[dbo].[P_UpdateUserAccountDetails]")]
+        Task<bool> UpdateUserAccountDetailsAsync(User user);
+
         [Sql("[dbo].[P_UpdateUserAccountActiveStatus]")]
-        Task<bool> UpdateUserAccountActiveStatus(long userId, bool isActive, long modifiedBy);
+        Task<bool> UpdateUserAccountActiveStatusAsync(long userId, bool isActive, long modifiedBy);
+
+        [Sql("[dbo].[P_UpdateUserAccountLockedStatus]")]
+        Task<bool> UpdateUserAccountLockedStatusAsync(long userId, bool isLocked, long modifiedBy);
+
+        [Sql("[dbo].[P_UpdateUserAccountPassword]")]
+        Task<bool> ChangeUserAccountPasswordAsync(User user);
     }
 }

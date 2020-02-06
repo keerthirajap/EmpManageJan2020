@@ -1,16 +1,16 @@
-﻿@model EmpManage.WebAppMVC.Areas.Admin.Models.SaveUserAccountViewModel
+﻿@model EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement.UpdateUserAccountViewModel
 
 <div class="card">
     <div class="card-header lead blockquote">
         <strong>User Details</strong>
     </div>
     <form id="formSaveUserDetails"
-          asp-area="Admin" asp-controller="UserManagement" asp-action="SaveUserAccountDetails"
+          asp-area="Admin" asp-controller="UserManagement" asp-action="UpdateUserAccountDetails"
           method="post" data-ajax="true"
-          data-ajax-begin="userManagementController.saveUserDetailsOnBegin"
-          data-ajax-complete="userManagementController.saveUserDetailsOnComplete"
-          data-ajax-success="userManagementController.saveUserDetailsOnSuccess"
-          data-ajax-failure="userManagementController.saveUserDetailsOnfailure">
+          data-ajax-begin="userManagementController.updateUserDetailsOnBegin"
+          data-ajax-complete="userManagementController.updateUserDetailsOnComplete"
+          data-ajax-success="userManagementController.updateUserDetailsOnSuccess"
+          data-ajax-failure="userManagementController.updateUserDetailsOnfailure">
 
         <div class="card-body">
             <div id="ajaxAddUserResult">
@@ -41,7 +41,7 @@
                         <div class="form-group">
 
                             <label>Title</label>
-                            <select class="form-control" asp-for="UserTitleId"
+                            <select class="form-control" asp-for="UserTitleId" id="selectUserTitle"
                                     asp-items="@(new SelectList(Model.UserTitles,"UserTitleId","UserTitleDesc"))">
                             </select>
                             <span asp-validation-for="UserTitleId" class="text-danger"></span>
@@ -70,7 +70,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                         <div class="form-group">
                             <label asp-for="FullName"></label>
-                            <input type="text"
+                            <input type="text" asp-for="FullName"
                                    class="form-control" id="txtFullName"
                                    placeholder="" readonly>
 
@@ -82,7 +82,7 @@
                         <div class="form-group">
 
                             <label>Gender</label>
-                            <select class="form-control" asp-for="UserGenderId"
+                            <select class="form-control" asp-for="UserGenderId" id="selectUserGender"
                                     asp-items="@(new SelectList(Model.UserGenders,"UserGenderId","UserGenderDesc"))">
                             </select>
                             <span asp-validation-for="UserGenderId" class="text-danger"></span>
@@ -96,8 +96,8 @@
                                 <label asp-for="IsActive" class="custom-control-label" for="chkIsActive"></label>
                             </div>
                             <div class="custom-control custom-switch pt-1">
-                                <input asp-for="IsLocked" type="checkbox" class="custom-control-input" id="IsLocked">
-                                <label class="custom-control-label" for="IsLocked">Account Locked</label>
+                                <input asp-for="IsLocked" type="checkbox" class="custom-control-input" id="chkIsLocked">
+                                <label class="custom-control-label" for="chkIsLocked">Account Locked</label>
                             </div>
                         </div>
                     </div>
@@ -108,9 +108,14 @@
             <button type="submit" class="btn btn-primary">
                 <i class="fas fa-save"></i> Save
             </button>
-            <button type="button" id="btnAddUserCancel" onclick="userManagementController.closeAddUserPartialView()"
+            <button type="button" id="btnClear" onclick="userManagementController.clearUserDetailsOnClick()"
                     class="btn btn-info ml-3">
-                <i class="fas fa-redo"></i>Reset
+                <i class="fas fa-redo"></i>Clear
+            </button>
+
+            <button type="button" id="btnChangePassword" onclick="userManagementController.changePasswordOnClick(loadChangePasswordPartialViewURL)"
+                    class="btn btn-secondary ml-3">
+                <i class="fas fa-key"></i>Change Password
             </button>
         </div>
     </form>
@@ -137,10 +142,37 @@
             </div>
         </div>
     </div>
+
+    <div class="modal" id="modalChangeUserAccountLockStatusPopUp" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title blockquote">
+                        <strong id="">Confirm</strong>
+                    </h6>
+                </div>
+                <div class="modal-body" id="txtChangeUserAccountLockStatusPopUp">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnChangeUserAccountLockStatusPopUpConfirm">
+                        <i class="fas fa-check"></i> Yes
+                    </button>
+
+                    <button type="button" class="btn btn-info" id="btnChangeUserAccountLockStatusPopUpCnl">
+                        <i class="fas fa-times-circle"></i> No
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<div id="loadChangePasswordPartialView">
+</div>
 <script>
     var updateUserAccountActiveStatusURL = '@Url.Action("UpdateUserAccountActiveStatus", "UserManagement", new { Area = "Admin" })';
+    var updateUserAccountLockedStatusURL = '@Url.Action("UpdateUserAccountLockedStatus", "UserManagement", new { Area = "Admin" })';
+    var loadChangePasswordPartialViewURL = '@Url.Action("LoadChangePasswordPartialView", "UserManagement", new { Area = "Admin" })';
 
     $(window).on("load", function () {
 
@@ -176,5 +208,31 @@
             $('#modalChangeUserAccountStatusPopUp').modal('hide');
         });
 
+         $('#chkIsLocked').click(function () {
+
+            if (!$(this).prop('checked')) {
+                 $('#txtChangeUserAccountLockStatusPopUp').text('Do you want to unlock this account?');
+            }
+            else {
+                 $('#txtChangeUserAccountLockStatusPopUp').text('Do you want to lock this account?');
+            }
+            $('#modalChangeUserAccountLockStatusPopUp').modal('show');
+         });
+
+        $('#btnChangeUserAccountLockStatusPopUpCnl').click(function () {
+
+            if ($('#chkIsLocked').prop('checked')) {
+                $('#chkIsLocked').prop('checked', false);
+            }
+            else {
+                $('#chkIsLocked').prop('checked', true);
+            }
+
+            $('#modalChangeUserAccountLockStatusPopUp').modal('hide');
+        });
+
+         $('#btnChangeUserAccountLockStatusPopUpConfirm').click(function () {
+            userManagementController.UpdateUserAccountLockedStatus(updateUserAccountLockedStatusURL);
+         });
     });
 </script>

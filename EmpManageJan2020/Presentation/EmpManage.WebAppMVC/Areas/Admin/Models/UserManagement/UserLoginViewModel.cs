@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Areas.Admin.Models
+﻿namespace EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement
 {
     using System;
     using System.Collections.Generic;

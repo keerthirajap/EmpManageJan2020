@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Areas.Admin.Models.DTOs
+﻿namespace EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement.DTOs
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,7 @@
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class UserAccountDetailsDTO
     {
-        public SaveUserAccountViewModel UserDetails { get; set; }
+        public UpdateUserAccountViewModel UserDetails { get; set; }
 
         public List<UserLoginViewModel> UserInCorrectAuthLogs { get; set; }
 

@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Areas.Admin.Models
+﻿namespace EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
-    public class SaveUserAccountViewModel
+    public class UpdateUserAccountViewModel
     {
         public long UserId { get; set; }
 

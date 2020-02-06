@@ -21,6 +21,12 @@
 
         Task<List<UserTitle>> GetAllUserTitleDetailsAsync();
 
-        Task<bool> UpdateUserAccountActiveStatus(long userId, bool isActive, long modifiedBy);
+        Task<bool> UpdateUserAccountDetailsAsync(User user);
+
+        Task<bool> UpdateUserAccountActiveStatusAsync(long userId, bool isActive, long modifiedBy);
+
+        Task<bool> UpdateUserAccountLockedStatusAsync(long userId, bool isLocked, long modifiedBy);
+
+        Task<bool> ChangeUserAccountPasswordAsync(User user);
     }
 }

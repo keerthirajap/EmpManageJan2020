@@ -11,6 +11,7 @@
     using EmpManage.Domain.Authentication;
     using EmpManage.ServiceInterface;
     using EmpManage.WebAppMVC.Areas.Authentication.Models;
+    using EmpManage.WebAppMVC.Areas.Authentication.Models.Auth;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Authorization;

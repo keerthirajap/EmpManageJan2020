@@ -69,9 +69,28 @@
             return userTitles;
         }
 
-        public async Task<bool> UpdateUserAccountActiveStatus(long userId, bool isActive, long modifiedBy)
+        public async Task<bool> UpdateUserAccountDetailsAsync(User user)
         {
-            return await this._userManagementRepository.UpdateUserAccountActiveStatus(userId, isActive, modifiedBy);
+            return await this._userManagementRepository.UpdateUserAccountDetailsAsync(user);
+        }
+
+        public async Task<bool> UpdateUserAccountActiveStatusAsync(long userId, bool isActive, long modifiedBy)
+        {
+            return await this._userManagementRepository.UpdateUserAccountActiveStatusAsync(userId, isActive, modifiedBy);
+        }
+
+        public async Task<bool> UpdateUserAccountLockedStatusAsync(long userId, bool isLocked, long modifiedBy)
+        {
+            return await this._userManagementRepository.UpdateUserAccountLockedStatusAsync(userId, isLocked, modifiedBy);
+        }
+
+        public async Task<bool> ChangeUserAccountPasswordAsync(User user)
+        {
+            user.PasswordSalt = Strings.CreateSalt(this._appSetting.AuthenticationSetting.PasswordSaltLength);
+            user.Password = user.Password + user.PasswordSalt;
+            user.PasswordHash = Hash.Create(HashType.SHA512, user.Password, string.Empty, false);
+            user.Password = null;
+            return await this._userManagementRepository.ChangeUserAccountPasswordAsync(user);
         }
     }
 }
