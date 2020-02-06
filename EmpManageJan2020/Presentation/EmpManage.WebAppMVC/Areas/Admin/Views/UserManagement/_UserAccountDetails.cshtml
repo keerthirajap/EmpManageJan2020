@@ -6,14 +6,18 @@
     </div>
     <form id="formSaveUserDetails"
           asp-area="Admin" asp-controller="UserManagement" asp-action="SaveUserAccountDetails"
-          method="post" data-ajax="true">
+          method="post" data-ajax="true"
+          data-ajax-begin="userManagementController.saveUserDetailsOnBegin"
+          data-ajax-complete="userManagementController.saveUserDetailsOnComplete"
+          data-ajax-success="userManagementController.saveUserDetailsOnSuccess"
+          data-ajax-failure="userManagementController.saveUserDetailsOnfailure">
 
         <div class="card-body">
             <div id="ajaxAddUserResult">
                 <div class="row pt-3">
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                         <div class="form-group">
-                            <input asp-for="UserId" type="hidden" />
+                            <input asp-for="UserId" type="hidden" id="hdnUserId" />
                             <input asp-for="UserName" type="hidden" />
                             <label asp-for="UserName"></label>
                             <input type="text" asp-for="UserName"
@@ -37,6 +41,10 @@
                         <div class="form-group">
 
                             <label>Title</label>
+                            <select class="form-control" asp-for="UserTitleId"
+                                    asp-items="@(new SelectList(Model.UserTitles,"UserTitleId","UserTitleDesc"))">
+                            </select>
+                            <span asp-validation-for="UserTitleId" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
@@ -45,7 +53,7 @@
                             <input type="text" asp-for="FirstName"
                                    class="form-control" id="txtFirstName"
                                    placeholder="Enter First Name">
-                            <span asp-validation-for="FirstName" class="text-danger small"></span>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -55,17 +63,18 @@
                             <input type="text" asp-for="LastName"
                                    class="form-control" id="txtLastName"
                                    placeholder="Enter Last Name">
-                            <span asp-validation-for="LastName" class="text-danger small"></span>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                         <div class="form-group">
                             <label asp-for="FullName"></label>
-                            <input type="text" asp-for="FullName"
+                            <input type="text"
                                    class="form-control" id="txtFullName"
                                    placeholder="" readonly>
-                            <span asp-validation-for="FullName" class="text-danger small"></span>
+
+                            <input asp-for="FullName" type="hidden" id="hdnFullName" />
                         </div>
                     </div>
 
@@ -76,18 +85,19 @@
                             <select class="form-control" asp-for="UserGenderId"
                                     asp-items="@(new SelectList(Model.UserGenders,"UserGenderId","UserGenderDesc"))">
                             </select>
+                            <span asp-validation-for="UserGenderId" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                         <div class="form-group">
                             <div class="custom-control custom-switch pt-5">
-                                <input asp-for="IsActive" type="checkbox" class="custom-control-input" id="IsActive">
-                                <label asp-for="IsActive" class="custom-control-label" for="IsActive"></label>
+                                <input asp-for="IsActive" type="checkbox" class="custom-control-input" id="chkIsActive">
+                                <label asp-for="IsActive" class="custom-control-label" for="chkIsActive"></label>
                             </div>
                             <div class="custom-control custom-switch pt-1">
                                 <input asp-for="IsLocked" type="checkbox" class="custom-control-input" id="IsLocked">
-                                <label class="custom-control-label" for="customSwitch2">Account Locked</label>
+                                <label class="custom-control-label" for="IsLocked">Account Locked</label>
                             </div>
                         </div>
                     </div>
@@ -104,4 +114,67 @@
             </button>
         </div>
     </form>
+
+    <div class="modal" id="modalChangeUserAccountStatusPopUp" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title blockquote">
+                        <strong id="">Confirm</strong>
+                    </h6>
+                </div>
+                <div class="modal-body" id="txtChangeUserAccountStatusPopUp">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnChangeUserAccountStatusPopUpConfirm">
+                        <i class="fas fa-check"></i> Yes
+                    </button>
+
+                    <button type="button" class="btn btn-info" id="btnChangeUserAccountStatusPopUpCnl">
+                        <i class="fas fa-times-circle"></i> No
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    var updateUserAccountActiveStatusURL = '@Url.Action("UpdateUserAccountActiveStatus", "UserManagement", new { Area = "Admin" })';
+
+    $(window).on("load", function () {
+
+        $('#txtFirstName, #txtLastName').on('input keyup', function () {
+            $('#txtFullName').val($('#txtFirstName').val() + ' ' + $('#txtLastName').val());
+            $('#hdnFullName').val($('#txtFirstName').val() + ' ' + $('#txtLastName').val());
+        });
+
+        $('#chkIsActive').click(function () {
+
+            if (!$(this).prop('checked')) {
+                 $('#txtChangeUserAccountStatusPopUp').text('Do you want to disable this account?');
+            }
+            else {
+                 $('#txtChangeUserAccountStatusPopUp').text('Do you want to enable this account?');
+            }
+            $('#modalChangeUserAccountStatusPopUp').modal('show');
+        });
+
+        $('#btnChangeUserAccountStatusPopUpConfirm').click(function () {
+            userManagementController.updateUserAccountActiveStatus(updateUserAccountActiveStatusURL);
+         });
+
+        $('#btnChangeUserAccountStatusPopUpCnl').click(function () {
+
+            if ($('#chkIsActive').prop('checked')) {
+                $('#chkIsActive').prop('checked', false);
+            }
+            else {
+                $('#chkIsActive').prop('checked', true);
+            }
+
+            $('#modalChangeUserAccountStatusPopUp').modal('hide');
+        });
+
+    });
+</script>

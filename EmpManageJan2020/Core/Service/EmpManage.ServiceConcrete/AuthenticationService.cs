@@ -54,18 +54,18 @@
 
                 passwordHash = Hash.Create(HashType.SHA512, userLogin.Password, string.Empty, false);
 
-                if (userDetailsForLoginValidation.IsLocked)
+                if (!userDetailsForLoginValidation.IsActive)
+                {
+                    userLogin.IsUserAccountDisabled = true;
+                }
+                else if (userDetailsForLoginValidation.IsLocked)
                 {
                     isInCorrectLogging = true;
                     userLogin.IsUserAccountLocked = true;
                 }
-
-                if (passwordHash == userDetailsForLoginValidation.PasswordHash)
+                else if (passwordHash == userDetailsForLoginValidation.PasswordHash)
                 {
-                    if (userDetailsForLoginValidation.IsActive && !userDetailsForLoginValidation.IsLocked)
-                    {
-                        userLogin.IsUserAuthenticated = true;
-                    }
+                    userLogin.IsUserAuthenticated = true;
                 }
                 else
                 {

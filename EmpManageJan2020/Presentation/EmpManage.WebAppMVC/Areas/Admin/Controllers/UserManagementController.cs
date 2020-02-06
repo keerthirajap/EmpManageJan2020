@@ -12,6 +12,7 @@
     using EmpManage.ServiceInterface;
     using EmpManage.WebAppMVC.Areas.Admin.Models;
     using EmpManage.WebAppMVC.Areas.Admin.Models.DTOs;
+    using EmpManage.WebAppMVC.Infrastructure.Extensions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json.Linq;
@@ -67,16 +68,25 @@
             User userDetails = new User();
             List<UserLogin> userInCorrectAuthLogs = new List<UserLogin>();
             List<UserLogin> userLoggingLogs = new List<UserLogin>();
+
             List<UserGender> userGenders = new List<UserGender>();
             List<UserGenderViewModel> userGendersViewModel = new List<UserGenderViewModel>();
 
+            List<UserTitle> userTitles = new List<UserTitle>();
+            List<UserTitleViewModel> userTitlesViewModel = new List<UserTitleViewModel>();
+
             userGenders = await this._userManagementService.GetAllUserGenderDetailsAsync();
             userGendersViewModel = this._mapper.Map<List<UserGenderViewModel>>(userGenders);
+
+            userTitlesViewModel = this._mapper.Map<List<UserTitleViewModel>>(await this._userManagementService.GetAllUserTitleDetailsAsync());
+
             var userAccountDetails = await this._userManagementService.GetUserAccountDetailsAsync(userId);
             UserAccountDetailsDTO userAccountDetailsDTO = new UserAccountDetailsDTO();
 
             userAccountDetailsDTO.UserDetails = this._mapper.Map<SaveUserAccountViewModel>(userAccountDetails.userDetails);
             userAccountDetailsDTO.UserDetails.UserGenders = userGendersViewModel;
+            userAccountDetailsDTO.UserDetails.UserTitles = userTitlesViewModel;
+
             userAccountDetailsDTO.UserInCorrectAuthLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userInCorrectAuthLogs);
             userAccountDetailsDTO.UserLoggingLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userLoggingLogs);
 
@@ -89,6 +99,37 @@
         {
             dynamic ajaxReturn = new JObject();
 
+            UserAuthentication userAuthenticationModel = new UserAuthentication();
+            userAuthenticationModel = WebAppMVCExtensions.GetLoggedInUserDetails(this.User);
+            return this.Json(ajaxReturn);
+        }
+
+        [HttpPost]
+        [Route("[controller]/UpdateUserAccountActiveStatus")]
+        public async Task<IActionResult> UpdateUserAccountActiveStatus(long userId, bool isActive)
+        {
+            dynamic ajaxReturn = new JObject();
+
+            UserAuthentication userAuthenticationModel = new UserAuthentication();
+            userAuthenticationModel = WebAppMVCExtensions.GetLoggedInUserDetails(this.User);
+
+            var isUpdateSuccess = await this._userManagementService.UpdateUserAccountActiveStatus(userId, isActive, userAuthenticationModel.UserId);
+
+            if (isUpdateSuccess && isActive)
+            {
+                ajaxReturn.Status = "Success";
+                ajaxReturn.Message = "User account enabled successfully";
+            }
+            else if (isUpdateSuccess && !isActive)
+            {
+                ajaxReturn.Status = "Success";
+                ajaxReturn.Message = "User account disabled successfully";
+            }
+            else
+            {
+                ajaxReturn.Status = "Error";
+                ajaxReturn.Message = "Error occured";
+            }
             return this.Json(ajaxReturn);
         }
     }

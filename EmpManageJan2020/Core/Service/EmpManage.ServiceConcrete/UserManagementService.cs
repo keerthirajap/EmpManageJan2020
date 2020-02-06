@@ -59,5 +59,19 @@
 
             return userGenders;
         }
+
+        public async Task<List<UserTitle>> GetAllUserTitleDetailsAsync()
+        {
+            List<UserTitle> userTitles = new List<UserTitle>();
+
+            userTitles = await this._userManagementRepository.GetAllUserTitleDetailsAsync();
+
+            return userTitles;
+        }
+
+        public async Task<bool> UpdateUserAccountActiveStatus(long userId, bool isActive, long modifiedBy)
+        {
+            return await this._userManagementRepository.UpdateUserAccountActiveStatus(userId, isActive, modifiedBy);
+        }
     }
 }

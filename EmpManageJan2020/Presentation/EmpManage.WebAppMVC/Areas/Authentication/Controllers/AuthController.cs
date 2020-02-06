@@ -152,12 +152,19 @@
             if (userLogin.IsUserAuthenticated)
             {
                 ajaxReturn.Status = "Success";
+                ajaxReturn.Title = "Congratulations";
                 ajaxReturn.Message = userLogin.UserName + " - user authenticated successfully";
             }
             else if (userLogin.IsUserAccountLocked)
             {
                 ajaxReturn.Status = "Warning";
                 ajaxReturn.Message = "User account locked. Please contact system adminstrator.";
+                ajaxReturn.Title = "Sorry";
+            }
+            else if (userLogin.IsUserAccountDisabled)
+            {
+                ajaxReturn.Status = "Warning";
+                ajaxReturn.Message = "User account disabled. Please contact system adminstrator.";
                 ajaxReturn.Title = "Sorry";
             }
             else if (userLogin.IsUserAccountNotFound)
@@ -200,7 +207,7 @@
             userAuthenticationModel.UserId = userLogin.UserId;
             userAuthenticationModel.LoggedOn = DateTime.Now;
             userAuthenticationModel.AuthenticationExpiresOn = DateTime.Now.AddHours(1);
-            userAuthenticationModel.AuthenticationGUID = new Guid().ToString();
+            userAuthenticationModel.AuthenticationGUID = this.HttpContext.TraceIdentifier;
 
             string userData = JsonConvert.SerializeObject(userAuthenticationModel);
 

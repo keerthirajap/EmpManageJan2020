@@ -18,5 +18,9 @@
         Task<(User userDetails, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId);
 
         Task<List<UserGender>> GetAllUserGenderDetailsAsync();
+
+        Task<List<UserTitle>> GetAllUserTitleDetailsAsync();
+
+        Task<bool> UpdateUserAccountActiveStatus(long userId, bool isActive, long modifiedBy);
     }
 }

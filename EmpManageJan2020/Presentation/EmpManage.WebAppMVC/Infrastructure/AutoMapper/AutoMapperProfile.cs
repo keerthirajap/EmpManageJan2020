@@ -35,6 +35,7 @@
             CreateMap<UserLoginViewModel, UserLogin>().ReverseMap();
 
             CreateMap<UserGenderViewModel, UserGender>().ReverseMap();
+            CreateMap<UserTitleViewModel, UserTitle>().ReverseMap();
 
             #endregion Admin
         }

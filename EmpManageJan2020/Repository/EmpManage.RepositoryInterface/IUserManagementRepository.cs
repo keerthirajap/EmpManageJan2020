@@ -22,5 +22,11 @@
 
         [Sql("SELECT [UserGenderId],[UserGenderDesc] FROM [dbo].[UserGender]")]
         Task<List<UserGender>> GetAllUserGenderDetailsAsync();
+
+        [Sql("SELECT [UserTitleId], [UserTitleDesc]  FROM [dbo].[UserTitle]")]
+        Task<List<UserTitle>> GetAllUserTitleDetailsAsync();
+
+        [Sql("[dbo].[P_UpdateUserAccountActiveStatus]")]
+        Task<bool> UpdateUserAccountActiveStatus(long userId, bool isActive, long modifiedBy);
     }
 }

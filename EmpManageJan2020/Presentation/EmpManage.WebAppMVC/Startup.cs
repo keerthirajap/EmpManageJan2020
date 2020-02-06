@@ -28,6 +28,7 @@ namespace EmpManage.WebAppMVC
     using Microsoft.AspNetCore.ResponseCompression;
     using WebMarkupMin.AspNetCore3;
     using Newtonsoft.Json.Serialization;
+    using EmpManage.CrossCutting.InMemoryCaching;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class Startup
@@ -36,6 +37,8 @@ namespace EmpManage.WebAppMVC
 
         public Startup(IConfiguration configuration)
         {
+            GlobalAppInMemoryCache.Instance.AddValue("Hello");
+
             this.Configuration = configuration;
         }
 
