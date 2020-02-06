@@ -19,9 +19,9 @@
                     text: data.Message,
                     timer: 4000,
                     timerProgressBar: true,
-                    showCancelButton: false,                  
+                    showCancelButton: false,
+                    showConfirmButton: false,
                     allowOutsideClick: false,
-                    confirmButtonText: '<i class="fas fa-home"></i> Go to Home',
                     onBeforeOpen: () => {
                     },
                     onClose: () => {
@@ -61,10 +61,7 @@
         }
 
         publicMethod.loginOnfailure = function (xMLHttpRequest, textStatus, errorThrown) {
-            sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);          
+            sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
         }
-
-        
-
     }(window.authController = window.authController || {}, jQuery)
 );

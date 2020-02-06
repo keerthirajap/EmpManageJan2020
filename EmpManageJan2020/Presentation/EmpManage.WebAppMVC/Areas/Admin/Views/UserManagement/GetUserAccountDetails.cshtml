@@ -6,66 +6,110 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
-@await Html.PartialAsync("_UserAccountDetails", @Model.UserDetails)
-
-<div class="card mt-3">
-    <div class="card-header lead blockquote">
-        <strong>User Incorrect Login Logs</strong>
+<div class="card">
+    <div class="card-header">
+        <h3>
+            <strong> User Id :</strong>  @Model.UserDetails.UserId
+            <strong class="pl-4">User Name :</strong>  @Model.UserDetails.UserName
+        </h3>
     </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="tblUserIncorrectLoggingLogs" class="table table-striped table-bordered table-hover" style="width:100%">
-                <thead class="lead blockquote ">
-                    <tr class="">
-                        <th>Id</th>
-                        <th>User Id</th>
-                        <th>InCorrect Loggin Count</th>
-                        <th>Logging Ip Address</th>
-                        <th>Logging Browser</th>
-                        <th>IsUserAuthenticated</th>
-                        <th>IsActive</th>
-                        <th>Created On</th>
-                        <th>Created By</th>
-                        <th>Created By UserName</th>
-                        <th>Modified On</th>
-                        <th>Modified By</th>
-                        <th>Modified By UserName</th>
-                    </tr>
-                </thead>
-                <tbody class="blockquote ">
-                </tbody>
-            </table>
+
+    <div class="row" style="">
+        <div class="col-sm-12">
+
+            <div class="bs-component">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#EditUserDetails">
+                            <i class="fas fa-user-edit"></i>Edit Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#UserLogins">
+                            <i class="fas fa-user-clock"></i> Logins
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#UserInCorrectLogins">
+                            <i class="fas fa-exclamation-triangle"></i> In Correct Logins
+                        </a>
+                    </li>
+
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade show active" id="EditUserDetails">
+
+                        @await Html.PartialAsync("_UserAccountDetails", @Model.UserDetails)
+
+                    </div>
+                    <div class="tab-pane fade" id="UserLogins">
+
+
+                        <div class="card">
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="tblUserLoggingLogs" class="table table-striped table-bordered table-hover" style="width:100%">
+                                        <thead class="lead blockquote ">
+                                            <tr class="">
+                                                <th>Id</th>
+                                                <th>User Id</th>
+                                                <th>Logging Ip Address</th>
+                                                <th>Logging Browser</th>
+                                                <th>Created On</th>
+                                                <th>Created By</th>
+                                                <th>Created By UserName</th>
+                                                <th>Modified On</th>
+                                                <th>Modified By</th>
+                                                <th>Modified By UserName</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="blockquote ">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="UserInCorrectLogins">
+                        <div class="card">
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="tblUserIncorrectLoggingLogs" class="table table-striped table-bordered table-hover" style="width:100%">
+                                        <thead class="lead blockquote ">
+                                            <tr class="">
+                                                <th>Id</th>
+                                                <th>User Id</th>
+                                                <th>InCorrect Loggin Count</th>
+                                                <th>Logging Ip Address</th>
+                                                <th>Logging Browser</th>
+                                                <th>IsUserAuthenticated</th>
+                                                <th>IsActive</th>
+                                                <th>Created On</th>
+                                                <th>Created By</th>
+                                                <th>Created By UserName</th>
+                                                <th>Modified On</th>
+                                                <th>Modified By</th>
+                                                <th>Modified By UserName</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="blockquote ">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<div class="card mt-3">
-    <div class="card-header lead blockquote">
-        <strong>User Login Logs</strong>
+
     </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="tblUserLoggingLogs" class="table table-striped table-bordered table-hover" style="width:100%">
-                <thead class="lead blockquote ">
-                    <tr class="">
-                        <th>Id</th>
-                        <th>User Id</th>
-                        <th>Logging Ip Address</th>
-                        <th>Logging Browser</th>
-                        <th>Created On</th>
-                        <th>Created By</th>
-                        <th>Created By UserName</th>
-                        <th>Modified On</th>
-                        <th>Modified By</th>
-                        <th>Modified By UserName</th>
-                    </tr>
-                </thead>
-                <tbody class="blockquote ">
-                </tbody>
-            </table>
-        </div>
-    </div>
+
 </div>
 
 <script src="~/jsControllers/Admin/userManagementController.js"></script>

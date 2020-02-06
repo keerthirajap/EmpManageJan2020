@@ -1,9 +1,7 @@
 ﻿@model EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement.UpdateUserAccountViewModel
 
 <div class="card">
-    <div class="card-header lead blockquote">
-        <strong>User Details</strong>
-    </div>
+    
     <form id="formSaveUserDetails"
           asp-area="Admin" asp-controller="UserManagement" asp-action="UpdateUserAccountDetails"
           method="post" data-ajax="true"
@@ -17,7 +15,14 @@
                 <div class="row pt-3">
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                         <div class="form-group">
-                            <input asp-for="UserId" type="hidden" id="hdnUserId" />
+                            <label asp-for="UserId">User Id</label>
+                            <input type="text" asp-for="UserId"
+                                   class="form-control" id="txtUserId"
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-group">
                             <input asp-for="UserName" type="hidden" />
                             <label asp-for="UserName"></label>
                             <input type="text" asp-for="UserName"
