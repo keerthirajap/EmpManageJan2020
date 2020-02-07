@@ -34,6 +34,9 @@
                 }
                 else
                 {
+
+                    
+
                     <ul class="navbar-nav mr-auto">
 
                         <li class="nav-item">
@@ -70,7 +73,10 @@
                     </ul>
 
                     <ul class="navbar-nav ml-auto">
-                        <button type="button" onclick="sharedController.getUserDetails('@Url.Action( "LoadUserDetailsPartialViewAsync", "Auth" , new { Area="Authentication" , userName = @User.Identity.Name} )')"
+                        <input type="hidden" id="hdnLoggedInUserId" value="@(User.FindFirst("UserId").Value)" />
+                        <input type="hidden" id="hdnLoggedInUserName" value="@User.Identity.Name" />
+
+                        <button type="button" onclick="sharedController.getLoggedUserDetails('@Url.Action( "LoadLoggedUserDetailsPartialView", "Auth" , new { Area="Authentication" } )')"
                                 class="btn btn-outline-light" data-toggle="tooltip" data-placement="bottom" title="Click to see current user information">
                             <h5 class="mb-0">Hello, <strong style="font-weight:bold">@User.Identity.Name</strong> </h5>
                         </button>
@@ -91,6 +97,9 @@
         </main>
     </div>
     @await Html.PartialAsync("_LayoutContents")
+
+    <div id="loadLoggedUserDetailsPartialView">
+    </div>
     <footer class="border-top footer text-muted">
         <div class="container-fluid text-center">
             &copy; 2020 - EmpManage.WebAppMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -107,6 +116,8 @@
 
     @RenderSection("Scripts", required: false)
     <script>
+         var loadLoggedUserDetailsPartialViewURL = '@Url.Action("LoadLoggedUserDetailsPartialView", "Auth", new { Area = "Authentication" })';
+
         //parsing the unobtrusive attributes when we get content via ajax
         $(document).ajaxComplete(function () {
             $.validator.unobtrusive.parse(document);

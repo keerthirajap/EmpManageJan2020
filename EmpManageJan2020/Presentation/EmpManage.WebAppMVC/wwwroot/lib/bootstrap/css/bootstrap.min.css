@@ -9494,11 +9494,6 @@ a.text-dark:focus, a.text-dark:hover {
     margin-top: 0
 }
 
-.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
-    color: #fff;
-    background-color: rgba(0,0,0,.21)
-}
-
 .dropdown-menu {
     margin-top: 0;
     border: none;
@@ -9534,6 +9529,22 @@ a.text-dark:focus, a.text-dark:hover {
     padding-right: 12px !important
 }
 
+.nav-tabs .nav-link.active, .nav-tabs .nav-link.active:focus {
+    border: 1px solid #dee2e6;
+    box-shadow: inset 0 -2px 0 #16a085;
+    color: #fff;
+    background-color: #16a085
+}
+
+    .nav-tabs .nav-link.active:focus:hover, .nav-tabs .nav-link.active:hover {
+        border: 1px solid #dee2e6;
+        color: #fff
+    }
+
+.nav-tabs .nav-link {
+    border: 1px solid #dee2e6
+}
+
 body, button, input {
     -webkit-font-smoothing: antialiased;
     letter-spacing: .1px;
@@ -9553,6 +9564,10 @@ a {
 
 .text-secondary {
     color: #adb5bd !important
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0
 }
 
 .table-hover > tbody > tr, .table-hover > tbody > tr > td, .table-hover > tbody > tr > th {

@@ -10,6 +10,7 @@
     using EmpManage.Domain;
     using EmpManage.Domain.Authentication;
     using EmpManage.ServiceInterface;
+    using EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement;
     using EmpManage.WebAppMVC.Areas.Authentication.Models;
     using EmpManage.WebAppMVC.Areas.Authentication.Models.Auth;
     using Microsoft.AspNetCore.Authentication;
@@ -197,6 +198,16 @@
             return this.Json(ajaxReturn);
         }
 
+        [HttpGet]
+        [Route("[controller]/LoadLoggedUserDetailsPartialView")]
+
+        public async Task<IActionResult> LoadLoggedUserDetailsPartialViewAsync(long loggedInUserId)
+        {
+            UserAccountViewModel userAccountViewModel = new UserAccountViewModel();
+
+            return await Task.Run(() => this.PartialView("_LoggedUserDetails", userAccountViewModel));
+        }
+
         private async Task AuthenticateUserWithCookieAsync(UserLogin userLogin)
         {
             var option = new CookieOptions();
@@ -217,11 +228,12 @@
             List<Claim> claims = new List<Claim>
                                     {
                                         new Claim(ClaimTypes.Name, userLogin.UserName),
-                                        new Claim(ClaimTypes.NameIdentifier, userLogin.UserName),
-                                        new Claim(ClaimTypes.Authentication, "Authenticated"),
-                                        new Claim("http://example.org/claims/AuthenticationGUID", "AuthenticationGUID",  userAuthenticationModel.AuthenticationGUID),
-                                        new Claim("http://example.org/claims/LoggedOn", "LoggedOn",  userAuthenticationModel.LoggedOn.ToString()),
-                                        new Claim("http://example.org/claims/AuthenticationExpiresOn", "AuthenticationExpiresOn",  userAuthenticationModel.AuthenticationExpiresOn.ToString()),
+                                        new Claim(ClaimTypes.NameIdentifier, userLogin.UserId.ToString()),
+                                        new Claim(ClaimTypes.Authentication, "Form"),
+                                        new Claim("UserId",  userLogin.UserId.ToString()),
+                                        new Claim("AuthenticationGUID",  userAuthenticationModel.AuthenticationGUID),
+                                        new Claim("LoggedOn", userAuthenticationModel.LoggedOn.ToString()),
+                                        new Claim("AuthenticationExpiresOn", "AuthenticationExpiresOn",  userAuthenticationModel.AuthenticationExpiresOn.ToString()),
                                         new Claim(ClaimTypes.UserData, userData),
                                     };
             var identityClaims = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

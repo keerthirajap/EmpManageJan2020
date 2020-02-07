@@ -69,11 +69,11 @@
             window.location.href = url;
         },
 
-        publicMethod.redirectToHomePage = function () {
-            sharedController.showLoadingIndicator();
-            var url = "/";
-            window.location.href = url;
-        }
+            publicMethod.redirectToHomePage = function () {
+                sharedController.showLoadingIndicator();
+                var url = "/";
+                window.location.href = url;
+            }
 
         publicMethod.createCookie = function (cookieName, value, days) {
             if (days) {
@@ -120,7 +120,6 @@
                     sharedController.hideLoadingIndicator();
                 },
                 success: function (data) {
-
                     swalWithBootstrapButtons.fire({
                         icon: 'success',
                         text: data.Message,
@@ -137,9 +136,42 @@
                         if (result.dismiss === Swal.DismissReason.timer) {
                             location.reload();
                         }
-                    })                   
+                    })
                 },
                 error: function (xMLHttpRequest, textStatus, errorThrown) {
+                    sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
+                }
+            });
+        }
+
+        publicMethod.getLoggedUserDetails = function (actionUrl) {
+
+            sharedController.showLoadingIndicator();
+            var loggedInUserId = $('#hdnLoggedInUserId').val();
+
+            $.ajax({
+                async: true,
+                type: "GET",
+                url: actionUrl,
+                data: { loggedInUserId: loggedInUserId },
+                
+                headers: {
+                    "RequestVerificationToken": $('input[name = __RequestVerificationToken]').val()
+                },
+                begin: function () {
+                },
+                complete: function () {
+                },
+                success: function (data) {
+                    $('#loadLoggedUserDetailsPartialView').append(data);
+                    setTimeout(
+                        function () {
+                            $('#modalLoggedUserDetails').modal('show');
+                            sharedController.hideLoadingIndicator();
+                        }, 200);
+                },
+                error: function (xMLHttpRequest, textStatus, errorThrown) {
+                    sharedController.hideLoadingIndicator();
                     sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
                 }
             });
