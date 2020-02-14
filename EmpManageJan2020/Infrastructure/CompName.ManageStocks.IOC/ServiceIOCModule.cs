@@ -12,7 +12,6 @@
 
     //Follow anti-pattern only
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class ServiceIOCModule : Module
     {
         private readonly string _lifeTime;
