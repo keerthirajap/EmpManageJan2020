@@ -8,9 +8,9 @@
 <script>
 
     $(document).ready(function () {
-        var isUserAuthenticated = sharedController.readCookie("EmployeeManage.UserAuthenticated");
+        var isUserAuthenticated = sharedController.readCookie("CompName.ManageStocks.UserAuthenticated");
         if (isUserAuthenticated == "true") {
-            sharedController.eraseCookie("EmployeeManage.UserAuthenticated");
+            sharedController.eraseCookie("CompName.ManageStocks.UserAuthenticated");
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -26,10 +26,9 @@
 
         }
 
-
     });
 
-     $(window).on("load", function () {
+    $(window).on("load", function () {
         sharedController.navActiveColorChange("nav-item-Home");
         sharedController.hideLoadingIndicator();
     });

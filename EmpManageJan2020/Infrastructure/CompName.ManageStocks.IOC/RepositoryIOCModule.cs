@@ -41,6 +41,12 @@
                    .InstancePerLifetimeScope()
                    .EnableInterfaceInterceptors()
                    .InterceptedBy(typeof(LogInterceptor));
+
+                builder
+                  .Register(b => this._sqlConnection.AsParallel<IProductManagementRepository>())
+                  .InstancePerLifetimeScope()
+                  .EnableInterfaceInterceptors()
+                  .InterceptedBy(typeof(LogInterceptor));
             }
             else
             {
@@ -53,6 +59,11 @@
                     .Register(b => this._sqlConnection.AsParallel<IUserManagementRepository>())
                     .EnableInterfaceInterceptors()
                     .InterceptedBy(typeof(LogInterceptor));
+
+                builder
+                .Register(b => this._sqlConnection.AsParallel<IProductManagementRepository>())
+                .EnableInterfaceInterceptors()
+                .InterceptedBy(typeof(LogInterceptor));
             }
 
             base.Load(builder);

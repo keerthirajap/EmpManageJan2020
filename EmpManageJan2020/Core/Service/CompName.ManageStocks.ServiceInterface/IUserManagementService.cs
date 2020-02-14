@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Text;
     using System.Threading.Tasks;
-    using Autofac.Extras.DynamicProxy;
-    using CompName.ManageStocks.Domain;
     using CompName.ManageStocks.Domain.Admin;
     using CompName.ManageStocks.Domain.Authentication;
 

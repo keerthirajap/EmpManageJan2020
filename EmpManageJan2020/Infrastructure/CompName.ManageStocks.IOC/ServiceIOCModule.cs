@@ -35,6 +35,11 @@
                     .InstancePerLifetimeScope()
                     .EnableInterfaceInterceptors()
                     .InterceptedBy(typeof(LogInterceptor));
+                builder
+                    .RegisterType<ProductManagementService>().As<IProductManagementService>()
+                    .InstancePerLifetimeScope()
+                    .EnableInterfaceInterceptors()
+                    .InterceptedBy(typeof(LogInterceptor));
             }
             else
             {
@@ -46,6 +51,10 @@
                    .RegisterType<UserManagementService>().As<IUserManagementService>()
                    .EnableInterfaceInterceptors()
                    .InterceptedBy(typeof(LogInterceptor));
+                builder
+                    .RegisterType<ProductManagementService>().As<IProductManagementService>()
+                    .EnableInterfaceInterceptors()
+                    .InterceptedBy(typeof(LogInterceptor));
             }
 
             base.Load(builder);

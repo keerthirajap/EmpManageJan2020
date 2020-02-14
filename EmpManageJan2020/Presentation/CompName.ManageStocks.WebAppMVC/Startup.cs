@@ -50,6 +50,8 @@ namespace CompName.ManageStocks.WebAppMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            this.Configuration.Bind("AppSetting", this.AppSetting);
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -63,7 +65,7 @@ namespace CompName.ManageStocks.WebAppMVC
                          options.LoginPath = "/Login";
                          options.AccessDeniedPath = "/AccessDenied";
                          options.SlidingExpiration = true;
-                         options.Cookie.Name = "EmployeeManage.AuthCookie";
+                         options.Cookie.Name = this.AppSetting.AuthenticationSetting.AppCookieName + ".AuthKey";
                          options.Cookie.SameSite = SameSiteMode.Strict;
                      });
 
@@ -91,8 +93,6 @@ namespace CompName.ManageStocks.WebAppMVC
                .AddHttpCompression()
                ;
 
-            this.Configuration.Bind("AppSetting", this.AppSetting);
-
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
             services.AddElmah();
@@ -116,7 +116,7 @@ namespace CompName.ManageStocks.WebAppMVC
         {
             builder.RegisterInstance(this.AppSetting).SingleInstance();
             builder.Register(c => new LogInterceptor(this.logger)).SingleInstance();
-            builder.RegisterModule(new RepositoryIOCModule("Data Source=.;Initial Catalog=ManageStocks;Integrated Security=True", "InstancePerLifetimeScope"));
+            builder.RegisterModule(new RepositoryIOCModule(this.AppSetting.DatabaseSetting.SqlDbConnection, "InstancePerLifetimeScope"));
             builder.RegisterModule(new ServiceIOCModule("InstancePerLifetimeScope"));
         }
 
@@ -135,6 +135,9 @@ namespace CompName.ManageStocks.WebAppMVC
                         context.Response.OnStarting(
                             () =>
                             {
+                                context.Response.Headers.Add("_ApplicationName", "CompName.ManageStocks.WebAppMVC");
+                                context.Response.Headers.Add("_Developed-By", "CompName Org.");
+
                                 context.Response.Headers.Add("RequestTime", DateTime.Now.ToString());
                                 context.Response.Headers.Add("RequestId", context.TraceIdentifier);
                                 stopWatch.Stop();

@@ -15,7 +15,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="/">Employee Manage</a>
+            <a class="navbar-brand" href="/">  Stock Management</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -23,92 +23,96 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 @if (!User.Identity.IsAuthenticated)
                 {
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item" id="nav-item-Login">
-                        <a class="nav-link" href="/Login">Login</a>
-                    </li>
-                    <li class="nav-item" id="nav-item-RegisterUser">
-                        <a class="nav-link" href="/RegisterUser">Register</a>
-                    </li>
-                </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item" id="nav-item-Login">
+                            <a class="nav-link aLinkOnClick" href="/Login">Login</a>
+                        </li>
+                        <li class="nav-item" id="nav-item-RegisterUser">
+                            <a class="nav-link aLinkOnClick" href="/RegisterUser">Register</a>
+                        </li>
+                    </ul>
                 }
                 else
                 {
 
-                <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav mr-auto">
 
-                    <li class="nav-item">
-                        <a class="nav-link" id="nav-item-Home" href="/">Home</a>
-                    </li>
-                    <li class="nav-item dropdown" id="nav-item-Employees">
-                        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Employees
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item"
-                               href="/Employee/EmployeeManage">
-                                Get Employees
+                        <li class="nav-item">
+                            <a class="nav-link aLinkOnClick" id="nav-item-Home" href="/">Home</a>
+                        </li>
+                        <li class="nav-item dropdown" id="nav-item-Products">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Products
                             </a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                        </div>
-                    </li>
 
-                    <li class="nav-item dropdown" id="nav-item-Admin">
-                        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Admin
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item"
-                               asp-area="Admin" asp-controller="UserManagement" asp-action="GetUserAccounts">
-                                Manage Users
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <h6 class="dropdown-header">Manage</h6>
+                                <a class="dropdown-item aLinkOnClick"
+                                   href="/Products/Manage/AddProduct">
+                                    Add Products
+                                </a>
+                                <a class="dropdown-item aLinkOnClick" href="#">
+                                    View Products
+                                </a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown" id="nav-item-Admin">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Admin
                             </a>
-                        </div>
-                    </li>
+                            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item aLinkOnClick"
+                                   asp-area="Admin" asp-controller="UserManagement" asp-action="GetUserAccounts">
+                                    Manage Users
+                                </a>
+                            </div>
+                        </li>
 
-                    <li class="nav-item dropdown" id="nav-item-Samples">
-                        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Samples
-                        </a>
-
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <h6 class="dropdown-header">Security</h6>
-                            <a class="dropdown-item"
-                               asp-area="Home" asp-controller="Sample" asp-action="Authorization">
-                                Authorization
+                        <li class="nav-item dropdown" id="nav-item-Samples">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Samples
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <h6 class="dropdown-header">Errors</h6>
-                            <a class="dropdown-item"
-                               asp-area="Home" asp-controller="Sample" asp-action="ErrorPage">
-                                Error Page
-                            </a>
-                            <a class="dropdown-item"
-                               asp-area="Home" asp-controller="Sample" asp-action="AjaxErrorPage">
-                                Ajax Error Page
-                            </a>
-                        </div>
-                    </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                </ul>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <h6 class="dropdown-header">Security</h6>
+                                <a class="dropdown-item aLinkOnClick"
+                                   asp-area="Home" asp-controller="Sample" asp-action="Authorization">
+                                    Authorization
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <h6 class="dropdown-header">Errors</h6>
+                                <a class="dropdown-item aLinkOnClick"
+                                   asp-area="Home" asp-controller="Sample" asp-action="ErrorPage">
+                                    Error Page
+                                </a>
+                                <a class="dropdown-item aLinkOnClick"
+                                   asp-area="Home" asp-controller="Sample" asp-action="AjaxErrorPage">
+                                    Ajax Error Page
+                                </a>
+                            </div>
+                        </li>
 
-                <ul class="navbar-nav ml-auto">
-                    <input type="hidden" id="hdnLoggedInUserId" value="@(User.FindFirst("UserId").Value)" />
-                    <input type="hidden" id="hdnLoggedInUserName" value="@User.Identity.Name" />
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                    </ul>
 
-                    <button type="button" onclick="sharedController.getLoggedUserDetails('@Url.Action( "LoadLoggedUserDetailsPartialView", "Auth" , new { Area="Authentication" } )')"
-                            class="btn btn-outline-light" data-toggle="tooltip" data-placement="bottom" title="Click to see current user information">
-                        <h5 class="mb-0">Hello, <strong style="font-weight:bold">@User.Identity.Name</strong> </h5>
-                    </button>
+                    <ul class="navbar-nav ml-auto">
+                        <input type="hidden" id="hdnLoggedInUserId" value="@(User.FindFirst("UserId").Value)" />
+                        <input type="hidden" id="hdnLoggedInUserName" value="@User.Identity.Name" />
 
-                    <button type="button" onclick="sharedController.onLogoutButtonClick('@Url.Action( "LogOut", "Auth" , new { Area="Authentication" } )')"
-                            data-toggle="tooltip" data-placement="bottom" title="Logout Application"
-                            style="color:white;padding-right: 3px;margin-left: 9px;" class="btn btn-danger">
-                        <i style="font-size: 20px;margin-top: 6px;margin-left: 0px;margin-right: 0px;" class="fas fa-power-off"></i>
-                    </button>
-                </ul>
+                        <button type="button" onclick="sharedController.getLoggedUserDetails('@Url.Action( "LoadLoggedUserDetailsPartialView", "Auth" , new { Area="Authentication" } )')"
+                                class="btn btn-outline-light" data-toggle="tooltip" data-placement="bottom" title="Click to see current user information">
+                            <h5 class="mb-0">Hello, <strong style="font-weight:bold">@User.Identity.Name</strong> </h5>
+                        </button>
+
+                        <button type="button" onclick="sharedController.onLogoutButtonClick('@Url.Action( "LogOut", "Auth" , new { Area="Authentication" } )')"
+                                data-toggle="tooltip" data-placement="bottom" title="Logout Application"
+                                style="color:white;padding-right: 3px;margin-left: 9px;" class="btn btn-danger">
+                            <i style="font-size: 20px;margin-top: 6px;margin-left: 0px;margin-right: 0px;" class="fas fa-power-off"></i>
+                        </button>
+                    </ul>
                 }
             </div>
         </nav>
@@ -152,6 +156,11 @@
                 allowOutsideClick: false
             },
             buttonsStyling: false,
+        });
+
+        $('.aLinkOnClick').click(function () {
+            sharedController.showLoadingIndicator();
+
         });
     </script>
 </body>

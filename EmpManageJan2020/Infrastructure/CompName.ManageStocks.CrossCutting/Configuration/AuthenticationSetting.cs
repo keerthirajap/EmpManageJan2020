@@ -10,5 +10,9 @@
     public class AuthenticationSetting
     {
         public int PasswordSaltLength { get; set; }
+
+        public string AppCookieName { get; set; }
+
+        public int AuthCookieExpireInHours { get; set; }
     }
 }

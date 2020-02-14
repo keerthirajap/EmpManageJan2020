@@ -1,0 +1,20 @@
+﻿@page  "/Products/Manage/"
+@model CompName.ManageStocks.WebAppMVC.Areas.Product.Pages.Manage.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+
+
+@section scripts{
+    <script>
+        $(window).on("load", function () {
+            sharedController.navActiveColorChange("nav-item-Products");
+            sharedController.hideLoadingIndicator();
+
+        });
+    </script>
+}

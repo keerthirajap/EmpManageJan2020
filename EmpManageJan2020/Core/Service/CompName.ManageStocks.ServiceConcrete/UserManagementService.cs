@@ -5,11 +5,8 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using Autofac.Extras.DynamicProxy;
     using Effortless.Net.Encryption;
     using CompName.ManageStocks.CrossCutting.Configuration;
-    using CompName.ManageStocks.CrossCutting.Logging;
-    using CompName.ManageStocks.Domain;
     using CompName.ManageStocks.Domain.Admin;
     using CompName.ManageStocks.Domain.Authentication;
     using CompName.ManageStocks.RepositoryInterface;

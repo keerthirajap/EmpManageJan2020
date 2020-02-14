@@ -211,13 +211,17 @@
         {
             var option = new CookieOptions();
             option.Expires = DateTime.Now.AddMinutes(1);
-            this._httpContextAccessor.HttpContext.Response.Cookies.Append("EmployeeManage.UserAuthenticated", "true", option);
+            this._httpContextAccessor.HttpContext.Response.Cookies.Append(this._appSetting.AuthenticationSetting.AppCookieName + ".UserAuthenticated", "true", option);
 
             UserAuthentication userAuthenticationModel = new UserAuthentication();
             userAuthenticationModel.UserName = userLogin.UserName;
             userAuthenticationModel.UserId = userLogin.UserId;
             userAuthenticationModel.LoggedOn = DateTime.Now;
-            userAuthenticationModel.AuthenticationExpiresOn = DateTime.Now.AddHours(1);
+            userAuthenticationModel.AuthenticationExpiresOn = DateTime.Now.AddHours(
+                                                                this
+                                                                ._appSetting
+                                                                .AuthenticationSetting
+                                                                .AuthCookieExpireInHours);
             userAuthenticationModel.AuthenticationGUID = this.HttpContext.TraceIdentifier;
 
             string userData = JsonConvert.SerializeObject(userAuthenticationModel);

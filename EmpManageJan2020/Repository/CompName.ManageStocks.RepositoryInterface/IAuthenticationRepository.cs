@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Autofac.Extras.DynamicProxy;
-    using CompName.ManageStocks.Domain;
     using CompName.ManageStocks.Domain.Authentication;
     using Insight.Database;
 

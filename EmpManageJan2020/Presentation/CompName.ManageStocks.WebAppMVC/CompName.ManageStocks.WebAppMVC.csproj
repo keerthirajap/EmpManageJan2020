@@ -21,6 +21,9 @@
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Home\Data\" />
     <Folder Include="Areas\Home\Models\" />
+    <Folder Include="Areas\Product\Controllers\" />
+    <Folder Include="Areas\Product\Data\" />
+    <Folder Include="Areas\Product\Views\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 

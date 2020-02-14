@@ -75,5 +75,7 @@
     <Build Include="dbo\Stored Procedures\P_GetUserDetailsForLoginValidation.sql" />
     <Build Include="dbo\Stored Procedures\P_GetUserAccountDetails.sql" />
     <Build Include="dbo\Stored Procedures\P_GetAllUserAccounts.sql" />
+    <Build Include="dbo\Tables\Product.sql" />
+    <Build Include="dbo\Stored Procedures\P_CreateProduct.sql" />
   </ItemGroup>
 </Project>
