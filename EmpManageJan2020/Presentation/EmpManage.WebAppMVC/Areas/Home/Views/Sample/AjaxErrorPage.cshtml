@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Get Ajax Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row  mr-0">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+        <h1 class="pb-3">Ajax Error Page Samples</h1>
+
+        <button type="button" id="btnGetAjaxError" class="btn btn-danger btn-lg mt-5">
+            <i class="fas fa-exclamation-circle"></i>Get Ajax Error
+        </button>
+    </div>
+</div>
+
+<script>
+    var ajaxErrorPageURL = '@Url.Action("ErrorPage", "Sample", new { Area = "Home" })';
+
+    $(window).on("load", function () {
+        sharedController.navActiveColorChange("nav-item-Samples");
+        sharedController.hideLoadingIndicator();
+
+         $('#btnGetAjaxError').click(function () {
+               $.ajax({
+                type: "GET",
+                url: ajaxErrorPageURL,
+                datatype: "json",
+                headers: {
+                    "RequestVerificationToken": $('input[name = __RequestVerificationToken]').val()
+                },
+                begin: function () {
+                },
+                complete: function () {
+                    sharedController.hideLoadingIndicator();
+                },
+                success: function (data) {
+
+                },
+                error: function (xMLHttpRequest, textStatus, errorThrown) {
+                    sharedController.hideLoadingIndicator();
+                    sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
+                }
+            });
+
+        });
+    });
+</script>

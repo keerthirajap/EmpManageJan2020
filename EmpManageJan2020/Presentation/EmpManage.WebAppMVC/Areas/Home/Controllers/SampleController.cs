@@ -10,7 +10,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     [AutoValidateAntiforgeryToken]
     [Area("Home")]
     public class SampleController : Controller
@@ -47,7 +46,13 @@
         [ApplicationAuthorize]
         public IActionResult ErrorPage()
         {
-            throw new IndexOutOfRangeException();
+            throw new Exception();
+        }
+
+        [ApplicationAuthorize]
+        public IActionResult AjaxErrorPage()
+        {
+            return this.View();
         }
     }
 }

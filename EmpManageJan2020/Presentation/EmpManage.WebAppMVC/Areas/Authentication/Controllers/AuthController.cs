@@ -21,7 +21,6 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     [AutoValidateAntiforgeryToken]
     [AllowAnonymous]
     [Area("Authentication")]
