@@ -52,9 +52,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Service\EmpManage.ServiceInterface\EmpManage.ServiceInterface.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\EmpManage.IOC\EmpManage.IOC.csproj" />
+    <ProjectReference Include="..\..\Core\Service\EmpManage.ServiceInterface\CompName.ManageStocks.ServiceInterface.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EmpManage.CrossCutting\CompName.ManageStocks.CrossCutting.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EmpManage.IOC\CompName.ManageStocks.IOC.csproj" />
   </ItemGroup>
+
 
   <ItemGroup>
     <Content Update="enviromentSettings.json">

@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Infrastructure.Security
+﻿namespace CompName.ManageStocks.WebAppMVC.Infrastructure.Security
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿namespace EmpManage.ServiceConcrete
+﻿namespace CompName.ManageStocks.ServiceConcrete
 {
     using System;
     using System.Collections.Generic;
@@ -7,14 +7,13 @@
     using System.Threading.Tasks;
     using Autofac.Extras.DynamicProxy;
     using Effortless.Net.Encryption;
-    using EmpManage.CrossCutting.Configuration;
-    using EmpManage.CrossCutting.Logging;
-    using EmpManage.Domain;
-    using EmpManage.Domain.Authentication;
-    using EmpManage.RepositoryInterface;
-    using EmpManage.ServiceInterface;
+    using CompName.ManageStocks.CrossCutting.Configuration;
+    using CompName.ManageStocks.CrossCutting.Logging;
+    using CompName.ManageStocks.Domain;
+    using CompName.ManageStocks.Domain.Authentication;
+    using CompName.ManageStocks.RepositoryInterface;
+    using CompName.ManageStocks.ServiceInterface;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class AuthenticationService : IAuthenticationService
     {
         private readonly AppSetting _appSetting;

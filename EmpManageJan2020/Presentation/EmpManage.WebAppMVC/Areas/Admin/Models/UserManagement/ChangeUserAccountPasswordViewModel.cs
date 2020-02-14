@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement
+﻿namespace CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement
 {
     using System;
     using System.Collections.Generic;

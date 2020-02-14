@@ -1,13 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyVersion>1.1.18.31140</AssemblyVersion>
     <FileVersion>1.1.18.31140</FileVersion>
+    <AssemblyName>CompName.ManageStocks.RepositoryInterface</AssemblyName>
+    <RootNamespace>CompName.ManageStocks.RepositoryInterface</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
+    <PackageReference Include="Insight.Database" Version="6.2.11" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -15,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Infrastructure\EmpManage.CrossCutting\EmpManage.CrossCutting.csproj" />
-    <ProjectReference Include="..\..\Domain\EmpManage.Domain\EmpManage.Domain.csproj" />
+    <ProjectReference Include="..\..\Core\Domain\EmpManage.Domain\CompName.ManageStocks.Domain.csproj" />
   </ItemGroup>
 
+ 
 </Project>

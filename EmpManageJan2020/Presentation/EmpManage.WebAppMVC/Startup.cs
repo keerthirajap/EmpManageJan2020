@@ -1,4 +1,4 @@
-namespace EmpManage.WebAppMVC
+namespace CompName.ManageStocks.WebAppMVC
 {
     using System;
     using System.Collections.Generic;
@@ -13,24 +13,23 @@ namespace EmpManage.WebAppMVC
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using ElmahCore.Mvc;
-    using EmpManage.WebAppMVC.Infrastructure.CustomFilters;
+    using CompName.ManageStocks.WebAppMVC.Infrastructure.CustomFilters;
     using Autofac;
-    using EmpManage.CrossCutting.Logging;
-    using EmpManage.IOC;
+    using CompName.ManageStocks.CrossCutting.Logging;
+    using CompName.ManageStocks.IOC;
     using Castle.DynamicProxy;
     using Autofac.Extensions.DependencyInjection;
     using AutoMapper;
-    using EmpManage.WebAppMVC.Infrastructure.AutoMapper;
-    using EmpManage.CrossCutting.Configuration;
+    using CompName.ManageStocks.WebAppMVC.Infrastructure.AutoMapper;
+    using CompName.ManageStocks.CrossCutting.Configuration;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.CookiePolicy;
     using Microsoft.AspNetCore.ResponseCompression;
     using WebMarkupMin.AspNetCore3;
     using Newtonsoft.Json.Serialization;
-    using EmpManage.CrossCutting.InMemoryCaching;
+    using CompName.ManageStocks.CrossCutting.InMemoryCaching;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class Startup
     {
         private readonly NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
@@ -117,7 +116,7 @@ namespace EmpManage.WebAppMVC
         {
             builder.RegisterInstance(this.AppSetting).SingleInstance();
             builder.Register(c => new LogInterceptor(this.logger)).SingleInstance();
-            builder.RegisterModule(new RepositoryIOCModule("Data Source=.;Initial Catalog=EmpManage;Integrated Security=True", "InstancePerLifetimeScope"));
+            builder.RegisterModule(new RepositoryIOCModule("Data Source=.;Initial Catalog=ManageStocks;Integrated Security=True", "InstancePerLifetimeScope"));
             builder.RegisterModule(new ServiceIOCModule("InstancePerLifetimeScope"));
         }
 

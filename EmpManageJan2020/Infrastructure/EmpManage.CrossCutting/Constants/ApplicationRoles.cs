@@ -1,4 +1,4 @@
-﻿namespace EmpManage.CrossCutting.Constants
+﻿namespace CompName.ManageStocks.CrossCutting.Constants
 {
     using System;
     using System.Collections.Generic;

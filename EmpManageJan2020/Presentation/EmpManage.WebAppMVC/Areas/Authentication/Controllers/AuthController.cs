@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Areas.Authentication.Controllers
+﻿namespace CompName.ManageStocks.WebAppMVC.Areas.Authentication.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -6,13 +6,13 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using AutoMapper;
-    using EmpManage.CrossCutting.Configuration;
-    using EmpManage.Domain;
-    using EmpManage.Domain.Authentication;
-    using EmpManage.ServiceInterface;
-    using EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement;
-    using EmpManage.WebAppMVC.Areas.Authentication.Models;
-    using EmpManage.WebAppMVC.Areas.Authentication.Models.Auth;
+    using CompName.ManageStocks.CrossCutting.Configuration;
+    using CompName.ManageStocks.Domain;
+    using CompName.ManageStocks.Domain.Authentication;
+    using CompName.ManageStocks.ServiceInterface;
+    using CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement;
+    using CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models;
+    using CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models.Auth;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Authorization;

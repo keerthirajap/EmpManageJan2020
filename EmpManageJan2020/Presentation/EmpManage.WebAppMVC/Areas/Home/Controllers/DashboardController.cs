@@ -1,11 +1,11 @@
-﻿namespace EmpManage.WebAppMVC.Areas.Home.Controllers
+﻿namespace CompName.ManageStocks.WebAppMVC.Areas.Home.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using EmpManage.CrossCutting.InMemoryCaching;
-    using EmpManage.WebAppMVC.Infrastructure.Security;
+    using CompName.ManageStocks.CrossCutting.InMemoryCaching;
+    using CompName.ManageStocks.WebAppMVC.Infrastructure.Security;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 

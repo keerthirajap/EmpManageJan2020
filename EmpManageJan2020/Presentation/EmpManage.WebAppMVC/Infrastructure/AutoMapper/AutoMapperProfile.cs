@@ -1,17 +1,17 @@
-﻿namespace EmpManage.WebAppMVC.Infrastructure.AutoMapper
+﻿namespace CompName.ManageStocks.WebAppMVC.Infrastructure.AutoMapper
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Threading.Tasks;
-    using EmpManage.Domain;
-    using EmpManage.Domain.Admin;
-    using EmpManage.Domain.Authentication;
-    using EmpManage.WebAppMVC.Areas.Admin.Models;
-    using EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement;
-    using EmpManage.WebAppMVC.Areas.Authentication.Models;
-    using EmpManage.WebAppMVC.Areas.Authentication.Models.Auth;
+    using CompName.ManageStocks.Domain;
+    using CompName.ManageStocks.Domain.Admin;
+    using CompName.ManageStocks.Domain.Authentication;
+    using CompName.ManageStocks.WebAppMVC.Areas.Admin.Models;
+    using CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement;
+    using CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models;
+    using CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models.Auth;
     using global::AutoMapper;
 
     [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "Reviewed.")]

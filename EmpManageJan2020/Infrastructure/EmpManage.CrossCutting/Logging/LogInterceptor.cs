@@ -1,4 +1,4 @@
-﻿namespace EmpManage.CrossCutting.Logging
+﻿namespace CompName.ManageStocks.CrossCutting.Logging
 {
     using System;
     using System.Reflection;
@@ -8,7 +8,6 @@
     using NLog;
 
     //Follow anti-pattern only
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class LogInterceptor : IInterceptor
     {
         private readonly ILogger _logger;

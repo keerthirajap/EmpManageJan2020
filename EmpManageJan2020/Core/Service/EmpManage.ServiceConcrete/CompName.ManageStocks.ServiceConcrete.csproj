@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>1.1.28.31140</AssemblyVersion>
+    <FileVersion>1.1.28.31140</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
+    <PackageReference Include="Effortless.Net.Encryption" Version="3.3.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\EmpManage.CrossCutting\CompName.ManageStocks.CrossCutting.csproj" />
+    <ProjectReference Include="..\..\..\Repository\CompName.ManageStocks.RepositoryInterface\CompName.ManageStocks.RepositoryInterface.csproj" />
+    <ProjectReference Include="..\..\..\Repository\EmpManage.RepositoryInterface\CompName.ManageStocks.RepositoryInterface.csproj" />
+    <ProjectReference Include="..\EmpManage.ServiceInterface\CompName.ManageStocks.ServiceInterface.csproj" />
+  </ItemGroup>
+
+  
+</Project>

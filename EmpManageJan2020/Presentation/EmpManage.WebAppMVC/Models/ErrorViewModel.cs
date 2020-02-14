@@ -1,4 +1,4 @@
-namespace EmpManage.WebAppMVC.Models
+namespace CompName.ManageStocks.WebAppMVC.Models
 {
     using System;
 

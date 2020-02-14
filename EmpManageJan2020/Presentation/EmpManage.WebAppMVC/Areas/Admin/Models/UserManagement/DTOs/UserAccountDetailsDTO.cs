@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement.DTOs
+﻿namespace CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement.DTOs
 {
     using System;
     using System.Collections.Generic;

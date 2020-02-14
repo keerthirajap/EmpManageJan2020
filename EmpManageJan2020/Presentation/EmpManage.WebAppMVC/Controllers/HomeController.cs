@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Controllers
+﻿namespace CompName.ManageStocks.WebAppMVC.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -8,9 +8,8 @@
     using System.Net;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using EmpManage.WebAppMVC.Models;
+    using CompName.ManageStocks.WebAppMVC.Models;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

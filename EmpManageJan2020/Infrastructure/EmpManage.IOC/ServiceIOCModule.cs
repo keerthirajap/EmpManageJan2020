@@ -1,4 +1,4 @@
-﻿namespace EmpManage.IOC
+﻿namespace CompName.ManageStocks.IOC
 {
     using System;
     using System.Collections.Generic;
@@ -6,9 +6,9 @@
     using Autofac;
     using Autofac.Extras.DynamicProxy;
     using Castle.DynamicProxy;
-    using EmpManage.CrossCutting.Logging;
-    using EmpManage.ServiceConcrete;
-    using EmpManage.ServiceInterface;
+    using CompName.ManageStocks.CrossCutting.Logging;
+    using CompName.ManageStocks.ServiceConcrete;
+    using CompName.ManageStocks.ServiceInterface;
 
     //Follow anti-pattern only
 

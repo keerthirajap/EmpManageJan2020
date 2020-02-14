@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Infrastructure.CustomFilters
+﻿namespace CompName.ManageStocks.WebAppMVC.Infrastructure.CustomFilters
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,6 @@
     using Microsoft.Extensions.Logging;
     using NLog;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class LoggingActionFilter : IAsyncActionFilter
     {
         private readonly Microsoft.Extensions.Logging.ILogger _logger;

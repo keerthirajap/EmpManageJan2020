@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Areas.Authentication.Models.Auth
+﻿namespace CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models.Auth
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,6 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class LoginViewModel
     {
         [Required(ErrorMessage = "The {0} field is required.")]

@@ -1,4 +1,4 @@
-﻿namespace EmpManage.Domain.Admin
+﻿namespace CompName.ManageStocks.Domain.Admin
 {
     using System;
     using System.Collections.Generic;

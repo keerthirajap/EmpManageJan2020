@@ -17,7 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Service\EmpManage.ServiceConcrete\EmpManage.ServiceConcrete.csproj" />
+    <ProjectReference Include="..\..\Core\Service\EmpManage.ServiceConcrete\CompName.ManageStocks.ServiceConcrete.csproj" />
+    <ProjectReference Include="..\..\Repository\CompName.ManageStocks.RepositoryInterface\CompName.ManageStocks.RepositoryInterface.csproj" />
   </ItemGroup>
 
 </Project>

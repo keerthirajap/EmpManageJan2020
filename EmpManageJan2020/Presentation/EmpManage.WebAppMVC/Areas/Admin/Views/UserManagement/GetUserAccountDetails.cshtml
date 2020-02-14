@@ -1,4 +1,4 @@
-﻿@model EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement.DTOs.UserAccountDetailsDTO
+﻿@model CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement.DTOs.UserAccountDetailsDTO
 
 @{
     ViewData["Title"] = @Model.UserDetails.UserName + " - User Details";
@@ -34,16 +34,13 @@
                             <i class="fas fa-exclamation-triangle"></i> In Correct Logins
                         </a>
                     </li>
-
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade show active" id="EditUserDetails">
 
                         @await Html.PartialAsync("_UserAccountDetails", @Model.UserDetails)
-
                     </div>
                     <div class="tab-pane fade" id="UserLogins">
-
 
                         <div class="card">
 
@@ -70,7 +67,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="tab-pane fade" id="UserInCorrectLogins">
                         <div class="card">
@@ -102,14 +98,10 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
-
     </div>
-
 </div>
 
 <script src="~/jsControllers/Admin/userManagementController.js"></script>

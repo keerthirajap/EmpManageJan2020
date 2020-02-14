@@ -1,4 +1,4 @@
-﻿namespace EmpManage.Domain
+﻿namespace CompName.ManageStocks.Domain.Authentication
 {
     using System;
 

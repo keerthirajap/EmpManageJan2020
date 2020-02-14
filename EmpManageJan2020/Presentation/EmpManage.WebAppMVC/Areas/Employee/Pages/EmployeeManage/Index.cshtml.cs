@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Areas.Employee.Pages.EmployeeManage
+﻿namespace CompName.ManageStocks.WebAppMVC.Areas.Employee.Pages.EmployeeManage
 {
     using System;
     using System.Collections.Generic;

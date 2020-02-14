@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EmpManage.WebAppMVC</title>
+    <title>@ViewData["Title"] - CompName.ManageStocks.WebAppMVC</title>
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
@@ -23,92 +23,92 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 @if (!User.Identity.IsAuthenticated)
                 {
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item" id="nav-item-Login">
-                            <a class="nav-link" href="/Login">Login</a>
-                        </li>
-                        <li class="nav-item" id="nav-item-RegisterUser">
-                            <a class="nav-link" href="/RegisterUser">Register</a>
-                        </li>
-                    </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="nav-item-Login">
+                        <a class="nav-link" href="/Login">Login</a>
+                    </li>
+                    <li class="nav-item" id="nav-item-RegisterUser">
+                        <a class="nav-link" href="/RegisterUser">Register</a>
+                    </li>
+                </ul>
                 }
                 else
                 {
 
-                    <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto">
 
-                        <li class="nav-item">
-                            <a class="nav-link" id="nav-item-Home" href="/">Home</a>
-                        </li>
-                        <li class="nav-item dropdown" id="nav-item-Employees">
-                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Employees
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-item-Home" href="/">Home</a>
+                    </li>
+                    <li class="nav-item dropdown" id="nav-item-Employees">
+                        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Employees
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"
+                               href="/Employee/EmployeeManage">
+                                Get Employees
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item"
-                                   href="/Employee/EmployeeManage">
-                                    Get Employees
-                                </a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                            </div>
-                        </li>
+                            <a class="dropdown-item" href="#">Another action</a>
+                        </div>
+                    </li>
 
-                        <li class="nav-item dropdown" id="nav-item-Admin">
-                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Admin
+                    <li class="nav-item dropdown" id="nav-item-Admin">
+                        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"
+                               asp-area="Admin" asp-controller="UserManagement" asp-action="GetUserAccounts">
+                                Manage Users
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item"
-                                   asp-area="Admin" asp-controller="UserManagement" asp-action="GetUserAccounts">
-                                    Manage Users
-                                </a>
-                            </div>
-                        </li>
+                        </div>
+                    </li>
 
-                        <li class="nav-item dropdown" id="nav-item-Samples">
-                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Samples
+                    <li class="nav-item dropdown" id="nav-item-Samples">
+                        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Samples
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <h6 class="dropdown-header">Security</h6>
+                            <a class="dropdown-item"
+                               asp-area="Home" asp-controller="Sample" asp-action="Authorization">
+                                Authorization
                             </a>
+                            <div class="dropdown-divider"></div>
+                            <h6 class="dropdown-header">Errors</h6>
+                            <a class="dropdown-item"
+                               asp-area="Home" asp-controller="Sample" asp-action="ErrorPage">
+                                Error Page
+                            </a>
+                            <a class="dropdown-item"
+                               asp-area="Home" asp-controller="Sample" asp-action="AjaxErrorPage">
+                                Ajax Error Page
+                            </a>
+                        </div>
+                    </li>
 
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <h6 class="dropdown-header">Security</h6>
-                                <a class="dropdown-item"
-                                   asp-area="Home" asp-controller="Sample" asp-action="Authorization">
-                                    Authorization
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <h6 class="dropdown-header">Errors</h6>
-                                <a class="dropdown-item"
-                                   asp-area="Home" asp-controller="Sample" asp-action="ErrorPage">
-                                    Error Page
-                                </a>
-                                <a class="dropdown-item"
-                                   asp-area="Home" asp-controller="Sample" asp-action="AjaxErrorPage">
-                                    Ajax Error Page
-                                </a>
-                            </div>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                    </ul>
+                <ul class="navbar-nav ml-auto">
+                    <input type="hidden" id="hdnLoggedInUserId" value="@(User.FindFirst("UserId").Value)" />
+                    <input type="hidden" id="hdnLoggedInUserName" value="@User.Identity.Name" />
 
-                    <ul class="navbar-nav ml-auto">
-                        <input type="hidden" id="hdnLoggedInUserId" value="@(User.FindFirst("UserId").Value)" />
-                        <input type="hidden" id="hdnLoggedInUserName" value="@User.Identity.Name" />
+                    <button type="button" onclick="sharedController.getLoggedUserDetails('@Url.Action( "LoadLoggedUserDetailsPartialView", "Auth" , new { Area="Authentication" } )')"
+                            class="btn btn-outline-light" data-toggle="tooltip" data-placement="bottom" title="Click to see current user information">
+                        <h5 class="mb-0">Hello, <strong style="font-weight:bold">@User.Identity.Name</strong> </h5>
+                    </button>
 
-                        <button type="button" onclick="sharedController.getLoggedUserDetails('@Url.Action( "LoadLoggedUserDetailsPartialView", "Auth" , new { Area="Authentication" } )')"
-                                class="btn btn-outline-light" data-toggle="tooltip" data-placement="bottom" title="Click to see current user information">
-                            <h5 class="mb-0">Hello, <strong style="font-weight:bold">@User.Identity.Name</strong> </h5>
-                        </button>
-
-                        <button type="button" onclick="sharedController.onLogoutButtonClick('@Url.Action( "LogOut", "Auth" , new { Area="Authentication" } )')"
-                                data-toggle="tooltip" data-placement="bottom" title="Logout Application"
-                                style="color:white;padding-right: 3px;margin-left: 9px;" class="btn btn-danger">
-                            <i style="font-size: 20px;margin-top: 6px;margin-left: 0px;margin-right: 0px;" class="fas fa-power-off"></i>
-                        </button>
-                    </ul>
+                    <button type="button" onclick="sharedController.onLogoutButtonClick('@Url.Action( "LogOut", "Auth" , new { Area="Authentication" } )')"
+                            data-toggle="tooltip" data-placement="bottom" title="Logout Application"
+                            style="color:white;padding-right: 3px;margin-left: 9px;" class="btn btn-danger">
+                        <i style="font-size: 20px;margin-top: 6px;margin-left: 0px;margin-right: 0px;" class="fas fa-power-off"></i>
+                    </button>
+                </ul>
                 }
             </div>
         </nav>
@@ -124,7 +124,7 @@
     </div>
     <footer class="border-top footer text-muted">
         <div class="container-fluid text-center">
-            &copy; 2020 - EmpManage.WebAppMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - CompName.ManageStocks.WebAppMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>

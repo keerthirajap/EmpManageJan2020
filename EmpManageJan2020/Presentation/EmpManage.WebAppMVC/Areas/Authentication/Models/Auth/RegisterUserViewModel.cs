@@ -1,4 +1,4 @@
-﻿namespace EmpManage.WebAppMVC.Areas.Authentication.Models.Auth
+﻿namespace CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models.Auth
 {
     using System;
     using System.Collections.Generic;

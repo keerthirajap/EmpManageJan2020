@@ -1,4 +1,4 @@
-namespace EmpManage.WebAppMVC
+namespace CompName.ManageStocks.WebAppMVC
 {
     using System;
     using System.Collections.Generic;
