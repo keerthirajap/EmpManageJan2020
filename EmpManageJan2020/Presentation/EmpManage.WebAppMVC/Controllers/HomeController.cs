@@ -37,5 +37,11 @@
             this.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier, RequestTime = DateTime.Now });
         }
+
+        [HttpGet("AccessDenied")]
+        public IActionResult AccessDenied()
+        {
+            return this.View();
+        }
     }
 }

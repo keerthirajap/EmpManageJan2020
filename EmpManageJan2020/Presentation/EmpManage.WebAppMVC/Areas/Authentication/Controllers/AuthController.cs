@@ -236,9 +236,15 @@
                                         new Claim("AuthenticationExpiresOn", "AuthenticationExpiresOn",  userAuthenticationModel.AuthenticationExpiresOn.ToString()),
                                         new Claim(ClaimTypes.UserData, userData),
                                     };
+
+            claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
+            claims.Add(new Claim(ClaimTypes.Role, "Manager"));
+            claims.Add(new Claim(ClaimTypes.Role, "BasicUser"));
+
             var identityClaims = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             ClaimsPrincipal principal = new ClaimsPrincipal(identityClaims);
+
             await this.HttpContext.SignInAsync(
                                         CookieAuthenticationDefaults.AuthenticationScheme,
                                         principal,

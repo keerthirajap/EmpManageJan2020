@@ -13,6 +13,7 @@
     using EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement;
     using EmpManage.WebAppMVC.Areas.Admin.Models.UserManagement.DTOs;
     using EmpManage.WebAppMVC.Infrastructure.Extensions;
+    using EmpManage.WebAppMVC.Infrastructure.Security;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json.Linq;
@@ -20,7 +21,7 @@
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     [AutoValidateAntiforgeryToken]
     [Area("Admin")]
-    [Authorize]
+    [ApplicationAuthorize]
     public class UserManagementController : Controller
     {
         private readonly IMapper _mapper;

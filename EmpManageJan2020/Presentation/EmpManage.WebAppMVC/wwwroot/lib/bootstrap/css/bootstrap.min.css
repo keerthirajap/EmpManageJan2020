@@ -9500,6 +9500,10 @@ a.text-dark:focus, a.text-dark:hover {
     box-shadow: 0 1px 4px rgba(0,0,0,.3)
 }
 
+.dropdown-header {
+    padding-left: 15px
+}
+
 .navbar-dark .navbar-nav .nav-link {
     color: #fff
 }

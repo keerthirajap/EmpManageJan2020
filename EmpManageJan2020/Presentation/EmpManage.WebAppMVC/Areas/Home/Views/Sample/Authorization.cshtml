@@ -1,0 +1,97 @@
+﻿@using EmpManage.CrossCutting.Constants
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row  mr-0">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+        <h1 class="pb-3">Authorization Samples</h1>
+
+        <a asp-area="Home" asp-controller="Sample" asp-action="IsUserAuthorized"
+           class="btn btn-primary btn-lg mr-2" role="button" aria-disabled="true">
+            <i class="fas fa-user-check"></i>Is User Authorized
+        </a>
+
+        <a asp-area="Home" asp-controller="Sample" asp-action="IsUserAdministrator"
+           class="btn btn-secondary btn-lg  mr-2" role="button" aria-disabled="true">
+            <i class="fas fa-user-check"></i>Is User Administrator
+        </a>
+
+        <a asp-area="Home" asp-controller="Sample" asp-action="IsUserAdministratorAndBasicUser"
+           class="btn btn-info btn-lg " role="button" aria-disabled="true">
+            <i class="fas fa-user-check"></i>Is User Administrator And BasicUser
+        </a>
+
+        <br />
+
+
+        <a asp-area="Home" asp-controller="Sample" asp-action="AccessDenied"
+           class="btn btn-warning btn-lg mt-5 mr-2" role="button" aria-disabled="true">
+            <i class="fas fa-exclamation-triangle"></i>Access Denied
+        </a>
+
+        <button type="button" id="btnAjaxAccessDenied" class="btn btn-warning btn-lg mt-5">
+            <i class="fas fa-exclamation-triangle"></i>Ajax Access Denied
+        </button>
+    </div>
+</div>
+<br />
+
+<div class="row text-center pt-5  mr-0">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+        <h3 class=""><strong>Roles inside view</strong></h3>
+        @if (User.IsInRole(ApplicationRoles.BasicUser))
+        {
+            <h5 class="pt-3">User is @ApplicationRoles.BasicUser</h5>
+        }
+        @if (User.IsInRole(ApplicationRoles.Manager))
+        {
+            <h5 class="pt-3">User is @ApplicationRoles.Manager</h5>
+        }
+        @if (User.IsInRole(ApplicationRoles.Administrator))
+        {
+            <h5 class="pt-3">User is @ApplicationRoles.Administrator</h5>
+        }
+
+        @if (User.IsInRole(ApplicationRoles.Approver))
+        {
+            <h5 class="pt-3">User is @ApplicationRoles.Approver</h5>
+        }
+        else
+        {
+            <h5 class="pt-3 text-danger">User is not @ApplicationRoles.Approver</h5>
+        }
+    </div>
+</div>
+<script>
+    var accessDeniedURL = '@Url.Action("AccessDenied", "Sample", new { Area = "Home" })';
+
+    $(window).on("load", function () {
+        sharedController.navActiveColorChange("nav-item-Samples");
+        sharedController.hideLoadingIndicator();
+
+          $('#btnAjaxAccessDenied').click(function () {
+               $.ajax({
+                type: "GET",
+                url: accessDeniedURL,
+                datatype: "json",
+                headers: {
+                    "RequestVerificationToken": $('input[name = __RequestVerificationToken]').val()
+                },
+                begin: function () {
+                },
+                complete: function () {
+                    sharedController.hideLoadingIndicator();
+                },
+                success: function (data) {
+
+                },
+                error: function (xMLHttpRequest, textStatus, errorThrown) {
+                    sharedController.hideLoadingIndicator();
+                    sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
+                }
+            });
+
+        });
+    });
+</script>

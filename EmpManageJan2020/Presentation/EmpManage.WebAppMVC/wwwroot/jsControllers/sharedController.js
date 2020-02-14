@@ -1,20 +1,20 @@
 ﻿(
     function (publicMethod, $) {
         publicMethod.showAjaxErrorMessagePopUp = function (xMLHttpRequest, textStatus, errorThrown) {
-            if (xMLHttpRequest.status == '401') {
+            if (xMLHttpRequest.status == '401' || xMLHttpRequest.status == '403' ) {
                 $('#ajaxAccessDeniedMessagePopUp').modal('show');
 
-                setTimeout(
-                    function () {
-                        sharedController.showLoadingIndicator();
-                        return "false";
-                    }, 3000);
+                //setTimeout(
+                //    function () {
+                //        sharedController.showLoadingIndicator();
+                //        return "false";
+                //    }, 3000);
 
-                setTimeout(
-                    function () {
-                        location.reload();
-                        return "false";
-                    }, 3500);
+                //setTimeout(
+                //    function () {
+                //        location.reload();
+                //        return "false";
+                //    }, 3500);
             }
             else {
                 if (xMLHttpRequest.getResponseHeader('RequestTime') != null) {

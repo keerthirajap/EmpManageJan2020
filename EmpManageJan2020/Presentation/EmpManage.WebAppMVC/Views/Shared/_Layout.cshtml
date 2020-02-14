@@ -35,8 +35,6 @@
                 else
                 {
 
-                    
-
                     <ul class="navbar-nav mr-auto">
 
                         <li class="nav-item">
@@ -48,7 +46,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item"
-                              href="/Employee/EmployeeManage">
+                                   href="/Employee/EmployeeManage">
                                     Get Employees
                                 </a>
                                 <a class="dropdown-item" href="#">Another action</a>
@@ -63,6 +61,30 @@
                                 <a class="dropdown-item"
                                    asp-area="Admin" asp-controller="UserManagement" asp-action="GetUserAccounts">
                                     Manage Users
+                                </a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown" id="nav-item-Samples">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Samples
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <h6 class="dropdown-header">Security</h6>
+                                <a class="dropdown-item"
+                                   asp-area="Home" asp-controller="Sample" asp-action="Authorization">
+                                    Authorization
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <h6 class="dropdown-header">Errors</h6>
+                                <a class="dropdown-item"
+                                   asp-area="Home" asp-controller="Sample" asp-action="ErrorPage">
+                                    Error Page
+                                </a>
+                                <a class="dropdown-item"
+                                   asp-area="Home" asp-controller="Sample" asp-action="Authorization">
+                                    Ajax Error Page
                                 </a>
                             </div>
                         </li>
