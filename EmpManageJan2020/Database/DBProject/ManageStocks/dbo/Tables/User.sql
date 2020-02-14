@@ -21,5 +21,3 @@
     FOREIGN KEY ([UserTitleId]) REFERENCES [dbo].[UserTitle] ([UserTitleId])
 );
 
-
-

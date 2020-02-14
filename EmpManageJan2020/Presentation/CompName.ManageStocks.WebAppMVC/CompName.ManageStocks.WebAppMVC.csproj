@@ -52,12 +52,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Service\EmpManage.ServiceInterface\CompName.ManageStocks.ServiceInterface.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\EmpManage.CrossCutting\CompName.ManageStocks.CrossCutting.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\EmpManage.IOC\CompName.ManageStocks.IOC.csproj" />
+    <ProjectReference Include="..\..\Core\Service\CompName.ManageStocks.ServiceInterface\CompName.ManageStocks.ServiceInterface.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CompName.ManageStocks.CrossCutting\CompName.ManageStocks.CrossCutting.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CompName.ManageStocks.IOC\CompName.ManageStocks.IOC.csproj" />
   </ItemGroup>
 
-
+ 
   <ItemGroup>
     <Content Update="enviromentSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

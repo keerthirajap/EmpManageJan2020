@@ -3,17 +3,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>EmpManage</Name>
+    <Name>ManageStocks</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{459623b4-39d7-4631-a779-50dc03c7ae58}</ProjectGuid>
+    <ProjectGuid>{7d2b3d03-bb9f-4349-b687-4129bb95864b}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>EmpManage</RootNamespace>
-    <AssemblyName>EmpManage</AssemblyName>
-    <ModelCollation>1033,CI</ModelCollation>
+    <RootNamespace>ManageStocks</RootNamespace>
+    <AssemblyName>ManageStocks</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -22,8 +22,6 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
-    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -64,18 +62,18 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserTitle.sql" />
-    <Build Include="dbo\Tables\UserGender.sql" />
     <Build Include="dbo\Tables\UserLoggingLog.sql" />
-    <Build Include="dbo\Tables\User.sql" />
-    <Build Include="dbo\Stored Procedures\P_RegisterUser.sql" />
-    <Build Include="dbo\Stored Procedures\P_SaveUserLoggingDetails.sql" />
-    <Build Include="dbo\Stored Procedures\P_GetUserDetailsForLoginValidation.sql" />
     <Build Include="dbo\Tables\UserInCorrectAuthLog.sql" />
-    <Build Include="dbo\Stored Procedures\P_GetAllUserAccounts.sql" />
-    <Build Include="dbo\Stored Procedures\P_GetUserAccountDetails.sql" />
+    <Build Include="dbo\Tables\UserGender.sql" />
+    <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Stored Procedures\P_UpdateUserAccountPassword.sql" />
     <Build Include="dbo\Stored Procedures\P_UpdateUserAccountLockedStatus.sql" />
     <Build Include="dbo\Stored Procedures\P_UpdateUserAccountDetails.sql" />
     <Build Include="dbo\Stored Procedures\P_UpdateUserAccountActiveStatus.sql" />
+    <Build Include="dbo\Stored Procedures\P_SaveUserLoggingDetails.sql" />
+    <Build Include="dbo\Stored Procedures\P_RegisterUser.sql" />
+    <Build Include="dbo\Stored Procedures\P_GetUserDetailsForLoginValidation.sql" />
+    <Build Include="dbo\Stored Procedures\P_GetUserAccountDetails.sql" />
+    <Build Include="dbo\Stored Procedures\P_GetAllUserAccounts.sql" />
   </ItemGroup>
 </Project>

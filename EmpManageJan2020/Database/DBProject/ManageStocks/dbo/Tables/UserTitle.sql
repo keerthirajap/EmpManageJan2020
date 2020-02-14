@@ -4,5 +4,3 @@
     CONSTRAINT [PK_dbo.UserTitle] PRIMARY KEY CLUSTERED ([UserTitleId] ASC)
 );
 
-
-

@@ -14,5 +14,3 @@
     CONSTRAINT [PK_dbo.UserInCorrectAuthLog] PRIMARY KEY CLUSTERED ([UserInCorrectAuthLogId] ASC)
 );
 
-
-

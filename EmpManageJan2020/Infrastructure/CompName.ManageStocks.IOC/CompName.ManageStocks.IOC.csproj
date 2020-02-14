@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -17,8 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Service\EmpManage.ServiceConcrete\CompName.ManageStocks.ServiceConcrete.csproj" />
+    <ProjectReference Include="..\..\Core\Service\CompName.ManageStocks.ServiceConcrete\CompName.ManageStocks.ServiceConcrete.csproj" />
     <ProjectReference Include="..\..\Repository\CompName.ManageStocks.RepositoryInterface\CompName.ManageStocks.RepositoryInterface.csproj" />
+    <ProjectReference Include="..\CompName.ManageStocks.CrossCutting\CompName.ManageStocks.CrossCutting.csproj" />
   </ItemGroup>
 
 </Project>

@@ -25,17 +25,17 @@ AS
 			  ,USR.[IsLocked]
 			  ,USR.[CreatedOn]
 			  ,USR.[CreatedBy]
-			  ,USRCreatedBy.[UserName] AS CreatedByUserName
+			  ,(SELECT TOP 1 [UserName] FROM [dbo].[User] WHERE [UserId] = USR.[CreatedBy] )	CreatedByUserName	  
+			 
+			  
 			  ,USR.[ModifiedOn]
 			  ,USR.[ModifiedBy]	
-			  ,USRModifiedBy.[UserName] AS ModifiedByUserName
+			  ,(SELECT TOP 1 [UserName] FROM [dbo].[User] WHERE [UserId] = USR.[ModifiedBy] )	CreatedByUserName	  
+
 		  FROM [dbo].[User] USR
 		  LEFT JOIN [dbo].UserGender USRGNDR
 			ON USR.[UserGenderId] = USRGNDR.UserGenderId
 		  LEFT JOIN [dbo].UserTitle USRTTL
 			ON USR.[UserTitleId] = USRTTL.[UserTitleId]
-  		  LEFT JOIN [dbo].[User] USRCreatedBy
-			ON USRCreatedBy.[CreatedBy] = USR.[UserId]
- 		  LEFT JOIN [dbo].[User] USRModifiedBy
-			ON USRModifiedBy.ModifiedBy = USR.[UserId]
+  		
   END;

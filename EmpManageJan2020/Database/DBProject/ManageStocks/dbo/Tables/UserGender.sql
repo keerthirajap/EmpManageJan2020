@@ -4,5 +4,3 @@
     CONSTRAINT [PK_dbo.UserGender] PRIMARY KEY CLUSTERED ([UserGenderId] ASC)
 );
 
-
-

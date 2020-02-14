@@ -8,8 +8,8 @@
   </SourceModelProvider>
   <TargetModelProvider>
     <ProjectBasedModelProvider>
-      <ProjectGuid>{459623b4-39d7-4631-a779-50dc03c7ae58}</ProjectGuid>
-      <Name>EmpManage</Name>
+      <ProjectGuid>{7d2b3d03-bb9f-4349-b687-4129bb95864b}</ProjectGuid>
+      <Name>ManageStocks</Name>
     </ProjectBasedModelProvider>
   </TargetModelProvider>
   <SchemaCompareSettingsService>
@@ -298,7 +298,7 @@
       </PropertyElementName>
       <PropertyElementName>
         <Name>TargetDatabaseName</Name>
-        <Value>EmpManage</Value>
+        <Value>ManageStocks</Value>
       </PropertyElementName>
       <PropertyElementName>
         <Name>TargetConnectionString</Name>

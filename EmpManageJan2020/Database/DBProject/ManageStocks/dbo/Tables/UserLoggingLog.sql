@@ -12,7 +12,3 @@
     CONSTRAINT [PK_dbo.UserLoggingLog] PRIMARY KEY CLUSTERED ([UserLoggingLogId] ASC)
 );
 
-
-
-
-
