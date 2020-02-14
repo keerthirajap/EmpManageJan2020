@@ -48,8 +48,8 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item"
-                                   asp-area="Employee" asp-controller="EmployeeManage" asp-action="CreateEmployee">
-                                    Create Employee
+                              href="/Employee/EmployeeManage">
+                                    Get Employees
                                 </a>
                                 <a class="dropdown-item" href="#">Another action</a>
                             </div>
@@ -91,7 +91,7 @@
             </div>
         </nav>
     </header>
-    <div class="container-fluid pt-3">
+    <div class="container-fluid pt-3 pl-2 pr-2">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

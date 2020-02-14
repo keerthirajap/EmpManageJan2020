@@ -106,6 +106,8 @@ namespace EmpManage.WebAppMVC
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
 
+            services.AddRazorPages();
+
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
             services.AddOptions();
@@ -180,6 +182,8 @@ namespace EmpManage.WebAppMVC
             });
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
+
                 endpoints.MapControllerRoute(
                    name: "areas",
                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
