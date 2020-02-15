@@ -105,8 +105,6 @@ namespace CompName.ManageStocks.WebAppMVC
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
 
-            services.AddRazorPages();
-
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
             services.AddOptions();
@@ -184,8 +182,6 @@ namespace CompName.ManageStocks.WebAppMVC
             });
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
-
                 endpoints.MapControllerRoute(
                    name: "areas",
                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
