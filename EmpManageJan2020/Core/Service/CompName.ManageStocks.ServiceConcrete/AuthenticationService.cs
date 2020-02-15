@@ -38,12 +38,17 @@
             return await this._authenticationRepository.RegisterUserAsync(user);
         }
 
-        public async Task<UserLogin> ValidateUserLoginAsync(UserLogin userLogin)
+        public async Task<(UserLogin userLogin, List<UserRoles> userRoles)> ValidateUserLoginAsync(UserLogin userLogin)
         {
             string passwordHash = string.Empty;
             bool isInCorrectLogging = false;
 
-            var userDetailsForLoginValidation = await this._authenticationRepository.GetUserDetailsForLoginValidationAsync(userLogin.UserName);
+            User userDetailsForLoginValidation = new User();
+            List<UserRoles> userRoles = new List<UserRoles>();
+
+            var resultSets = await this._authenticationRepository.GetUserDetailsForLoginValidationAsync(userLogin.UserName);
+            userDetailsForLoginValidation = resultSets.Set1.FirstOrDefault();
+            userRoles = resultSets.Set2.ToList();
 
             if (userDetailsForLoginValidation != null)
             {
@@ -78,7 +83,7 @@
 
             await this._authenticationRepository.SaveUserLoggingDetailsAsync(userLogin, isInCorrectLogging);
 
-            return userLogin;
+            return (userLogin, userRoles);
         }
 
         public async Task<bool> IsUserNameExistsAsync(string userName)

@@ -13,7 +13,6 @@
     using CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement;
     using CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models;
     using CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models.Auth;
-    using CompName.ManageStocks.WebAppMVC.Areas.Product.Models.Manage;
     using global::AutoMapper;
 
     [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "Reviewed.")]
@@ -46,8 +45,6 @@
             #endregion Admin
 
             #region Product
-
-            CreateMap<AddProductViewModel, Product>().ReverseMap();
 
             #endregion Product
         }

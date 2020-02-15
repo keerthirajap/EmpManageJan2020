@@ -12,7 +12,7 @@
         Task<User> RegisterUserAsync(User user);
 
         [Sql("[dbo].[P_GetUserDetailsForLoginValidation]")]
-        Task<User> GetUserDetailsForLoginValidationAsync(string userName);
+        Task<Results<User, UserRoles>> GetUserDetailsForLoginValidationAsync(string userName);
 
         [Sql("[dbo].[P_SaveUserLoggingDetails]")]
         Task SaveUserLoggingDetailsAsync(UserLogin userLogin, bool isInCorrectLogging);

@@ -76,8 +76,8 @@
                 userLogin.LoggingIpAddress = this._httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
                 userLogin.LoggingBrowser = this._httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
                 userLogin.CreatedOn = DateTime.Now;
-                userLogin = await this._authenticationService.ValidateUserLoginAsync(userLogin);
-
+                var userLoginDetails = await this._authenticationService.ValidateUserLoginAsync(userLogin);
+                userLogin = userLoginDetails.userLogin;
                 if (userLogin.IsUserAuthenticated)
                 {
                     await this.AuthenticateUserWithCookieAsync(userLogin);
@@ -143,7 +143,8 @@
             userLogin.LoggingIpAddress = this._httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
             userLogin.LoggingBrowser = this._httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
             userLogin.CreatedOn = DateTime.Now;
-            userLogin = await this._authenticationService.ValidateUserLoginAsync(userLogin);
+            var userLoginDetails = await this._authenticationService.ValidateUserLoginAsync(userLogin);
+            userLogin = userLoginDetails.userLogin;
 
             if (userLogin.IsUserAuthenticated)
             {

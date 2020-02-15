@@ -10,7 +10,7 @@
     {
         Task<User> RegisterUserAsync(User user);
 
-        Task<UserLogin> ValidateUserLoginAsync(UserLogin userLogin);
+        Task<(UserLogin userLogin, List<UserRoles> userRoles)> ValidateUserLoginAsync(UserLogin userLogin);
 
         Task<bool> IsUserNameExistsAsync(string userName);
 

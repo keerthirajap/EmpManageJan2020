@@ -1,10 +1,13 @@
-﻿namespace CompName.ManageStocks.Domain.Authentication
+﻿namespace CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models.Auth
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
 
-    public class UserRoles
+    public class UserRolesViewModel
     {
         public int UserRoleId { get; set; }
 
