@@ -45,6 +45,24 @@ AS
 
         DECLARE @UserId BIGINT= SCOPE_IDENTITY()
 
+		
+		INSERT INTO [dbo].[UserRoles]
+				   ([UserId]
+				   ,[RoleId]
+				   ,[RoleName]
+				   ,[IsActive]
+				   ,[CreatedOn]
+				   ,[CreatedBy]
+				   ,[ModifiedOn]
+				   ,[ModifiedBy])
+		SELECT			@UserId
+						, 100 
+						,'BasicUser'						
+						,1						
+                      ,@TodaysDate
+                      ,@UserId
+                      ,@TodaysDate
+                      ,@UserId
 
         COMMIT TRANSACTION;
 

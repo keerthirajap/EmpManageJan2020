@@ -28,6 +28,7 @@
 
             CreateMap<RegisterUserViewModel, User>().ReverseMap();
             CreateMap<LoginViewModel, UserLogin>().ReverseMap();
+            CreateMap<UserRolesViewModel, UserRoles>().ReverseMap();
 
             #endregion Authentication
 

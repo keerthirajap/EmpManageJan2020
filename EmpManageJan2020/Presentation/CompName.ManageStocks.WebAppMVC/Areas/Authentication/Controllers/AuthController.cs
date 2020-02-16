@@ -59,6 +59,9 @@
         {
             dynamic ajaxReturn = new JObject();
             var user = this._mapper.Map<User>(registerUserViewModel);
+            List<UserRoles> userRoles = new List<UserRoles>();
+            List<UserRolesViewModel> userRolesVM = new List<UserRolesViewModel>();
+            UserLogin userLogin = new UserLogin();
 
             user = await this._authenticationService.RegisterUserAsync(user);
 
@@ -70,7 +73,6 @@
                 ajaxReturn.UserId = user.UserId;
                 ajaxReturn.UserName = registerUserViewModel.UserName;
 
-                UserLogin userLogin = new UserLogin();
                 userLogin.UserName = registerUserViewModel.UserName;
                 userLogin.Password = registerUserViewModel.Password;
                 userLogin.LoggingIpAddress = this._httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -78,9 +80,12 @@
                 userLogin.CreatedOn = DateTime.Now;
                 var userLoginDetails = await this._authenticationService.ValidateUserLoginAsync(userLogin);
                 userLogin = userLoginDetails.userLogin;
+                userRoles = userLoginDetails.userRoles;
+                userRolesVM = this._mapper.Map<List<UserRolesViewModel>>(userRoles);
+
                 if (userLogin.IsUserAuthenticated)
                 {
-                    await this.AuthenticateUserWithCookieAsync(userLogin);
+                    await this.AuthenticateUserWithCookieAsync(userLogin, userRolesVM);
                 }
             }
 
@@ -137,6 +142,8 @@
         {
             dynamic ajaxReturn = new JObject();
             UserLogin userLogin = new UserLogin();
+            List<UserRoles> userRoles = new List<UserRoles>();
+            List<UserRolesViewModel> userRolesVM = new List<UserRolesViewModel>();
 
             userLogin = this._mapper.Map<UserLogin>(loginViewModel);
 
@@ -145,10 +152,11 @@
             userLogin.CreatedOn = DateTime.Now;
             var userLoginDetails = await this._authenticationService.ValidateUserLoginAsync(userLogin);
             userLogin = userLoginDetails.userLogin;
-
+            userRoles = userLoginDetails.userRoles;
+            userRolesVM = this._mapper.Map<List<UserRolesViewModel>>(userRoles);
             if (userLogin.IsUserAuthenticated)
             {
-                await this.AuthenticateUserWithCookieAsync(userLogin);
+                await this.AuthenticateUserWithCookieAsync(userLogin, userRolesVM);
             }
 
             if (userLogin.IsUserAuthenticated)
@@ -208,7 +216,7 @@
             return await Task.Run(() => this.PartialView("_LoggedUserDetails", userAccountViewModel));
         }
 
-        private async Task AuthenticateUserWithCookieAsync(UserLogin userLogin)
+        private async Task AuthenticateUserWithCookieAsync(UserLogin userLogin, List<UserRolesViewModel> userRolesVM)
         {
             var option = new CookieOptions();
             option.Expires = DateTime.Now.AddMinutes(1);
@@ -241,9 +249,10 @@
                                         new Claim(ClaimTypes.UserData, userData),
                                     };
 
-            claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
-            claims.Add(new Claim(ClaimTypes.Role, "Manager"));
-            claims.Add(new Claim(ClaimTypes.Role, "BasicUser"));
+            foreach (var userRoleVM in userRolesVM)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, userRoleVM.RoleName));
+            }
 
             var identityClaims = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

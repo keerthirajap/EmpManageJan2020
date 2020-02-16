@@ -1,0 +1,30 @@
+﻿@model List<CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models.Auth.UserRolesViewModel>
+
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="row pt-3 pl-3">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                @foreach (var item in Model)
+                {
+                    <div class="form-group">
+                        <div class="custom-control custom-switch pt-5">
+                            <input  type="checkbox"   
+                                   value="@item.RoleName" 
+                                    checked="@item.IsActive"
+                                   class="custom-control-input" id="@item.RoleName" >
+                            <label class="custom-control-label" for="@item.RoleName">
+                            @item.RoleName</label>
+                        </div>
+                    </div>
+
+                   
+                }
+            </div>
+                </div>
+    </div>
+</div>
+
+<script>
+</script>

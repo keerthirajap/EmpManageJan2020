@@ -11,7 +11,7 @@
     {
         Task<List<User>> GetAllUserAccountsAsync();
 
-        Task<(User userDetails, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId);
+        Task<(User userDetails, List<UserRoles> userRoles, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId);
 
         Task<List<UserGender>> GetAllUserGenderDetailsAsync();
 

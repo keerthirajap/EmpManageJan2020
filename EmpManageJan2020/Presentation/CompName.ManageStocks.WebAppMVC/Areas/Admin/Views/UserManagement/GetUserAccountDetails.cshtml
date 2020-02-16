@@ -25,6 +25,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#EditUserRoles">
+                            <i class="fas fa-user-check"></i>Edit Roles
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#UserLogins">
                             <i class="fas fa-user-clock"></i> Logins
                         </a>
@@ -40,6 +45,11 @@
 
                         @await Html.PartialAsync("_UserAccountDetails", @Model.UserDetails)
                     </div>
+                    <div class="tab-pane fade show" id="EditUserRoles">
+
+                        @await Html.PartialAsync("_EditUserRoles", @Model.UserRolesVM)
+                    </div>
+
                     <div class="tab-pane fade" id="UserLogins">
 
                         <div class="card">

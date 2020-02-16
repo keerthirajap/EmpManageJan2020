@@ -32,19 +32,21 @@
             return await this._userManagementRepository.GetAllUserAccountsAsync();
         }
 
-        public async Task<(User userDetails, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId)
+        public async Task<(User userDetails, List<UserRoles> userRoles, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId)
         {
             User userDetails = new User();
+            List<UserRoles> userRoles = new List<UserRoles>();
             List<UserLogin> userInCorrectAuthLogs = new List<UserLogin>();
             List<UserLogin> userLoggingLogs = new List<UserLogin>();
 
             var resultSets = await this._userManagementRepository.GetUserAccountDetailsAsync(userId);
 
             userDetails = resultSets.Set1.FirstOrDefault();
-            userInCorrectAuthLogs = resultSets.Set2.ToList();
-            userLoggingLogs = resultSets.Set3.ToList();
+            userRoles = resultSets.Set2.ToList();
+            userInCorrectAuthLogs = resultSets.Set3.ToList();
+            userLoggingLogs = resultSets.Set4.ToList();
 
-            return (userDetails, userInCorrectAuthLogs, userLoggingLogs);
+            return (userDetails, userRoles, userInCorrectAuthLogs, userLoggingLogs);
         }
 
         public async Task<List<UserGender>> GetAllUserGenderDetailsAsync()

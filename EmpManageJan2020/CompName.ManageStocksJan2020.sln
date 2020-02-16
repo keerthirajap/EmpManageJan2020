@@ -27,6 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLComparator", "SQLCompara
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DBScripts", "DBScripts", "{1EB6EBCE-D1AB-4BE9-A5C9-922A5CB7CFF5}"
+	ProjectSection(SolutionItems) = preProject
+		Database\DBScripts\script14_02_2020.sql = Database\DBScripts\script14_02_2020.sql
+		Database\DBScripts\script16_02_2020.sql = Database\DBScripts\script16_02_2020.sql
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompName.ManageStocks.RepositoryInterface", "Repository\CompName.ManageStocks.RepositoryInterface\CompName.ManageStocks.RepositoryInterface.csproj", "{43FDE141-2A96-46AA-AC9B-6B46C406EF3A}"
 EndProject
@@ -43,6 +47,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompName.ManageStocks.WebAppMVC", "Presentation\CompName.ManageStocks.WebAppMVC\CompName.ManageStocks.WebAppMVC.csproj", "{59A3FE20-EADC-494F-9154-6EB037CE8D88}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ManageStocks", "Database\DBProject\ManageStocks\ManageStocks.sqlproj", "{7D2B3D03-BB9F-4349-B687-4129BB95864B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C4A89D80-33F8-4DF7-8B4B-C70C63413267}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -12,6 +12,7 @@
     using CompName.ManageStocks.ServiceInterface;
     using CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement;
     using CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement.DTOs;
+    using CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models.Auth;
     using CompName.ManageStocks.WebAppMVC.Infrastructure.Extensions;
     using CompName.ManageStocks.WebAppMVC.Infrastructure.Security;
     using Microsoft.AspNetCore.Authorization;
@@ -75,6 +76,9 @@
             List<UserTitle> userTitles = new List<UserTitle>();
             List<UserTitleViewModel> userTitlesViewModel = new List<UserTitleViewModel>();
 
+            List<UserRoles> userRoles = new List<UserRoles>();
+            List<UserRolesViewModel> userRolesVM = new List<UserRolesViewModel>();
+
             userGenders = await this._userManagementService.GetAllUserGenderDetailsAsync();
             userGendersViewModel = this._mapper.Map<List<UserGenderViewModel>>(userGenders);
 
@@ -86,7 +90,7 @@
             userAccountDetailsDTO.UserDetails = this._mapper.Map<UpdateUserAccountViewModel>(userAccountDetails.userDetails);
             userAccountDetailsDTO.UserDetails.UserGenders = userGendersViewModel;
             userAccountDetailsDTO.UserDetails.UserTitles = userTitlesViewModel;
-
+            userAccountDetailsDTO.UserRolesVM = this._mapper.Map<List<UserRolesViewModel>>(userAccountDetails.userRoles);
             userAccountDetailsDTO.UserInCorrectAuthLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userInCorrectAuthLogs);
             userAccountDetailsDTO.UserLoggingLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userLoggingLogs);
 
