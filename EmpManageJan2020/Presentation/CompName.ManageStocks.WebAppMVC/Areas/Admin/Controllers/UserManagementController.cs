@@ -44,14 +44,14 @@
 
         [HttpGet]
         [Route("[controller]/GetUserAccounts")]
-        public async Task<IActionResult> GetUserAccountsAsync()
+        public async ValueTask<IActionResult> GetUserAccountsAsync()
         {
             return await Task.Run(() => this.View());
         }
 
         [HttpGet]
         [Route("[controller]/GetAllUserAccounts")]
-        public async Task<IActionResult> GetAllUserAccountsAsync()
+        public async ValueTask<IActionResult> GetAllUserAccountsAsync()
         {
             List<User> users = new List<User>();
             List<UserAccountViewModel> userAccountsViewModel = new List<UserAccountViewModel>();
@@ -64,7 +64,7 @@
 
         [HttpGet]
         [Route("[controller]/GetUserAccountDetails")]
-        public async Task<IActionResult> GetUserAccountDetailsAsync(long userId)
+        public async ValueTask<IActionResult> GetUserAccountDetailsAsync(long userId)
         {
             User userDetails = new User();
             List<UserLogin> userInCorrectAuthLogs = new List<UserLogin>();
@@ -99,7 +99,7 @@
 
         [HttpPost]
         [Route("[controller]/UpdateUserAccountDetails")]
-        public async Task<IActionResult> UpdateUserAccountDetailsAsync(UpdateUserAccountViewModel updateUserAccountViewModel)
+        public async ValueTask<IActionResult> UpdateUserAccountDetailsAsync(UpdateUserAccountViewModel updateUserAccountViewModel)
         {
             dynamic ajaxReturn = new JObject();
             User user = new User();
@@ -126,7 +126,7 @@
 
         [HttpPost]
         [Route("[controller]/UpdateUserAccountActiveStatus")]
-        public async Task<IActionResult> UpdateUserAccountActiveStatusAsync(long userId, bool isActive)
+        public async ValueTask<IActionResult> UpdateUserAccountActiveStatusAsync(long userId, bool isActive)
         {
             dynamic ajaxReturn = new JObject();
 
@@ -156,7 +156,7 @@
 
         [HttpPost]
         [Route("[controller]/UpdateUserAccountLockedStatus")]
-        public async Task<IActionResult> UpdateUserAccountLockedStatusAsync(long userId, bool isLocked)
+        public async ValueTask<IActionResult> UpdateUserAccountLockedStatusAsync(long userId, bool isLocked)
         {
             dynamic ajaxReturn = new JObject();
 
@@ -187,7 +187,7 @@
         [HttpGet]
         [Route("[controller]/LoadChangePasswordPartialView")]
 
-        public async Task<IActionResult> LoadChangePasswordPartialViewAsync(long userId, string userName)
+        public async ValueTask<IActionResult> LoadChangePasswordPartialViewAsync(long userId, string userName)
         {
             ChangeUserAccountPasswordViewModel changeUserAccountPasswordVM = new ChangeUserAccountPasswordViewModel();
             changeUserAccountPasswordVM.UserId = userId;
@@ -198,7 +198,7 @@
 
         [HttpPost]
         [Route("[controller]/ChangeUserAccountPassword")]
-        public async Task<IActionResult> ChangeUserAccountPasswordAsync([FromForm] ChangeUserAccountPasswordViewModel changeUserAccountPasswordVM)
+        public async ValueTask<IActionResult> ChangeUserAccountPasswordAsync([FromForm] ChangeUserAccountPasswordViewModel changeUserAccountPasswordVM)
         {
             dynamic ajaxReturn = new JObject();
             User user = new User();

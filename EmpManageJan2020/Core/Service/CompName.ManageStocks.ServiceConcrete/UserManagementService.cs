@@ -23,16 +23,15 @@
                         IUserManagementRepository userManagementRepository)
         {
             this._appSetting = appSetting;
-
             this._userManagementRepository = userManagementRepository;
         }
 
-        public async Task<List<User>> GetAllUserAccountsAsync()
+        public async ValueTask<List<User>> GetAllUserAccountsAsync()
         {
             return await this._userManagementRepository.GetAllUserAccountsAsync();
         }
 
-        public async Task<(User userDetails, List<UserRoles> userRoles, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId)
+        public async ValueTask<(User userDetails, List<UserRoles> userRoles, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId)
         {
             User userDetails = new User();
             List<UserRoles> userRoles = new List<UserRoles>();
@@ -49,7 +48,7 @@
             return (userDetails, userRoles, userInCorrectAuthLogs, userLoggingLogs);
         }
 
-        public async Task<List<UserGender>> GetAllUserGenderDetailsAsync()
+        public async ValueTask<List<UserGender>> GetAllUserGenderDetailsAsync()
         {
             List<UserGender> userGenders = new List<UserGender>();
 
@@ -58,7 +57,7 @@
             return userGenders;
         }
 
-        public async Task<List<UserTitle>> GetAllUserTitleDetailsAsync()
+        public async ValueTask<List<UserTitle>> GetAllUserTitleDetailsAsync()
         {
             List<UserTitle> userTitles = new List<UserTitle>();
 
@@ -67,22 +66,22 @@
             return userTitles;
         }
 
-        public async Task<bool> UpdateUserAccountDetailsAsync(User user)
+        public async ValueTask<bool> UpdateUserAccountDetailsAsync(User user)
         {
             return await this._userManagementRepository.UpdateUserAccountDetailsAsync(user);
         }
 
-        public async Task<bool> UpdateUserAccountActiveStatusAsync(long userId, bool isActive, long modifiedBy)
+        public async ValueTask<bool> UpdateUserAccountActiveStatusAsync(long userId, bool isActive, long modifiedBy)
         {
             return await this._userManagementRepository.UpdateUserAccountActiveStatusAsync(userId, isActive, modifiedBy);
         }
 
-        public async Task<bool> UpdateUserAccountLockedStatusAsync(long userId, bool isLocked, long modifiedBy)
+        public async ValueTask<bool> UpdateUserAccountLockedStatusAsync(long userId, bool isLocked, long modifiedBy)
         {
             return await this._userManagementRepository.UpdateUserAccountLockedStatusAsync(userId, isLocked, modifiedBy);
         }
 
-        public async Task<bool> ChangeUserAccountPasswordAsync(User user)
+        public async ValueTask<bool> ChangeUserAccountPasswordAsync(User user)
         {
             user.PasswordSalt = Strings.CreateSalt(this._appSetting.AuthenticationSetting.PasswordSaltLength);
             user.Password = user.Password + user.PasswordSalt;

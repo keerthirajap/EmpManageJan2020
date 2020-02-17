@@ -9,20 +9,20 @@
 
     public interface IUserManagementService
     {
-        Task<List<User>> GetAllUserAccountsAsync();
+        ValueTask<List<User>> GetAllUserAccountsAsync();
 
-        Task<(User userDetails, List<UserRoles> userRoles, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId);
+        ValueTask<(User userDetails, List<UserRoles> userRoles, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId);
 
-        Task<List<UserGender>> GetAllUserGenderDetailsAsync();
+        ValueTask<List<UserGender>> GetAllUserGenderDetailsAsync();
 
-        Task<List<UserTitle>> GetAllUserTitleDetailsAsync();
+        ValueTask<List<UserTitle>> GetAllUserTitleDetailsAsync();
 
-        Task<bool> UpdateUserAccountDetailsAsync(User user);
+        ValueTask<bool> UpdateUserAccountDetailsAsync(User user);
 
-        Task<bool> UpdateUserAccountActiveStatusAsync(long userId, bool isActive, long modifiedBy);
+        ValueTask<bool> UpdateUserAccountActiveStatusAsync(long userId, bool isActive, long modifiedBy);
 
-        Task<bool> UpdateUserAccountLockedStatusAsync(long userId, bool isLocked, long modifiedBy);
+        ValueTask<bool> UpdateUserAccountLockedStatusAsync(long userId, bool isLocked, long modifiedBy);
 
-        Task<bool> ChangeUserAccountPasswordAsync(User user);
+        ValueTask<bool> ChangeUserAccountPasswordAsync(User user);
     }
 }
