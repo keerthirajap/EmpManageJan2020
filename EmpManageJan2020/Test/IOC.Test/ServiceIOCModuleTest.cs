@@ -12,10 +12,10 @@ using CompName.ManageStocks.CrossCutting.Logging;
 using CompName.ManageStocks.ServiceInterface;
 using CompName.ManageStocks.CrossCutting.Configuration;
 
-namespace IOCTest
+namespace IOC.Test
 {
     [TestClass]
-    public class RepositoryIOCModuleTest
+    public class ServiceIOCModuleTest
     {
         protected IContainer _container { get; private set; }
         private readonly NLog.Logger logger;
@@ -25,20 +25,22 @@ namespace IOCTest
         {
             var containerBuilder = new ContainerBuilder();
 
+            containerBuilder.Register(c => new AppSetting()).SingleInstance();
             containerBuilder.Register(c => new LogInterceptor(this.logger)).SingleInstance();
+            containerBuilder.RegisterModule(new ServiceIOCModule("InstancePerLifetimeScope"));
             containerBuilder.RegisterModule(new RepositoryIOCModule("", "InstancePerLifetimeScope"));
 
             this._container = containerBuilder.Build();
         }
 
         [TestMethod]
-        public void ValidateRepositoryRegistrations()
+        public void ValidateServiceRegistrations()
         {
-            var _userManagementRepository = _container.Resolve<IUserManagementRepository>();
-            Assert.IsNotNull(_userManagementRepository, "UserManagementRepository is not registered");
+            var _userManagementService = _container.Resolve<IUserManagementService>();
+            Assert.IsNotNull(_userManagementService, "UserManagementService is not registered");
 
-            var _authenticationRepository = _container.Resolve<IAuthenticationRepository>();
-            Assert.IsNotNull(_authenticationRepository, "IAuthenticationRepository is not registered");
+            var _authenticationService = _container.Resolve<IAuthenticationService>();
+            Assert.IsNotNull(_authenticationService, "IAuthenticationService is not registered");
         }
     }
 }

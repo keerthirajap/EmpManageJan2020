@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
 
-namespace ServiceTest
+namespace Service.Test
 {
     [TestClass]
     public class UserManagementServiceTest

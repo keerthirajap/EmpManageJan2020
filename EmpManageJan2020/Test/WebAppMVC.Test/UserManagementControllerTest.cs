@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace WebAppMVCTest
+namespace WebAppMVC.Test
 {
     public class UserManagementControllerTest
     {

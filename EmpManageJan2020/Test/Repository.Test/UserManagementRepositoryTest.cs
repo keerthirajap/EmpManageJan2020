@@ -9,7 +9,7 @@ using FizzWare.NBuilder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace RepositoryTest
+namespace Repository.Test
 {
     [TestClass]
     public class UserManagementRepository
