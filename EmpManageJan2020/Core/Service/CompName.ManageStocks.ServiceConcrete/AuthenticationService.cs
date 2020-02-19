@@ -16,9 +16,15 @@
 
     public class AuthenticationService : IAuthenticationService
     {
+        #region Private Variables
+
         private readonly AppSetting _appSetting;
 
         private readonly IAuthenticationRepository _authenticationRepository;
+
+        #endregion Private Variables
+
+        #region Constructor
 
         public AuthenticationService(
                         AppSetting appSetting,
@@ -29,6 +35,12 @@
             this._authenticationRepository = authenticationRepository;
         }
 
+        #endregion Constructor
+
+        #region Public Methods
+
+        #region Register User
+
         public async ValueTask<User> RegisterUserAsync(User user)
         {
             user.PasswordSalt = Strings.CreateSalt(this._appSetting.AuthenticationSetting.PasswordSaltLength);
@@ -37,6 +49,34 @@
             user.Password = null;
             return await this._authenticationRepository.RegisterUserAsync(user);
         }
+
+        public async ValueTask<bool> IsUserNameExistsAsync(string userName)
+        {
+            var userNames = await this._authenticationRepository.GetUserNameForNewUserValidationAsync(userName);
+
+            if (userNames != null && userNames.Any(x => x == userName))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async ValueTask<bool> IsEmailIdExistsAsync(string emailId)
+        {
+            var emailIds = await this._authenticationRepository.GetEmailIdForNewUserValidationAsync(emailId);
+
+            if (emailIds != null && emailIds.Any(x => x == emailId))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion Register User
+
+        #region User Login
 
         public async ValueTask<(UserLogin userLogin, List<UserRole> userRoles)> ValidateUserLoginAsync(UserLogin userLogin)
         {
@@ -86,28 +126,12 @@
             return (userLogin, userRoles);
         }
 
-        public async ValueTask<bool> IsUserNameExistsAsync(string userName)
-        {
-            var userNames = await this._authenticationRepository.GetUserNameForNewUserValidationAsync(userName);
+        #endregion User Login
 
-            if (userNames != null && userNames.Any(x => x == userName))
-            {
-                return true;
-            }
+        #endregion Public Methods
 
-            return false;
-        }
+        #region Private Methods
 
-        public async ValueTask<bool> IsEmailIdExistsAsync(string emailId)
-        {
-            var emailIds = await this._authenticationRepository.GetEmailIdForNewUserValidationAsync(emailId);
-
-            if (emailIds != null && emailIds.Any(x => x == emailId))
-            {
-                return true;
-            }
-
-            return false;
-        }
+        #endregion Private Methods
     }
 }

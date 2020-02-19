@@ -8,12 +8,20 @@
 
     public interface IAuthenticationService
     {
-        ValueTask<User> RegisterUserAsync(User user);
+        #region Register User
 
-        ValueTask<(UserLogin userLogin, List<UserRole> userRoles)> ValidateUserLoginAsync(UserLogin userLogin);
+        ValueTask<User> RegisterUserAsync(User user);
 
         ValueTask<bool> IsUserNameExistsAsync(string userName);
 
         ValueTask<bool> IsEmailIdExistsAsync(string emailId);
+
+        #endregion Register User
+
+        #region User Login
+
+        ValueTask<(UserLogin userLogin, List<UserRole> userRoles)> ValidateUserLoginAsync(UserLogin userLogin);
+
+        #endregion User Login
     }
 }

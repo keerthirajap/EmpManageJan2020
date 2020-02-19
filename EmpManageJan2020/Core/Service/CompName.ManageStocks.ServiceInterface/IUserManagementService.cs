@@ -39,7 +39,9 @@
 
         #region Manage User Roles
 
-        ValueTask<List<UserRole>> GetGetUserRolesAsync(long userId);
+        ValueTask<List<UserRole>> GetUserRolesAsync(long userId);
+
+        ValueTask<bool> EditUserRolesAsync(List<UserRole> editUserRoles, long modifiedBy);
 
         #endregion Manage User Roles
     }

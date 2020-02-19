@@ -26,12 +26,18 @@
     [Area("Authentication")]
     public class AuthController : Controller
     {
+        #region Private Variables
+
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
 
         private readonly AppSetting _appSetting;
 
         private readonly ServiceInterface.IAuthenticationService _authenticationService;
+
+        #endregion Private Variables
+
+        #region Constructor
 
         public AuthController(
                                IMapper mapper,
@@ -44,6 +50,12 @@
             this._appSetting = appSetting;
             this._authenticationService = authenticationService;
         }
+
+        #endregion Constructor
+
+        #region Public Methods
+
+        #region Register User
 
         [HttpGet("RegisterUser")]
         public async ValueTask<IActionResult> RegisterUserAsync()
@@ -128,6 +140,10 @@
             }
         }
 
+        #endregion Register User
+
+        #region User Login
+
         [HttpGet("Login")]
         public async ValueTask<IActionResult> LoginAsync()
         {
@@ -193,6 +209,8 @@
             return this.Json(ajaxReturn);
         }
 
+        #endregion User Login
+
         [HttpGet("LogOut")]
         public async ValueTask<IActionResult> LogOutAsync()
         {
@@ -215,6 +233,10 @@
 
             return await Task.Run(() => this.PartialView("_LoggedUserDetails", userAccountViewModel));
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private async ValueTask AuthenticateUserWithCookieAsync(UserLogin userLogin, List<UserRoleViewModel> userRolesVM)
         {
@@ -267,5 +289,7 @@
                                             IsPersistent = true,
                                         });
         }
+
+        #endregion Private Methods
     }
 }

@@ -301,7 +301,7 @@
             List<UserRole> userRoles = new List<UserRole>();
 
             var task1 = this._userManagementService.GetUserAccountDetailsAsync(userId);
-            var task2 = this._userManagementService.GetGetUserRolesAsync(userId);
+            var task2 = this._userManagementService.GetUserRolesAsync(userId);
 
             await Task.WhenAll(task1.AsTask(), task2.AsTask());
 
@@ -312,6 +312,25 @@
             userRolesViewModel = this._mapper.Map<List<UserRoleViewModel>>(userRoles);
 
             return await Task.Run(() => this.View("EditUserRoles", (userAccountViewModel, userRolesViewModel)));
+        }
+
+        [HttpPost]
+        [Route("[controller]/EditUserRoles")]
+        public async ValueTask<IActionResult> EditUserRolesAsync(List<UserRoleViewModel> userRolesViewModel)
+        {
+            dynamic ajaxReturn = new JObject();
+
+            List<UserRole> userRoles = new List<UserRole>();
+            userRoles = this._mapper.Map<List<UserRole>>(userRolesViewModel);
+
+            var userAuthenticationModel = WebAppMVCExtensions.GetLoggedInUserDetails(this.User);
+
+            var isEditUserRoleSuccess = await this._userManagementService.EditUserRolesAsync(userRoles, userAuthenticationModel.UserId);
+
+            ajaxReturn.Status = "Success";
+            ajaxReturn.Message = "User role changed sucessfully.";
+
+            return this.Json(ajaxReturn);
         }
 
         #endregion Manage User Roles

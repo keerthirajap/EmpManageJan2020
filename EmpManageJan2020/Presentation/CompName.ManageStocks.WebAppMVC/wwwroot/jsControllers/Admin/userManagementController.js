@@ -1,5 +1,7 @@
 ﻿(
     function (publicMethod, $) {
+        // #region Update User Account Details
+
         publicMethod.updateUserDetailsOnBegin = function (xhr, data) {
             sharedController.showLoadingIndicator();
         }
@@ -172,14 +174,11 @@
             });
         }
 
-     
-
-            publicMethod.changeUserAccountPasswordOnBegin = function (xhr, data) {
+        publicMethod.changeUserAccountPasswordOnBegin = function (xhr, data) {
             sharedController.showLoadingIndicator();
         }
 
         publicMethod.changeUserAccountPasswordOnComplete = function (xhr, data) {
-          
             sharedController.hideLoadingIndicator();
         }
 
@@ -204,7 +203,6 @@
                     }
                 }).then((result) => {
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        
                     }
                 })
             }
@@ -214,5 +212,7 @@
             sharedController.hideLoadingIndicator();
             sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
         }
+
+        // #endregion Update Account Details
     }(window.userManagementController = window.userManagementController || {}, jQuery)
 );

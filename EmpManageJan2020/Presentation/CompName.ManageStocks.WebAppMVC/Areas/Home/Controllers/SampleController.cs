@@ -14,6 +14,16 @@
     [Area("Home")]
     public class SampleController : Controller
     {
+        #region Private Variables
+
+        #endregion Private Variables
+
+        #region Constructor
+
+        #endregion Constructor
+
+        #region Public Methods
+
         public IActionResult Authorization()
         {
             return this.View();
@@ -54,5 +64,11 @@
         {
             return this.View();
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        #endregion Private Methods
     }
 }

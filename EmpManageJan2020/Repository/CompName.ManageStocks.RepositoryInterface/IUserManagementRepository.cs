@@ -50,7 +50,10 @@
         #region Manage User Roles
 
         [Sql("[dbo].[P_GetUserRoles]")]
-        Task<List<UserRole>> GetGetUserRolesAsync(long userId);
+        Task<List<UserRole>> GetUserRolesAsync(long userId);
+
+        [Sql("[dbo].[P_EditUserRoles]")]
+        Task<bool> EditUserRolesAsync(List<UserRole> editUserRoles, long modifiedBy);
 
         #endregion Manage User Roles
     }

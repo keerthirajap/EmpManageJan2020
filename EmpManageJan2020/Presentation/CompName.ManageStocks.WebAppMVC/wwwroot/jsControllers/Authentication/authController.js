@@ -1,5 +1,7 @@
 ﻿(
     function (publicMethod, $) {
+        // #region Register User
+
         publicMethod.registerUserOnBegin = function (xhr, data) {
             sharedController.showLoadingIndicator();
         }
@@ -39,6 +41,10 @@
             sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
         }
 
+        // #endregion Register User
+
+        // #region login User
+
         publicMethod.loginOnBegin = function (xhr, data) {
             sharedController.showLoadingIndicator();
         }
@@ -63,5 +69,7 @@
         publicMethod.loginOnfailure = function (xMLHttpRequest, textStatus, errorThrown) {
             sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
         }
+
+        // #endregion login User
     }(window.authController = window.authController || {}, jQuery)
 );

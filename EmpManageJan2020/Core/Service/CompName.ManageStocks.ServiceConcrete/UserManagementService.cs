@@ -112,9 +112,14 @@
 
         #region Manage User Roles
 
-        public async ValueTask<List<UserRole>> GetGetUserRolesAsync(long userId)
+        public async ValueTask<List<UserRole>> GetUserRolesAsync(long userId)
         {
-            return await this._userManagementRepository.GetGetUserRolesAsync(userId);
+            return await this._userManagementRepository.GetUserRolesAsync(userId);
+        }
+
+        public async ValueTask<bool> EditUserRolesAsync(List<UserRole> editUserRoles, long modifiedBy)
+        {
+            return await this._userManagementRepository.EditUserRolesAsync(editUserRoles, modifiedBy);
         }
 
         #endregion Manage User Roles

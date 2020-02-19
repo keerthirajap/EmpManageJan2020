@@ -1,20 +1,10 @@
 ﻿(
     function (publicMethod, $) {
+        // #region PopUps
+
         publicMethod.showAjaxErrorMessagePopUp = function (xMLHttpRequest, textStatus, errorThrown) {
-            if (xMLHttpRequest.status == '401' || xMLHttpRequest.status == '403' ) {
+            if (xMLHttpRequest.status == '401' || xMLHttpRequest.status == '403') {
                 $('#ajaxAccessDeniedMessagePopUp').modal('show');
-
-                //setTimeout(
-                //    function () {
-                //        sharedController.showLoadingIndicator();
-                //        return "false";
-                //    }, 3000);
-
-                //setTimeout(
-                //    function () {
-                //        location.reload();
-                //        return "false";
-                //    }, 3500);
             }
             else {
                 if (xMLHttpRequest.getResponseHeader('RequestTime') != null) {
@@ -37,6 +27,19 @@
             sharedController.hideLoadingIndicator();
         }
 
+        publicMethod.showLoadingIndicator = function () {
+            document.getElementById("myNav").style.height = "100%";
+        }
+
+        publicMethod.hideLoadingIndicator = function () {
+            setTimeout(
+                function () {
+                    document.getElementById("myNav").style.height = "0%";
+                }, 100);
+        }
+
+        // #endregion PopUps
+
         publicMethod.navActiveColorChange = function (navBarId) {
             $('[id^="nav-Item"]').removeClass('active');
 
@@ -53,27 +56,18 @@
             });
         }
 
-        publicMethod.showLoadingIndicator = function () {
-            document.getElementById("myNav").style.height = "100%";
-        }
-
-        publicMethod.hideLoadingIndicator = function () {
-            setTimeout(
-                function () {
-                    document.getElementById("myNav").style.height = "0%";
-                }, 100);
-        }
-
         publicMethod.redirectToUrl = function (url) {
             sharedController.showLoadingIndicator();
             window.location.href = url;
-        },
+        }
 
-            publicMethod.redirectToHomePage = function () {
-                sharedController.showLoadingIndicator();
-                var url = "/";
-                window.location.href = url;
-            }
+        publicMethod.redirectToHomePage = function () {
+            sharedController.showLoadingIndicator();
+            var url = "/";
+            window.location.href = url;
+        }
+
+        // #region Manage Cookie
 
         publicMethod.createCookie = function (cookieName, value, days) {
             if (days) {
@@ -105,6 +99,10 @@
         publicMethod.eraseCookie = function (cookieName) {
             document.cookie = cookieName + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         }
+
+        // #endregion  Manage Cookie
+
+        // #region User Details
 
         publicMethod.onLogoutButtonClick = function (url) {
             sharedController.showLoadingIndicator();
@@ -145,7 +143,6 @@
         }
 
         publicMethod.getLoggedUserDetails = function (actionUrl) {
-
             sharedController.showLoadingIndicator();
             var loggedInUserId = $('#hdnLoggedInUserId').val();
 
@@ -154,7 +151,7 @@
                 type: "GET",
                 url: actionUrl,
                 data: { loggedInUserId: loggedInUserId },
-                
+
                 headers: {
                     "RequestVerificationToken": $('input[name = __RequestVerificationToken]').val()
                 },
@@ -176,5 +173,7 @@
                 }
             });
         }
+
+        // #endregion User Details
     }(window.sharedController = window.sharedController || {}, jQuery)
 );

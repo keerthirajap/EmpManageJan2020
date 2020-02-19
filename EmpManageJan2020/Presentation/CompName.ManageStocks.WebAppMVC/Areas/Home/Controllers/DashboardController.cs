@@ -14,10 +14,26 @@
     [ApplicationAuthorize]
     public class DashboardController : Controller
     {
+        #region Private Variables
+
+        #endregion Private Variables
+
+        #region Constructor
+
+        #endregion Constructor
+
+        #region Public Methods
+
         [Route("")]
         public IActionResult Index()
         {
             return this.View();
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        #endregion Private Methods
     }
 }

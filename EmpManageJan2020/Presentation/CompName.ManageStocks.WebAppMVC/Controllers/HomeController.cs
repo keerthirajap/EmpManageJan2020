@@ -12,12 +12,22 @@
 
     public class HomeController : Controller
     {
+        #region Private Variables
+
         private readonly ILogger<HomeController> _logger;
+
+        #endregion Private Variables
+
+        #region Constructor
 
         public HomeController(ILogger<HomeController> logger)
         {
             this._logger = logger;
         }
+
+        #endregion Constructor
+
+        #region Public Methods
 
         public IActionResult Index()
         {
@@ -42,5 +52,11 @@
         {
             return this.View();
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        #endregion Private Methods
     }
 }

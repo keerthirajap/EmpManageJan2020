@@ -10,12 +10,22 @@
     //Follow anti-pattern only
     public class LogInterceptor : IInterceptor
     {
+        #region Private Variables
+
         private readonly ILogger _logger;
+
+        #endregion Private Variables
+
+        #region Constructor
 
         public LogInterceptor(ILogger logger)
         {
             this._logger = logger;
         }
+
+        #endregion Constructor
+
+        #region Public Methods
 
         public void Intercept(IInvocation invocation)
         {
@@ -46,6 +56,10 @@
                 throw;
             }
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private static async Task InterceptAsync(Task task, ILogger logger, string invocationTarget, string methodName, string codeBase)
         {
@@ -105,5 +119,7 @@
             logMethodEvent.SetCallerInfo(invocationTarget, methodName + " - ", codeBase, 0);
             logger.Log(logMethodEvent);
         }
+
+        #endregion Private Methods
     }
 }
