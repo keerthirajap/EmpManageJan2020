@@ -14,7 +14,6 @@
 
     //Follow anti-pattern only
 
-    [ExcludeFromCodeCoverage]
     public class RepositoryIOCModule : Module
     {
         private readonly DbConnection _sqlConnection;
