@@ -8,12 +8,12 @@
 
     public interface IAuthenticationService
     {
-        Task<User> RegisterUserAsync(User user);
+        ValueTask<User> RegisterUserAsync(User user);
 
-        Task<(UserLogin userLogin, List<UserRoles> userRoles)> ValidateUserLoginAsync(UserLogin userLogin);
+        ValueTask<(UserLogin userLogin, List<UserRoles> userRoles)> ValidateUserLoginAsync(UserLogin userLogin);
 
-        Task<bool> IsUserNameExistsAsync(string userName);
+        ValueTask<bool> IsUserNameExistsAsync(string userName);
 
-        Task<bool> IsEmailIdExistsAsync(string emailId);
+        ValueTask<bool> IsEmailIdExistsAsync(string emailId);
     }
 }

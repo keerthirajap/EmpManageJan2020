@@ -29,7 +29,7 @@
             this._authenticationRepository = authenticationRepository;
         }
 
-        public async Task<User> RegisterUserAsync(User user)
+        public async ValueTask<User> RegisterUserAsync(User user)
         {
             user.PasswordSalt = Strings.CreateSalt(this._appSetting.AuthenticationSetting.PasswordSaltLength);
             user.Password = user.Password + user.PasswordSalt;
@@ -38,7 +38,7 @@
             return await this._authenticationRepository.RegisterUserAsync(user);
         }
 
-        public async Task<(UserLogin userLogin, List<UserRoles> userRoles)> ValidateUserLoginAsync(UserLogin userLogin)
+        public async ValueTask<(UserLogin userLogin, List<UserRoles> userRoles)> ValidateUserLoginAsync(UserLogin userLogin)
         {
             string passwordHash = string.Empty;
             bool isInCorrectLogging = false;
@@ -86,7 +86,7 @@
             return (userLogin, userRoles);
         }
 
-        public async Task<bool> IsUserNameExistsAsync(string userName)
+        public async ValueTask<bool> IsUserNameExistsAsync(string userName)
         {
             var userNames = await this._authenticationRepository.GetUserNameForNewUserValidationAsync(userName);
 
@@ -98,7 +98,7 @@
             return false;
         }
 
-        public async Task<bool> IsEmailIdExistsAsync(string emailId)
+        public async ValueTask<bool> IsEmailIdExistsAsync(string emailId)
         {
             var emailIds = await this._authenticationRepository.GetEmailIdForNewUserValidationAsync(emailId);
 

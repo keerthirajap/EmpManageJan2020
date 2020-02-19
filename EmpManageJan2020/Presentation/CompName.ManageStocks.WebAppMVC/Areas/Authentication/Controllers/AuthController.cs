@@ -46,7 +46,7 @@
         }
 
         [HttpGet("RegisterUser")]
-        public async Task<IActionResult> RegisterUserAsync()
+        public async ValueTask<IActionResult> RegisterUserAsync()
         {
             this._httpContextAccessor.HttpContext.Response.Cookies.Delete("EmployeeManage.AuthCookie");
 
@@ -55,7 +55,7 @@
         }
 
         [HttpPost("RegisterUser")]
-        public async Task<IActionResult> RegisterUserAsync([FromForm] RegisterUserViewModel registerUserViewModel)
+        public async ValueTask<IActionResult> RegisterUserAsync([FromForm] RegisterUserViewModel registerUserViewModel)
         {
             dynamic ajaxReturn = new JObject();
             var user = this._mapper.Map<User>(registerUserViewModel);
@@ -93,7 +93,7 @@
         }
 
         [HttpGet("IsUserNameExists")]
-        public async Task<IActionResult> IsUserNameExistsAsync(string userName)
+        public async ValueTask<IActionResult> IsUserNameExistsAsync(string userName)
         {
             User user = new User();
             bool isUserNameExists = false;
@@ -129,7 +129,7 @@
         }
 
         [HttpGet("Login")]
-        public async Task<IActionResult> LoginAsync()
+        public async ValueTask<IActionResult> LoginAsync()
         {
             this._httpContextAccessor.HttpContext.Response.Cookies.Delete("EmployeeManage.AuthCookie");
 
@@ -138,7 +138,7 @@
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginAsync([FromForm] LoginViewModel loginViewModel)
+        public async ValueTask<IActionResult> LoginAsync([FromForm] LoginViewModel loginViewModel)
         {
             dynamic ajaxReturn = new JObject();
             UserLogin userLogin = new UserLogin();
@@ -194,7 +194,7 @@
         }
 
         [HttpGet("LogOut")]
-        public async Task<IActionResult> LogOutAsync()
+        public async ValueTask<IActionResult> LogOutAsync()
         {
             await this.HttpContext.SignOutAsync();
 
@@ -209,14 +209,14 @@
         [HttpGet]
         [Route("[controller]/LoadLoggedUserDetailsPartialView")]
 
-        public async Task<IActionResult> LoadLoggedUserDetailsPartialViewAsync(long loggedInUserId)
+        public async ValueTask<IActionResult> LoadLoggedUserDetailsPartialViewAsync(long loggedInUserId)
         {
             UserAccountViewModel userAccountViewModel = new UserAccountViewModel();
 
             return await Task.Run(() => this.PartialView("_LoggedUserDetails", userAccountViewModel));
         }
 
-        private async Task AuthenticateUserWithCookieAsync(UserLogin userLogin, List<UserRolesViewModel> userRolesVM)
+        private async ValueTask AuthenticateUserWithCookieAsync(UserLogin userLogin, List<UserRolesViewModel> userRolesVM)
         {
             var option = new CookieOptions();
             option.Expires = DateTime.Now.AddMinutes(1);

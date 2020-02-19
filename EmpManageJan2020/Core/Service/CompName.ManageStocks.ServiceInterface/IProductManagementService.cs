@@ -8,6 +8,6 @@
 
     public interface IProductManagementService
     {
-        Task<long> CreateProductAsync(Product createProduct);
+        ValueTask<long> CreateProductAsync(Product createProduct);
     }
 }

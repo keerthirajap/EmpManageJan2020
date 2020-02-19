@@ -25,7 +25,7 @@
             this._productManagementRepository = productManagementRepository;
         }
 
-        public async Task<long> CreateProductAsync(Product createProduct)
+        public async ValueTask<long> CreateProductAsync(Product createProduct)
         {
             return await this._productManagementRepository.CreateProductAsync(createProduct);
         }
