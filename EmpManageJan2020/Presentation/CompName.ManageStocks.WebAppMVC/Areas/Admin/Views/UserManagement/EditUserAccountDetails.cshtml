@@ -1,0 +1,302 @@
+﻿@model CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement.UpdateUserAccountViewModel
+
+@{
+    ViewData["Title"] = @Model.UserName + " - User Details";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div class="card">
+    <div class="card-header">
+        <h3>
+            <strong>User Name :</strong>  @Model.UserName
+            <strong class="pl-4"> User Id :</strong>  @Model.UserId
+        </h3>
+    </div>
+
+    <div class="row" style="">
+        <div class="col-sm-12">
+
+            <div class="bs-component">
+                <ul class="nav nav-tabs pt-2 pl-2">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="tab-EditUserDetails"
+                           href="@Url.Action("EditUserAccountDetails", "UserManagement", new { Area="Admin"})?userId=@Model.UserId">
+                            <i class="fas fa-user-edit"></i>Edit Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab-EditUserRoles"
+                           href="@Url.Action("EditUserRoles", "UserManagement", new { Area=""})?userId=@Model.UserId">
+                            <i class="fas fa-user-check"></i>Edit Roles
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="@Url.Action("UserLoginHistory", "UserManagement", new { Area=""})?userId=@Model.UserId">
+                            <i class="fas fa-user-clock"></i> Logins
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="@Url.Action("UserInCorrectLoginHistory", "UserManagement", new { Area=""})?userId=@Model.UserId">
+                            <i class="fas fa-exclamation-triangle"></i> In Correct Logins
+                        </a>
+                    </li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade show active" id="EditUserDetails">
+                        <div class="card">
+
+                            <form id="formSaveUserDetails"
+                                  asp-area="Admin" asp-controller="UserManagement" asp-action="UpdateUserAccountDetails"
+                                  method="post" data-ajax="true"
+                                  data-ajax-begin="userManagementController.updateUserDetailsOnBegin"
+                                  data-ajax-complete="userManagementController.updateUserDetailsOnComplete"
+                                  data-ajax-success="userManagementController.updateUserDetailsOnSuccess"
+                                  data-ajax-failure="userManagementController.updateUserDetailsOnfailure">
+
+                                <div class="card-body">
+                                    <div id="ajaxAddUserResult">
+                                        <div class="row pt-3">
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                                <div class="form-group">
+                                                    <label asp-for="UserId">User Id</label>
+                                                    <input type="text" asp-for="UserId"
+                                                           class="form-control" id="txtUserId"
+                                                           readonly>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                                <div class="form-group">
+                                                    <input asp-for="UserName" type="hidden" />
+                                                    <label asp-for="UserName"></label>
+                                                    <input type="text" asp-for="UserName"
+                                                           class="form-control" id="txtUserName"
+                                                           placeholder="Enter User Name" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                                <div class="form-group">
+                                                    <input asp-for="EmailId" type="hidden" />
+                                                    <label asp-for="EmailId"></label>
+                                                    <input type="text" asp-for="EmailId"
+                                                           class="form-control" id="txtEmailId"
+                                                           placeholder="Enter EmailId" readonly>
+                                                </div>
+                                            </div>
+                                            9
+                                        </div>
+
+                                        <div class="row pt-3">
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                                <div class="form-group">
+
+                                                    <label>Title</label>
+                                                    <select class="form-control" asp-for="UserTitleId" id="selectUserTitle"
+                                                            asp-items="@(new SelectList(Model.UserTitles,"UserTitleId","UserTitleDesc"))">
+                                                    </select>
+                                                    <span asp-validation-for="UserTitleId" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                                <div class="form-group">
+                                                    <label asp-for="FirstName"></label>
+                                                    <input type="text" asp-for="FirstName"
+                                                           class="form-control" id="txtFirstName"
+                                                           placeholder="Enter First Name">
+                                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                                <div class="form-group">
+                                                    <label asp-for="LastName"></label>
+                                                    <input type="text" asp-for="LastName"
+                                                           class="form-control" id="txtLastName"
+                                                           placeholder="Enter Last Name">
+                                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                                <div class="form-group">
+                                                    <label asp-for="FullName"></label>
+                                                    <input type="text" asp-for="FullName"
+                                                           class="form-control" id="txtFullName"
+                                                           placeholder="" readonly>
+
+                                                    <input asp-for="FullName" type="hidden" id="hdnFullName" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                                <div class="form-group">
+
+                                                    <label>Gender</label>
+                                                    <select class="form-control" asp-for="UserGenderId" id="selectUserGender"
+                                                            asp-items="@(new SelectList(Model.UserGenders,"UserGenderId","UserGenderDesc"))">
+                                                    </select>
+                                                    <span asp-validation-for="UserGenderId" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch pt-5">
+                                                        <input asp-for="IsActive" type="checkbox" class="custom-control-input" id="chkIsActive">
+                                                        <label asp-for="IsActive" class="custom-control-label" for="chkIsActive"></label>
+                                                    </div>
+                                                    <div class="custom-control custom-switch pt-1">
+                                                        <input asp-for="IsLocked" type="checkbox" class="custom-control-input" id="chkIsLocked">
+                                                        <label class="custom-control-label" for="chkIsLocked">Account Locked</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Save
+                                    </button>
+                                    <button type="button" id="btnClear" onclick="userManagementController.clearUserDetailsOnClick()"
+                                            class="btn btn-info ml-3">
+                                        <i class="fas fa-redo"></i>Clear
+                                    </button>
+
+                                    <button type="button" id="btnChangePassword" onclick="userManagementController.changePasswordOnClick(loadChangePasswordPartialViewURL)"
+                                            class="btn btn-secondary ml-3">
+                                        <i class="fas fa-key"></i>Change Password
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="modal" id="modalChangeUserAccountStatusPopUp" data-backdrop="static">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title blockquote">
+                                                <strong id="">Confirm</strong>
+                                            </h6>
+                                        </div>
+                                        <div class="modal-body" id="txtChangeUserAccountStatusPopUp">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" id="btnChangeUserAccountStatusPopUpConfirm">
+                                                <i class="fas fa-check"></i> Yes
+                                            </button>
+
+                                            <button type="button" class="btn btn-info" id="btnChangeUserAccountStatusPopUpCnl">
+                                                <i class="fas fa-times-circle"></i> No
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal" id="modalChangeUserAccountLockStatusPopUp" data-backdrop="static">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title blockquote">
+                                                <strong id="">Confirm</strong>
+                                            </h6>
+                                        </div>
+                                        <div class="modal-body" id="txtChangeUserAccountLockStatusPopUp">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" id="btnChangeUserAccountLockStatusPopUpConfirm">
+                                                <i class="fas fa-check"></i> Yes
+                                            </button>
+
+                                            <button type="button" class="btn btn-info" id="btnChangeUserAccountLockStatusPopUpCnl">
+                                                <i class="fas fa-times-circle"></i> No
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="loadChangePasswordPartialView">
+</div>
+<script src="~/jsControllers/Admin/userManagementController.js"></script>
+
+<script>
+    var updateUserAccountActiveStatusURL = '@Url.Action("UpdateUserAccountActiveStatus", "UserManagement", new { Area = "Admin" })';
+    var updateUserAccountLockedStatusURL = '@Url.Action("UpdateUserAccountLockedStatus", "UserManagement", new { Area = "Admin" })';
+    var loadChangePasswordPartialViewURL = '@Url.Action("LoadChangePasswordPartialView", "UserManagement", new { Area = "Admin" })';
+
+    $(window).on("load", function () {
+
+          $('#txtFirstName, #txtLastName').on('input keyup', function () {
+            $('#txtFullName').val($('#txtFirstName').val() + ' ' + $('#txtLastName').val());
+            $('#hdnFullName').val($('#txtFirstName').val() + ' ' + $('#txtLastName').val());
+        });
+
+        $('#chkIsActive').click(function () {
+
+            if (!$(this).prop('checked')) {
+                 $('#txtChangeUserAccountStatusPopUp').text('Do you want to disable this account?');
+            }
+            else {
+                 $('#txtChangeUserAccountStatusPopUp').text('Do you want to enable this account?');
+            }
+            $('#modalChangeUserAccountStatusPopUp').modal('show');
+        });
+
+        $('#btnChangeUserAccountStatusPopUpConfirm').click(function () {
+            userManagementController.updateUserAccountActiveStatus(updateUserAccountActiveStatusURL);
+         });
+
+        $('#btnChangeUserAccountStatusPopUpCnl').click(function () {
+
+            if ($('#chkIsActive').prop('checked')) {
+                $('#chkIsActive').prop('checked', false);
+            }
+            else {
+                $('#chkIsActive').prop('checked', true);
+            }
+
+            $('#modalChangeUserAccountStatusPopUp').modal('hide');
+        });
+
+         $('#chkIsLocked').click(function () {
+
+            if (!$(this).prop('checked')) {
+                 $('#txtChangeUserAccountLockStatusPopUp').text('Do you want to unlock this account?');
+            }
+            else {
+                 $('#txtChangeUserAccountLockStatusPopUp').text('Do you want to lock this account?');
+            }
+            $('#modalChangeUserAccountLockStatusPopUp').modal('show');
+         });
+
+        $('#btnChangeUserAccountLockStatusPopUpCnl').click(function () {
+
+            if ($('#chkIsLocked').prop('checked')) {
+                $('#chkIsLocked').prop('checked', false);
+            }
+            else {
+                $('#chkIsLocked').prop('checked', true);
+            }
+
+            $('#modalChangeUserAccountLockStatusPopUp').modal('hide');
+        });
+
+         $('#btnChangeUserAccountLockStatusPopUpConfirm').click(function () {
+            userManagementController.UpdateUserAccountLockedStatus(updateUserAccountLockedStatusURL);
+         });
+
+        sharedController.navActiveColorChange("nav-item-Admin");
+        sharedController.hideLoadingIndicator();
+
+    });
+</script>

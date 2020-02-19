@@ -30,13 +30,13 @@
 </div>
 
 <script>
-   
+
     $(document).ready(function () {
 
         $('#example').dataTable({
             "bLengthChange": false,
             "ajax": {
-                    "url": '@Url.Action("GetAllUserAccountsData","UserManagement", new { Area="Admin"} )',
+                    "url": '@Url.Action("GetAllUserAccountsData","UserManagement", new { Area=""} )',
                     "type": "GET",
                     "datatype": "json",
                       "error": function (xMLHttpRequest, textStatus, errorThrown)
@@ -51,14 +51,13 @@
                   $('.userId').click(function () {
                         sharedController.showLoadingIndicator();
 
-
                      });
             },
             "columns": [
 
                  {
                         "render": function (data, type, full, meta)
-                        { return '<u><a class="userId" href="@Url.Action("GetUserAccountDetails", "UserManagement", new { Area="Admin"})?userId=' + full.UserId + '"> ' + full.UserId +'</a></u>'; }
+                        { return '<u><a class="userId" href="@Url.Action("EditUserAccountDetails", "UserManagement", new { Area="Admin"})?userId=' + full.UserId + '"> ' + full.UserId +'</a></u>'; }
                 },
 
                     //{ "data": "UserId", "autoWidth": true },
@@ -73,13 +72,10 @@
 
         });
 
-
     });
 
      $(window).on("load", function () {
          sharedController.navActiveColorChange("nav-item-Admin");
 
-
      });
-
 </script>

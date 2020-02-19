@@ -41,7 +41,7 @@
         publicMethod.updateUserAccountActiveStatus = function (actionUrl) {
             sharedController.showLoadingIndicator();
 
-            var userId = $('#hdnUserId').val();
+            var userId = $('#txtUserId').val();
             var isActive = $('#chkIsActive').is(":checked");
 
             $.ajax({
@@ -88,7 +88,7 @@
         publicMethod.UpdateUserAccountLockedStatus = function (actionUrl) {
             sharedController.showLoadingIndicator();
 
-            var userId = $('#hdnUserId').val();
+            var userId = $('#txtUserId').val();
             var isLocked = $('#chkIsLocked').is(":checked");
 
             $.ajax({

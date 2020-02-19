@@ -1,0 +1,76 @@
+﻿@model CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement.UpdateUserAccountViewModel
+
+@{
+    ViewData["Title"] = @Model.UserName + " - User Details";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div class="card">
+    <div class="card-header">
+        <h3>
+            <strong>User Name :</strong>  @Model.UserName
+            <strong class="pl-4"> User Id :</strong>  @Model.UserId
+        </h3>
+    </div>
+
+    <div class="row" style="">
+        <div class="col-sm-12">
+
+            <div class="bs-component">
+                <ul class="nav nav-tabs pt-2 pl-2">
+                    <li class="nav-item">
+                        <a class="nav-link " id="tab-EditUserDetails"
+                           href="@Url.Action("EditUserAccountDetails", "UserManagement", new { Area="Admin"})?userId=@Model.UserId">
+                            <i class="fas fa-user-edit"></i>Edit Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="tab-EditUserRoles"
+                           href="@Url.Action("EditUserRoles", "UserManagement", new { Area=""})?userId=@Model.UserId">
+                            <i class="fas fa-user-check"></i>Edit Roles
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                           href="@Url.Action("UserLoginHistory", "UserManagement", new { Area=""})?userId=@Model.UserId">
+                            <i class="fas fa-user-clock"></i> Logins
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="@Url.Action("UserInCorrectLoginHistory", "UserManagement", new { Area=""})?userId=@Model.UserId">
+                            <i class="fas fa-exclamation-triangle"></i> In Correct Logins
+                        </a>
+                    </li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade show" id="EditUserDetails">
+                    </div>
+                    <div class="tab-pane fade show" id="EditUserRoles">
+                        <div class="card">
+                            Roles
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show active" id="UserLoginHistory">
+                        <div class="card">
+                            UserLoginHistory
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/jsControllers/Admin/userManagementController.js"></script>
+
+<script>
+
+    $(window).on("load", function () {
+
+        sharedController.navActiveColorChange("nav-item-Admin");
+        sharedController.hideLoadingIndicator();
+
+    });
+</script>
