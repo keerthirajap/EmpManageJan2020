@@ -11,15 +11,13 @@
     {
         ValueTask<List<User>> GetAllUserAccountsAsync();
 
-        ValueTask<User> GetUserAccountDetailsAsync(long userId);
-
         ValueTask<List<UserGender>> GetAllUserGenderDetailsAsync();
 
         ValueTask<List<UserTitle>> GetAllUserTitleDetailsAsync();
 
-        ValueTask<List<UserLogin>> GetUserLoginHistoryAsync(long userId);
+        #region Manage User
 
-        ValueTask<List<UserLogin>> GetUserInCorrectLoginHistoryAsync(long userId);
+        ValueTask<User> GetUserAccountDetailsAsync(long userId);
 
         ValueTask<bool> UpdateUserAccountDetailsAsync(User user);
 
@@ -28,5 +26,21 @@
         ValueTask<bool> UpdateUserAccountLockedStatusAsync(long userId, bool isLocked, long modifiedBy);
 
         ValueTask<bool> ChangeUserAccountPasswordAsync(User user);
+
+        #endregion Manage User
+
+        #region User Login History
+
+        ValueTask<List<UserLogin>> GetUserLoginHistoryAsync(long userId);
+
+        ValueTask<List<UserLogin>> GetUserInCorrectLoginHistoryAsync(long userId);
+
+        #endregion User Login History
+
+        #region Manage User Roles
+
+        ValueTask<List<UserRole>> GetGetUserRolesAsync(long userId);
+
+        #endregion Manage User Roles
     }
 }

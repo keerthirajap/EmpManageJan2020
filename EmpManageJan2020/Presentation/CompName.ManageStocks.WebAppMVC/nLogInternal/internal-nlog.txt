@@ -5700,3 +5700,17 @@
 2020-02-19 14:32:59.2517 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: dbAsync
 2020-02-19 14:32:59.2517 Info Closing old configuration.
 2020-02-19 14:32:59.3028 Info Found 34 configuration items
+2020-02-19 15:10:28.4324 Info Message Template Auto Format enabled
+2020-02-19 15:10:28.4637 Info Loading assembly: NLog.Web.AspNetCore
+2020-02-19 15:10:28.6851 Info Adding target AsyncTargetWrapper(Name=LogFileAsync)
+2020-02-19 15:10:28.7301 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-02-19 15:10:28.7410 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: dbAsync
+2020-02-19 15:10:28.8063 Info Found 34 configuration items
+2020-02-19 15:10:31.1113 Info Configuring from an XML element in C:\Users\Keerthiraja.P\source\repos\CompName.ManageStocksJan2020\EmpManageJan2020\Presentation\CompName.ManageStocks.WebAppMVC\bin\Debug\netcoreapp3.1\nlog.config...
+2020-02-19 15:10:31.1113 Info Message Template Auto Format enabled
+2020-02-19 15:10:31.1281 Info Loading assembly: NLog.Web.AspNetCore
+2020-02-19 15:10:31.1397 Info Adding target AsyncTargetWrapper(Name=LogFileAsync)
+2020-02-19 15:10:31.1397 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: allfile
+2020-02-19 15:10:31.1597 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: dbAsync
+2020-02-19 15:10:31.1597 Info Closing old configuration.
+2020-02-19 15:10:31.1989 Info Found 34 configuration items

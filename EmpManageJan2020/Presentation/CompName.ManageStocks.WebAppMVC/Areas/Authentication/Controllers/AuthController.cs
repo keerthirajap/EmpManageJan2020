@@ -59,8 +59,8 @@
         {
             dynamic ajaxReturn = new JObject();
             var user = this._mapper.Map<User>(registerUserViewModel);
-            List<UserRoles> userRoles = new List<UserRoles>();
-            List<UserRolesViewModel> userRolesVM = new List<UserRolesViewModel>();
+            List<UserRole> userRoles = new List<UserRole>();
+            List<UserRoleViewModel> userRolesVM = new List<UserRoleViewModel>();
             UserLogin userLogin = new UserLogin();
 
             user = await this._authenticationService.RegisterUserAsync(user);
@@ -81,7 +81,7 @@
                 var userLoginDetails = await this._authenticationService.ValidateUserLoginAsync(userLogin);
                 userLogin = userLoginDetails.userLogin;
                 userRoles = userLoginDetails.userRoles;
-                userRolesVM = this._mapper.Map<List<UserRolesViewModel>>(userRoles);
+                userRolesVM = this._mapper.Map<List<UserRoleViewModel>>(userRoles);
 
                 if (userLogin.IsUserAuthenticated)
                 {
@@ -142,8 +142,8 @@
         {
             dynamic ajaxReturn = new JObject();
             UserLogin userLogin = new UserLogin();
-            List<UserRoles> userRoles = new List<UserRoles>();
-            List<UserRolesViewModel> userRolesVM = new List<UserRolesViewModel>();
+            List<UserRole> userRoles = new List<UserRole>();
+            List<UserRoleViewModel> userRolesVM = new List<UserRoleViewModel>();
 
             userLogin = this._mapper.Map<UserLogin>(loginViewModel);
 
@@ -153,7 +153,7 @@
             var userLoginDetails = await this._authenticationService.ValidateUserLoginAsync(userLogin);
             userLogin = userLoginDetails.userLogin;
             userRoles = userLoginDetails.userRoles;
-            userRolesVM = this._mapper.Map<List<UserRolesViewModel>>(userRoles);
+            userRolesVM = this._mapper.Map<List<UserRoleViewModel>>(userRoles);
             if (userLogin.IsUserAuthenticated)
             {
                 await this.AuthenticateUserWithCookieAsync(userLogin, userRolesVM);
@@ -216,7 +216,7 @@
             return await Task.Run(() => this.PartialView("_LoggedUserDetails", userAccountViewModel));
         }
 
-        private async ValueTask AuthenticateUserWithCookieAsync(UserLogin userLogin, List<UserRolesViewModel> userRolesVM)
+        private async ValueTask AuthenticateUserWithCookieAsync(UserLogin userLogin, List<UserRoleViewModel> userRolesVM)
         {
             var option = new CookieOptions();
             option.Expires = DateTime.Now.AddMinutes(1);

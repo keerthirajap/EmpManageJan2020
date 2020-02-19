@@ -10,7 +10,7 @@
     {
         ValueTask<User> RegisterUserAsync(User user);
 
-        ValueTask<(UserLogin userLogin, List<UserRoles> userRoles)> ValidateUserLoginAsync(UserLogin userLogin);
+        ValueTask<(UserLogin userLogin, List<UserRole> userRoles)> ValidateUserLoginAsync(UserLogin userLogin);
 
         ValueTask<bool> IsUserNameExistsAsync(string userName);
 

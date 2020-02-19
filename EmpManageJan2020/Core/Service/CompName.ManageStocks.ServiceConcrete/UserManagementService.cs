@@ -14,30 +14,31 @@
 
     public class UserManagementService : IUserManagementService
     {
+        #region Private Variables
+
         private readonly AppSetting _appSetting;
 
         private readonly IUserManagementRepository _userManagementRepository;
 
+        #endregion Private Variables
+
+        #region Constructor
+
         public UserManagementService(
-                        AppSetting appSetting,
-                        IUserManagementRepository userManagementRepository)
+                       AppSetting appSetting,
+                       IUserManagementRepository userManagementRepository)
         {
             this._appSetting = appSetting;
             this._userManagementRepository = userManagementRepository;
         }
 
+        #endregion Constructor
+
+        #region Public Methods
+
         public async ValueTask<List<User>> GetAllUserAccountsAsync()
         {
             return await this._userManagementRepository.GetAllUserAccountsAsync();
-        }
-
-        public async ValueTask<User> GetUserAccountDetailsAsync(long userId)
-        {
-            User userDetails = new User();
-
-            userDetails = await this._userManagementRepository.GetUserAccountDetailsAsync(userId);
-
-            return userDetails;
         }
 
         public async ValueTask<List<UserGender>> GetAllUserGenderDetailsAsync()
@@ -58,14 +59,15 @@
             return userTitles;
         }
 
-        public async ValueTask<List<UserLogin>> GetUserLoginHistoryAsync(long userId)
-        {
-            return await this._userManagementRepository.GetUserLoginHistoryAsync(userId);
-        }
+        #region Manage User
 
-        public async ValueTask<List<UserLogin>> GetUserInCorrectLoginHistoryAsync(long userId)
+        public async ValueTask<User> GetUserAccountDetailsAsync(long userId)
         {
-            return await this._userManagementRepository.GetUserInCorrectLoginHistoryAsync(userId);
+            User userDetails = new User();
+
+            userDetails = await this._userManagementRepository.GetUserAccountDetailsAsync(userId);
+
+            return userDetails;
         }
 
         public async ValueTask<bool> UpdateUserAccountDetailsAsync(User user)
@@ -91,5 +93,36 @@
             user.Password = null;
             return await this._userManagementRepository.ChangeUserAccountPasswordAsync(user);
         }
+
+        #endregion Manage User
+
+        #region User Login History
+
+        public async ValueTask<List<UserLogin>> GetUserLoginHistoryAsync(long userId)
+        {
+            return await this._userManagementRepository.GetUserLoginHistoryAsync(userId);
+        }
+
+        public async ValueTask<List<UserLogin>> GetUserInCorrectLoginHistoryAsync(long userId)
+        {
+            return await this._userManagementRepository.GetUserInCorrectLoginHistoryAsync(userId);
+        }
+
+        #endregion User Login History
+
+        #region Manage User Roles
+
+        public async ValueTask<List<UserRole>> GetGetUserRolesAsync(long userId)
+        {
+            return await this._userManagementRepository.GetGetUserRolesAsync(userId);
+        }
+
+        #endregion Manage User Roles
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        #endregion Private Methods
     }
 }

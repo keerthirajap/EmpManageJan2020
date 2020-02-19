@@ -11,7 +11,7 @@
     {
         public UpdateUserAccountViewModel UserDetails { get; set; }
 
-        public List<UserRolesViewModel> UserRolesVM { get; set; }
+        public List<UserRoleViewModel> UserRolesVM { get; set; }
 
         public List<UserLoginViewModel> UserInCorrectAuthLogs { get; set; }
 

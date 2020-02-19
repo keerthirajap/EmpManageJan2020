@@ -24,16 +24,22 @@
     [ApplicationAuthorize]
     public class UserManagementController : Controller
     {
+        #region Private Variables
+
         private readonly IMapper _mapper;
 
         private readonly AppSetting _appSetting;
 
         private readonly IUserManagementService _userManagementService;
 
+        #endregion Private Variables
+
+        #region Constructor
+
         public UserManagementController(
-                        IMapper mapper,
-                        AppSetting appSetting,
-                        IUserManagementService userManagementService)
+                          IMapper mapper,
+                          AppSetting appSetting,
+                          IUserManagementService userManagementService)
         {
             this._mapper = mapper;
 
@@ -41,6 +47,12 @@
 
             this._userManagementService = userManagementService;
         }
+
+        #endregion Constructor
+
+        #region Public Methods
+
+        #region Get All Users
 
         [HttpGet]
         [Route("[controller]/GetAllUserAccounts")]
@@ -61,6 +73,10 @@
 
             return this.Json(new { data = userAccountsViewModel });
         }
+
+        #endregion Get All Users
+
+        #region Manage User
 
         [HttpGet]
         [Route("[controller]/EditUserAccountDetails")]
@@ -218,19 +234,9 @@
             return this.Json(ajaxReturn);
         }
 
-        [HttpGet]
-        [Route("[controller]/EditUserRoles")]
-        public async ValueTask<IActionResult> GetEditUserRolesViewAsync(long userId)
-        {
-            User user = new User();
-            UpdateUserAccountViewModel updateUserAccountViewModel = new UpdateUserAccountViewModel();
+        #endregion Manage User
 
-            user = await this._userManagementService.GetUserAccountDetailsAsync(userId);
-
-            updateUserAccountViewModel = this._mapper.Map<UpdateUserAccountViewModel>(user);
-
-            return await Task.Run(() => this.View("EditUserRoles", updateUserAccountViewModel));
-        }
+        #region User Login History
 
         [HttpGet]
         [Route("[controller]/UserLoginHistory")]
@@ -279,5 +285,41 @@
 
             return await Task.Run(() => this.View("UserInCorrectLoginHistory", (userAccountViewModel, userLoginsViewModel)));
         }
+
+        #endregion User Login History
+
+        #region Manage User Roles
+
+        [HttpGet]
+        [Route("[controller]/EditUserRoles")]
+        public async ValueTask<IActionResult> GetEditUserRolesViewAsync(long userId)
+        {
+            User user = new User();
+            UserAccountViewModel userAccountViewModel = new UserAccountViewModel();
+
+            List<UserRoleViewModel> userRolesViewModel = new List<UserRoleViewModel>();
+            List<UserRole> userRoles = new List<UserRole>();
+
+            var task1 = this._userManagementService.GetUserAccountDetailsAsync(userId);
+            var task2 = this._userManagementService.GetGetUserRolesAsync(userId);
+
+            await Task.WhenAll(task1.AsTask(), task2.AsTask());
+
+            user = await task1;
+            userRoles = await task2;
+
+            userAccountViewModel = this._mapper.Map<UserAccountViewModel>(user);
+            userRolesViewModel = this._mapper.Map<List<UserRoleViewModel>>(userRoles);
+
+            return await Task.Run(() => this.View("EditUserRoles", (userAccountViewModel, userRolesViewModel)));
+        }
+
+        #endregion Manage User Roles
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        #endregion Private Methods
     }
 }

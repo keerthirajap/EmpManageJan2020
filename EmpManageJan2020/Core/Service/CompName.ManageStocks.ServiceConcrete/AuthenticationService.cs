@@ -38,13 +38,13 @@
             return await this._authenticationRepository.RegisterUserAsync(user);
         }
 
-        public async ValueTask<(UserLogin userLogin, List<UserRoles> userRoles)> ValidateUserLoginAsync(UserLogin userLogin)
+        public async ValueTask<(UserLogin userLogin, List<UserRole> userRoles)> ValidateUserLoginAsync(UserLogin userLogin)
         {
             string passwordHash = string.Empty;
             bool isInCorrectLogging = false;
 
             User userDetailsForLoginValidation = new User();
-            List<UserRoles> userRoles = new List<UserRoles>();
+            List<UserRole> userRoles = new List<UserRole>();
 
             var resultSets = await this._authenticationRepository.GetUserDetailsForLoginValidationAsync(userLogin.UserName);
             userDetailsForLoginValidation = resultSets.Set1.FirstOrDefault();
