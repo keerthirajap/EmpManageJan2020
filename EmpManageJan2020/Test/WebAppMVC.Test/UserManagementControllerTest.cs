@@ -38,7 +38,7 @@ namespace WebAppMVC.Test
         public async Task CanGetUserAccountsAsync()
         {
             //Act
-            var result = await this._userManagementController.GetUserAccountsAsync();
+            var result = await this._userManagementController.GetAllUserAccountsViewAsync();
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);

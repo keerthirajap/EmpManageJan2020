@@ -11,7 +11,7 @@
     {
         ValueTask<List<User>> GetAllUserAccountsAsync();
 
-        ValueTask<(User userDetails, List<UserRoles> userRoles, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId);
+        ValueTask<User> GetUserAccountDetailsAsync(long userId);
 
         ValueTask<List<UserGender>> GetAllUserGenderDetailsAsync();
 

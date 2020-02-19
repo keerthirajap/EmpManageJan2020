@@ -180,6 +180,7 @@ namespace CompName.ManageStocks.WebAppMVC
                 Secure = CookieSecurePolicy.None,
                 MinimumSameSitePolicy = SameSiteMode.None,
             });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

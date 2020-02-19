@@ -43,14 +43,14 @@
         }
 
         [HttpGet]
-        [Route("[controller]/GetUserAccounts")]
-        public async ValueTask<IActionResult> GetUserAccountsAsync()
+        [Route("[controller]/GetAllUserAccounts")]
+        public async ValueTask<IActionResult> GetAllUserAccountsViewAsync()
         {
-            return await Task.Run(() => this.View());
+            return await Task.Run(() => this.View("GetAllUserAccounts"));
         }
 
         [HttpGet]
-        [Route("[controller]/GetAllUserAccounts")]
+        [Route("[area]/[controller]/GetAllUserAccountsData")]
         public async ValueTask<IActionResult> GetAllUserAccountsAsync()
         {
             List<User> users = new List<User>();
@@ -66,35 +66,14 @@
         [Route("[controller]/GetUserAccountDetails")]
         public async ValueTask<IActionResult> GetUserAccountDetailsAsync(long userId)
         {
-            User userDetails = new User();
-            List<UserLogin> userInCorrectAuthLogs = new List<UserLogin>();
-            List<UserLogin> userLoggingLogs = new List<UserLogin>();
+            User user = new User();
+            UpdateUserAccountViewModel updateUserAccountViewModel = new UpdateUserAccountViewModel();
 
-            List<UserGender> userGenders = new List<UserGender>();
-            List<UserGenderViewModel> userGendersViewModel = new List<UserGenderViewModel>();
+            user = await this._userManagementService.GetUserAccountDetailsAsync(userId);
 
-            List<UserTitle> userTitles = new List<UserTitle>();
-            List<UserTitleViewModel> userTitlesViewModel = new List<UserTitleViewModel>();
+            updateUserAccountViewModel = this._mapper.Map<UpdateUserAccountViewModel>(user);
 
-            List<UserRoles> userRoles = new List<UserRoles>();
-            List<UserRolesViewModel> userRolesVM = new List<UserRolesViewModel>();
-
-            userGenders = await this._userManagementService.GetAllUserGenderDetailsAsync();
-            userGendersViewModel = this._mapper.Map<List<UserGenderViewModel>>(userGenders);
-
-            userTitlesViewModel = this._mapper.Map<List<UserTitleViewModel>>(await this._userManagementService.GetAllUserTitleDetailsAsync());
-
-            var userAccountDetails = await this._userManagementService.GetUserAccountDetailsAsync(userId);
-            UserAccountDetailsDTO userAccountDetailsDTO = new UserAccountDetailsDTO();
-
-            userAccountDetailsDTO.UserDetails = this._mapper.Map<UpdateUserAccountViewModel>(userAccountDetails.userDetails);
-            userAccountDetailsDTO.UserDetails.UserGenders = userGendersViewModel;
-            userAccountDetailsDTO.UserDetails.UserTitles = userTitlesViewModel;
-            userAccountDetailsDTO.UserRolesVM = this._mapper.Map<List<UserRolesViewModel>>(userAccountDetails.userRoles);
-            userAccountDetailsDTO.UserInCorrectAuthLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userInCorrectAuthLogs);
-            userAccountDetailsDTO.UserLoggingLogs = this._mapper.Map<List<UserLoginViewModel>>(userAccountDetails.userLoggingLogs);
-
-            return await Task.Run(() => this.View(userAccountDetailsDTO));
+            return await Task.Run(() => this.View(updateUserAccountViewModel));
         }
 
         [HttpPost]

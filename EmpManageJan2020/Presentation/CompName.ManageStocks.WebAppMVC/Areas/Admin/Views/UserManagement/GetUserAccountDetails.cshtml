@@ -1,7 +1,7 @@
-﻿@model CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement.DTOs.UserAccountDetailsDTO
+﻿@model CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement.UpdateUserAccountViewModel
 
 @{
-    ViewData["Title"] = @Model.UserDetails.UserName + " - User Details";
+    ViewData["Title"] = @Model.UserName + " - User Details";
 
     Layout = "~/Views/Shared/_Layout.cshtml";
 
@@ -9,8 +9,8 @@
 <div class="card">
     <div class="card-header">
         <h3>
-            <strong> User Id :</strong>  @Model.UserDetails.UserId
-            <strong class="pl-4">User Name :</strong>  @Model.UserDetails.UserName
+            <strong  >User Name :</strong>  @Model.UserName
+            <strong class="pl-4"> User Id :</strong>  @Model.UserId
         </h3>
     </div>
 
@@ -42,12 +42,8 @@
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade show active" id="EditUserDetails">
-
-                        @await Html.PartialAsync("_UserAccountDetails", @Model.UserDetails)
                     </div>
                     <div class="tab-pane fade show" id="EditUserRoles">
-
-                        @await Html.PartialAsync("_EditUserRoles", @Model.UserRolesVM)
                     </div>
 
                     <div class="tab-pane fade" id="UserLogins">
@@ -118,74 +114,6 @@
 
 <script>
     $(window).on("load", function () {
-
-        var userLoggingLogs =  @Html.Raw(Json.Serialize(@Model.UserLoggingLogs));
-        var userInCorrectLoggingLogs =  @Html.Raw(Json.Serialize(@Model.UserInCorrectAuthLogs));
-
-         $('#tblUserIncorrectLoggingLogs').DataTable({
-            "bLengthChange": false,
-            "order": [],
-            data :userInCorrectLoggingLogs,
-            "columns": [
-                       { "data": "UserInCorrectAuthLogId", "autowidth": true },
-                        { "data": "UserId", "autowidth": true },
-                       { "data": "InCorrectLoggingCount", "autowidth": true },
-
-                       { "data": "LoggingIpAddress", "autowidth": true },
-                         { "data": "LoggingBrowser", "autowidth": true },
-
-                       { "data": "IsUserAuthenticated", "autowidth": true },
-                       { "data": "IsActive", "autowidth": true },
-                        {
-                           "data": "CreatedOn",
-                           "type": "date ",
-                           "render": function (data) {
-                               return moment(data).format('lll');
-                            }
-                },
-                       { "data": "CreatedBy", "autowidth": true },
-                       { "data": "CreatedByUserName", "autowidth": true },
-                        {
-                           "data": "ModifiedOn",
-                           "type": "date ",
-                           "render": function (data) {
-                               return moment(data).format('lll');
-                            }
-                        },
-                       { "data": "ModifiedBy", "autowidth": true },
-                       { "data": "ModifiedByUserName", "autowidth": true },
-           ]
-         });
-
-        $('#tblUserLoggingLogs').DataTable({
-            "bLengthChange": false,
-            "order": [],
-            data :userLoggingLogs,
-            "columns": [
-                       { "data": "UserLoggingLogId", "autowidth": true },
-                       { "data": "UserId", "autowidth": true },
-                       { "data": "LoggingIpAddress", "autowidth": true },
-                { "data": "LoggingBrowser", "autowidth": true },
-                       {
-                           "data": "CreatedOn",
-                           "type": "date ",
-                           "render": function (data) {
-                               return moment(data).format('lll');
-                            }
-                        },
-                       { "data": "CreatedBy", "autowidth": true },
-                       { "data": "CreatedByUserName", "autowidth": true },
-                        {
-                           "data": "ModifiedOn",
-                           "type": "date ",
-                           "render": function (data) {
-                               return moment(data).format('lll');
-                            }
-                        },
-                       { "data": "ModifiedBy", "autowidth": true },
-                       { "data": "ModifiedByUserName", "autowidth": true },
-           ]
-        });
 
         sharedController.navActiveColorChange("nav-item-Admin");
         sharedController.hideLoadingIndicator();

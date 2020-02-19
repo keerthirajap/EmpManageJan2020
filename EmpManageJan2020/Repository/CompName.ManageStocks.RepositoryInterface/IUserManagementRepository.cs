@@ -13,7 +13,7 @@
         Task<List<User>> GetAllUserAccountsAsync();
 
         [Sql("[dbo].[P_GetUserAccountDetails]")]
-        Task<Results<User, UserRoles, UserLogin, UserLogin>> GetUserAccountDetailsAsync(long userId);
+        Task<User> GetUserAccountDetailsAsync(long userId);
 
         [Sql("SELECT [UserGenderId],[UserGenderDesc] FROM [dbo].[UserGender]")]
         Task<List<UserGender>> GetAllUserGenderDetailsAsync();

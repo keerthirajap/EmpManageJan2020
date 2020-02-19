@@ -30,14 +30,20 @@
 </div>
 
 <script>
+   
     $(document).ready(function () {
 
         $('#example').dataTable({
             "bLengthChange": false,
             "ajax": {
-                    "url": '@Url.Action("GetAllUserAccounts", "UserManagement", new { Area="Admin" })',
+                    "url": '@Url.Action("GetAllUserAccountsData","UserManagement", new { Area="Admin"} )',
                     "type": "GET",
-                    "datatype": "json"
+                    "datatype": "json",
+                      "error": function (xMLHttpRequest, textStatus, errorThrown)
+                        {
+                             sharedController.hideLoadingIndicator();
+                             sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
+                        }
             },
             "ajax.dataSrc": "",
              "initComplete":function( settings, json){

@@ -31,21 +31,13 @@
             return await this._userManagementRepository.GetAllUserAccountsAsync();
         }
 
-        public async ValueTask<(User userDetails, List<UserRoles> userRoles, List<UserLogin> userInCorrectAuthLogs, List<UserLogin> userLoggingLogs)> GetUserAccountDetailsAsync(long userId)
+        public async ValueTask<User> GetUserAccountDetailsAsync(long userId)
         {
             User userDetails = new User();
-            List<UserRoles> userRoles = new List<UserRoles>();
-            List<UserLogin> userInCorrectAuthLogs = new List<UserLogin>();
-            List<UserLogin> userLoggingLogs = new List<UserLogin>();
 
-            var resultSets = await this._userManagementRepository.GetUserAccountDetailsAsync(userId);
+            userDetails = await this._userManagementRepository.GetUserAccountDetailsAsync(userId);
 
-            userDetails = resultSets.Set1.FirstOrDefault();
-            userRoles = resultSets.Set2.ToList();
-            userInCorrectAuthLogs = resultSets.Set3.ToList();
-            userLoggingLogs = resultSets.Set4.ToList();
-
-            return (userDetails, userRoles, userInCorrectAuthLogs, userLoggingLogs);
+            return userDetails;
         }
 
         public async ValueTask<List<UserGender>> GetAllUserGenderDetailsAsync()
