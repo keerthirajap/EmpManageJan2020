@@ -2,8 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Text;
 
+    [ExcludeFromCodeCoverage]
     public static class ApplicationRoles
     {
         public const string BasicUser = "BasicUser";

@@ -30,10 +30,21 @@ namespace Service.Test
             this._appSetting = new Mock<AppSetting>();
 
             this.Users = Builder<User>.CreateListOfSize(100).Build().ToList();
+
             this._userManagementRepository.Setup(m => m.GetAllUserAccountsAsync()).ReturnsAsync(this.Users);
 
             List<UserGender> userGenders = Builder<UserGender>.CreateListOfSize(10).Build().ToList();
             this._userManagementRepository.Setup(m => m.GetAllUserGenderDetailsAsync()).ReturnsAsync(userGenders);
+
+            List<UserTitle> userTitles = Builder<UserTitle>.CreateListOfSize(10).Build().ToList();
+
+            this._userManagementRepository
+                .Setup(m => m.GetAllUserTitleDetailsAsync())
+                .ReturnsAsync(userTitles);
+
+            this._userManagementRepository
+                .Setup(m => m.GetUserAccountDetailsAsync(It.IsAny<long>()))
+                .ReturnsAsync(this.Users.FirstOrDefault());
 
             _userManagementService = new UserManagementService(this._appSetting.Object, this._userManagementRepository.Object);
         }
@@ -52,5 +63,26 @@ namespace Service.Test
             List<UserGender> userGenders = await this._userManagementService.GetAllUserGenderDetailsAsync();
             Assert.IsTrue(userGenders.Count >= 1);
         }
+
+        [TestMethod]
+        public async Task CanGetAllUserTitleDetailsAsync()
+        {
+            List<UserTitle> userTitles = await this._userManagementService.GetAllUserTitleDetailsAsync();
+            Assert.IsTrue(userTitles.Count >= 1);
+        }
+
+        #region Manage User
+
+        [TestMethod]
+        public async Task CanGetUserAccountDetailsAsync()
+        {
+            User userDetails = null;
+
+            userDetails = await this._userManagementService.GetUserAccountDetailsAsync(5);
+
+            Assert.IsTrue(userDetails != null);
+        }
+
+        #endregion Manage User
     }
 }

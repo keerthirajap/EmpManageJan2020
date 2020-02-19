@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Text;
 
     /// <summary>
     /// App Setting Configuration Model
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class DatabaseSetting
     {
         public string SqlDbConnection { get; set; }

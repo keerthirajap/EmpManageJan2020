@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data.Common;
     using System.Data.SqlClient;
+    using System.Diagnostics.CodeAnalysis;
     using System.Text;
     using Autofac;
     using Autofac.Extras.DynamicProxy;
@@ -13,6 +14,7 @@
 
     //Follow anti-pattern only
 
+    [ExcludeFromCodeCoverage]
     public class RepositoryIOCModule : Module
     {
         private readonly DbConnection _sqlConnection;

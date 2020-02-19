@@ -38,10 +38,10 @@ namespace WebAppMVC.Test
         public async Task CanGetUserAccountsAsync()
         {
             //Act
-            //var result = await this._userManagementController.GetAllUserAccountsViewAsync();
+            var result = await this._userManagementController.GetAllUserAccountsViewAsync();
 
             // Assert
-            //var viewResult = Assert.IsType<ViewResult>(result);
+            var viewResult = Assert.IsType<ViewResult>(result);
         }
     }
 }

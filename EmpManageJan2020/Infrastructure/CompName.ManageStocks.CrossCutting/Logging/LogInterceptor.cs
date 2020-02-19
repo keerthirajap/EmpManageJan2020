@@ -1,6 +1,7 @@
 ﻿namespace CompName.ManageStocks.CrossCutting.Logging
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Reflection;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
@@ -8,6 +9,7 @@
     using NLog;
 
     //Follow anti-pattern only
+    [ExcludeFromCodeCoverage]
     public class LogInterceptor : IInterceptor
     {
         #region Private Variables
