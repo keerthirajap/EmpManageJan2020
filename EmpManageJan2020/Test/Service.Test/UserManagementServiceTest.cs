@@ -46,6 +46,10 @@ namespace Service.Test
                 .Setup(m => m.GetUserAccountDetailsAsync(It.IsAny<long>()))
                 .ReturnsAsync(this.Users.FirstOrDefault());
 
+            this._userManagementRepository
+               .Setup(m => m.UpdateUserAccountDetailsAsync(this.Users.FirstOrDefault()))
+               .ReturnsAsync(true);
+
             _userManagementService = new UserManagementService(this._appSetting.Object, this._userManagementRepository.Object);
         }
 
@@ -81,6 +85,14 @@ namespace Service.Test
             userDetails = await this._userManagementService.GetUserAccountDetailsAsync(5);
 
             Assert.IsTrue(userDetails != null);
+        }
+
+        [TestMethod]
+        public async Task CanUpdateUserAccountDetailsAsync()
+        {
+            var canUpdateUserAccountDetailsAsync = await this._userManagementService.UpdateUserAccountDetailsAsync(this.Users.FirstOrDefault());
+
+            Assert.IsTrue(canUpdateUserAccountDetailsAsync == true);
         }
 
         #endregion Manage User

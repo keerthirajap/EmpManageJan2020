@@ -15,7 +15,7 @@
             UserAuthentication userAuthenticationModel = new UserAuthentication();
             if (principal == null)
             {
-                throw new ArgumentNullException(nameof(principal));
+                return userAuthenticationModel;
             }
 
             userAuthenticationModel = JsonConvert.DeserializeObject<UserAuthentication>(principal.FindAll(ClaimTypes.UserData).Select(s => s.Value).FirstOrDefault());
