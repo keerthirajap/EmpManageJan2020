@@ -75,13 +75,18 @@
             List<UserTitle> userTitles = new List<UserTitle>();
             List<UserTitleViewModel> userTitlesViewModel = new List<UserTitleViewModel>();
 
-            userGenders = await this._userManagementService.GetAllUserGenderDetailsAsync();
+            var task1 = this._userManagementService.GetAllUserGenderDetailsAsync();
+            var task2 = this._userManagementService.GetAllUserTitleDetailsAsync();
+            var task3 = this._userManagementService.GetUserAccountDetailsAsync(userId);
+
+            await Task.WhenAll(task1.AsTask(), task2.AsTask(), task3.AsTask());
+
+            userGenders = await task1;
+            userTitles = await task2;
+            user = await task3;
+
             userGendersViewModel = this._mapper.Map<List<UserGenderViewModel>>(userGenders);
-
-            userTitles = await this._userManagementService.GetAllUserTitleDetailsAsync();
             userTitlesViewModel = this._mapper.Map<List<UserTitleViewModel>>(userTitles);
-
-            user = await this._userManagementService.GetUserAccountDetailsAsync(userId);
 
             updateUserAccountViewModel = this._mapper.Map<UpdateUserAccountViewModel>(user);
             updateUserAccountViewModel.UserTitles = userTitlesViewModel;
@@ -232,13 +237,23 @@
         public async ValueTask<IActionResult> GetUserLoginHistoryViewAsync(long userId)
         {
             User user = new User();
-            UpdateUserAccountViewModel updateUserAccountViewModel = new UpdateUserAccountViewModel();
+            UserAccountViewModel userAccountViewModel = new UserAccountViewModel();
 
-            user = await this._userManagementService.GetUserAccountDetailsAsync(userId);
+            List<UserLoginViewModel> userLoginsViewModel = new List<UserLoginViewModel>();
+            List<UserLogin> userLogins = new List<UserLogin>();
 
-            updateUserAccountViewModel = this._mapper.Map<UpdateUserAccountViewModel>(user);
+            var task1 = this._userManagementService.GetUserAccountDetailsAsync(userId);
+            var task2 = this._userManagementService.GetUserLoginHistoryAsync(userId);
 
-            return await Task.Run(() => this.View("UserLoginHistory", updateUserAccountViewModel));
+            await Task.WhenAll(task1.AsTask(), task2.AsTask());
+
+            user = await task1;
+            userLogins = await task2;
+
+            userAccountViewModel = this._mapper.Map<UserAccountViewModel>(user);
+            userLoginsViewModel = this._mapper.Map<List<UserLoginViewModel>>(userLogins);
+
+            return await Task.Run(() => this.View("UserLoginHistory", (userAccountViewModel, userLoginsViewModel)));
         }
 
         [HttpGet]
@@ -246,13 +261,23 @@
         public async ValueTask<IActionResult> GetUserInCorrectLoginHistoryViewAsync(long userId)
         {
             User user = new User();
-            UpdateUserAccountViewModel updateUserAccountViewModel = new UpdateUserAccountViewModel();
+            UserAccountViewModel userAccountViewModel = new UserAccountViewModel();
 
-            user = await this._userManagementService.GetUserAccountDetailsAsync(userId);
+            List<UserLoginViewModel> userLoginsViewModel = new List<UserLoginViewModel>();
+            List<UserLogin> userLogins = new List<UserLogin>();
 
-            updateUserAccountViewModel = this._mapper.Map<UpdateUserAccountViewModel>(user);
+            var task1 = this._userManagementService.GetUserAccountDetailsAsync(userId);
+            var task2 = this._userManagementService.GetUserInCorrectLoginHistoryAsync(userId);
 
-            return await Task.Run(() => this.View("UserInCorrectLoginHistory", updateUserAccountViewModel));
+            await Task.WhenAll(task1.AsTask(), task2.AsTask());
+
+            user = await task1;
+            userLogins = await task2;
+
+            userAccountViewModel = this._mapper.Map<UserAccountViewModel>(user);
+            userLoginsViewModel = this._mapper.Map<List<UserLoginViewModel>>(userLogins);
+
+            return await Task.Run(() => this.View("UserInCorrectLoginHistory", (userAccountViewModel, userLoginsViewModel)));
         }
     }
 }

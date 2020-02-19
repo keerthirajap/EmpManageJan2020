@@ -58,6 +58,16 @@
             return userTitles;
         }
 
+        public async ValueTask<List<UserLogin>> GetUserLoginHistoryAsync(long userId)
+        {
+            return await this._userManagementRepository.GetUserLoginHistoryAsync(userId);
+        }
+
+        public async ValueTask<List<UserLogin>> GetUserInCorrectLoginHistoryAsync(long userId)
+        {
+            return await this._userManagementRepository.GetUserInCorrectLoginHistoryAsync(userId);
+        }
+
         public async ValueTask<bool> UpdateUserAccountDetailsAsync(User user)
         {
             return await this._userManagementRepository.UpdateUserAccountDetailsAsync(user);

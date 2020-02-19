@@ -21,6 +21,12 @@
         [Sql("SELECT [UserTitleId], [UserTitleDesc]  FROM [dbo].[UserTitle]")]
         Task<List<UserTitle>> GetAllUserTitleDetailsAsync();
 
+        [Sql("[dbo].[P_GetUserLoginHistory]")]
+        Task<List<UserLogin>> GetUserLoginHistoryAsync(long userId);
+
+        [Sql("[dbo].[P_GetUserInCorrectLoginHistory]")]
+        Task<List<UserLogin>> GetUserInCorrectLoginHistoryAsync(long userId);
+
         [Sql("[dbo].[P_UpdateUserAccountDetails]")]
         Task<bool> UpdateUserAccountDetailsAsync(User user);
 

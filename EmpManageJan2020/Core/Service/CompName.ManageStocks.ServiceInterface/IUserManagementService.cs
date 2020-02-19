@@ -17,6 +17,10 @@
 
         ValueTask<List<UserTitle>> GetAllUserTitleDetailsAsync();
 
+        ValueTask<List<UserLogin>> GetUserLoginHistoryAsync(long userId);
+
+        ValueTask<List<UserLogin>> GetUserInCorrectLoginHistoryAsync(long userId);
+
         ValueTask<bool> UpdateUserAccountDetailsAsync(User user);
 
         ValueTask<bool> UpdateUserAccountActiveStatusAsync(long userId, bool isActive, long modifiedBy);

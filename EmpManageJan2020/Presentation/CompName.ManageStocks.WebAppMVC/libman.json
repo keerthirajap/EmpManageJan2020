@@ -6,7 +6,8 @@
       "library": "twitter-bootstrap@4.4.1",
       "files": [
         "css/bootstrap.min.css",
-        "js/bootstrap.min.js"
+        "js/bootstrap.min.js",
+        "js/bootstrap.min.js.map"
       ],
       "destination": "wwwroot/lib/bootstrap/"
     },

@@ -1,0 +1,33 @@
+﻿@model (long userId, string tabName)
+
+<ul class="nav nav-tabs pt-2 pl-2">
+    <li class="nav-item">
+        <a class="nav-link " id="tab-EditUserDetails"
+           href="@Url.Action("EditUserAccountDetails", "UserManagement", new { Area="Admin"})?userId=@Model.userId">
+            <i class="fas fa-user-edit"></i>Edit Details
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " id="tab-EditUserRoles"
+           href="@Url.Action("EditUserRoles", "UserManagement", new { Area=""})?userId=@Model.userId">
+            <i class="fas fa-user-check"></i>Edit Roles
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="tab-UserLoginHistory"
+           href="@Url.Action("UserLoginHistory", "UserManagement", new { Area=""})?userId=@Model.userId">
+            <i class="fas fa-user-clock"></i> Logins
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="tab-UserInCorrectLoginHistory"
+           href="@Url.Action("UserInCorrectLoginHistory", "UserManagement", new { Area=""})?userId=@Model.userId">
+            <i class="fas fa-exclamation-triangle"></i> In Correct Logins
+        </a>
+    </li>
+</ul>
+<script>
+    $(window).on("load", function () {     
+        $("#" + "@Model.tabName").addClass('active');
+    });
+</script>
