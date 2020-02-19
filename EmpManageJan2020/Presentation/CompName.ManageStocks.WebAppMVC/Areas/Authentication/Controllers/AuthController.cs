@@ -261,10 +261,10 @@
 
             List<Claim> claims = new List<Claim>
                                     {
-                                        new Claim(ClaimTypes.Name, userLogin.UserName),
-                                        new Claim(ClaimTypes.NameIdentifier, userLogin.UserId.ToString()),
+                                        new Claim(ClaimTypes.Name, userAuthenticationModel.UserName),
+                                        new Claim(ClaimTypes.NameIdentifier, userAuthenticationModel.UserId.ToString()),
                                         new Claim(ClaimTypes.Authentication, "Form"),
-                                        new Claim("UserId",  userLogin.UserId.ToString()),
+                                        new Claim("UserId",  userAuthenticationModel.UserId.ToString()),
                                         new Claim("AuthenticationGUID",  userAuthenticationModel.AuthenticationGUID),
                                         new Claim("LoggedOn", userAuthenticationModel.LoggedOn.ToString()),
                                         new Claim("AuthenticationExpiresOn", "AuthenticationExpiresOn",  userAuthenticationModel.AuthenticationExpiresOn.ToString()),

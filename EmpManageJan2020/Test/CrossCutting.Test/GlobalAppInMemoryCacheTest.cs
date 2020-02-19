@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using CompName.ManageStocks.CrossCutting.InMemoryCaching;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CrossCutting.Test
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class GlobalAppInMemoryCacheTest
     {

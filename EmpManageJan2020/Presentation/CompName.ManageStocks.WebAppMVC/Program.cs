@@ -2,6 +2,7 @@ namespace CompName.ManageStocks.WebAppMVC
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace CompName.ManageStocks.WebAppMVC
     using Newtonsoft.Json.Linq;
     using NLog.Web;
 
+    [ExcludeFromCodeCoverage]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Reviewed")]
     public class Program
     {

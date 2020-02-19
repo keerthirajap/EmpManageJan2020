@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Helpers;
@@ -21,6 +22,7 @@ using Xunit;
 
 namespace WebAppMVC.Test
 {
+    [ExcludeFromCodeCoverage]
     public class UserManagementControllerTest
     {
         private Mock<IUserManagementService> _userManagementService { get; set; }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using CompName.ManageStocks.CrossCutting.Configuration;
@@ -14,6 +15,7 @@ using Moq;
 
 namespace Service.Test
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class UserManagementServiceTest
     {

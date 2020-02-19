@@ -18,7 +18,11 @@
                 return userAuthenticationModel;
             }
 
-            userAuthenticationModel = JsonConvert.DeserializeObject<UserAuthentication>(principal.FindAll(ClaimTypes.UserData).Select(s => s.Value).FirstOrDefault());
+            userAuthenticationModel = JsonConvert
+                                     .DeserializeObject<UserAuthentication>(principal
+                                                                      .FindAll(ClaimTypes.UserData)
+                                                                      .Select(s => s.Value)
+                                                                      .FirstOrDefault());
 
             return userAuthenticationModel;
         }

@@ -1,25 +1,21 @@
 ﻿namespace WebAppMVC.Test.Infrastructure
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Diagnostics.CodeAnalysis;
     using AutoMapper;
     using CompName.ManageStocks.WebAppMVC.Infrastructure.AutoMapper;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class AutoMapperProfileTest
     {
-        private IMapper _mapper { get; set; }
-
         [TestInitialize]
         public void Setup()
         {
         }
 
         [TestMethod]
-        public async Task CanConfigureAutoMapperProfileAsync()
+        public void CanConfigureAutoMapperProfileAsync()
         {
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {

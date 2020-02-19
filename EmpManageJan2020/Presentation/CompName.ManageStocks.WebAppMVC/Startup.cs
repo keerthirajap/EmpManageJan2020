@@ -29,7 +29,9 @@ namespace CompName.ManageStocks.WebAppMVC
     using WebMarkupMin.AspNetCore3;
     using Newtonsoft.Json.Serialization;
     using CompName.ManageStocks.CrossCutting.InMemoryCaching;
+    using System.Diagnostics.CodeAnalysis;
 
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         private readonly NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();

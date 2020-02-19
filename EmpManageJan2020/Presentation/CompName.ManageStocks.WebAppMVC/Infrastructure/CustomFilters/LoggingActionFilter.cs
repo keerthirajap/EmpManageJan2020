@@ -2,12 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.Extensions.Logging;
     using NLog;
 
+    [ExcludeFromCodeCoverage]
     public class LoggingActionFilter : IAsyncActionFilter
     {
         private readonly Microsoft.Extensions.Logging.ILogger _logger;

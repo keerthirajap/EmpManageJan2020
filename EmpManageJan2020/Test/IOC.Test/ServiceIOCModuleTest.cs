@@ -11,9 +11,11 @@ using CompName.ManageStocks.RepositoryInterface;
 using CompName.ManageStocks.CrossCutting.Logging;
 using CompName.ManageStocks.ServiceInterface;
 using CompName.ManageStocks.CrossCutting.Configuration;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IOC.Test
 {
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class ServiceIOCModuleTest
     {
