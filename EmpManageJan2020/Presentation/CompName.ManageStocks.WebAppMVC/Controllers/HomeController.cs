@@ -35,7 +35,7 @@
         public async ValueTask<IActionResult> Index()
         {
             this._logger.LogInformation("Hello, this is the index!");
-            return await Task.Run(() => this.View());
+            return await Task.Run(() => this.View("Index"));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -46,13 +46,13 @@
             var errorVM = new ErrorViewModel();
             errorVM.RequestId = this._httpContextAccessor.HttpContext.TraceIdentifier;
             errorVM.RequestTime = DateTime.Now;
-            return await Task.Run(() => this.View(errorVM));
+            return await Task.Run(() => this.View("Error", errorVM));
         }
 
         [HttpGet("AccessDenied")]
         public async ValueTask<IActionResult> AccessDenied()
         {
-            return await Task.Run(() => this.View());
+            return await Task.Run(() => this.View("AccessDenied"));
         }
 
         #endregion Public Methods

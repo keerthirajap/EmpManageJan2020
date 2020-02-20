@@ -150,7 +150,7 @@
             this._httpContextAccessor.HttpContext.Response.Cookies.Delete("EmployeeManage.AuthCookie");
 
             LoginViewModel loginViewModel = new LoginViewModel();
-            return await Task.Run(() => this.View(loginViewModel));
+            return await Task.Run(() => this.View("Login", loginViewModel));
         }
 
         [HttpPost("Login")]
@@ -214,7 +214,7 @@
         [HttpGet("LogOut")]
         public async ValueTask<IActionResult> LogOutAsync()
         {
-            await this.HttpContext.SignOutAsync();
+            await this._httpContextAccessor.HttpContext.SignOutAsync();
 
             dynamic ajaxReturn = new JObject();
             ajaxReturn.Status = "Success";
@@ -253,11 +253,9 @@
                                                                 ._appSetting
                                                                 .AuthenticationSetting
                                                                 .AuthCookieExpireInHours);
-            userAuthenticationModel.AuthenticationGUID = this.HttpContext.TraceIdentifier;
+            userAuthenticationModel.AuthenticationGUID = this._httpContextAccessor.HttpContext.TraceIdentifier;
 
             string userData = JsonConvert.SerializeObject(userAuthenticationModel);
-
-            var identity = (ClaimsIdentity)this.HttpContext.User.Identity;
 
             List<Claim> claims = new List<Claim>
                                     {
@@ -280,7 +278,7 @@
 
             ClaimsPrincipal principal = new ClaimsPrincipal(identityClaims);
 
-            await this.HttpContext.SignInAsync(
+            await this._httpContextAccessor.HttpContext.SignInAsync(
                                         CookieAuthenticationDefaults.AuthenticationScheme,
                                         principal,
                                         new AuthenticationProperties

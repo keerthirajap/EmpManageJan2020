@@ -61,38 +61,38 @@ namespace WebAppMVC.Test
         }
 
         [Fact]
-        public async ValueTask CanRunIndex()
+        public async Task CanRunIndex()
         {
             var result = await this._homeController.Index();
 
             Assert.IsType<ViewResult>(result);
 
             var viewResult = (ViewResult)result;
-            Assert.True(viewResult.ViewName != "Index");
+            Assert.True(viewResult.ViewName == "Index");
         }
 
         [Fact]
-        public async ValueTask CanRunError()
+        public async Task CanRunError()
         {
             var result = await this._homeController.Error();
 
             Assert.IsType<ViewResult>(result);
 
             var viewResult = (ViewResult)result;
-            Assert.True(viewResult.ViewName != "Error");
-            Assert.True(viewResult.Model != null);
+            Assert.True(viewResult.ViewName == "Error");
             Assert.IsType<ErrorViewModel>(viewResult.Model);
+            Assert.True(viewResult.Model != null);
         }
 
         [Fact]
-        public async ValueTask CanRunAccessDenied()
+        public async Task CanRunAccessDenied()
         {
             var result = await this._homeController.AccessDenied();
 
             Assert.IsType<ViewResult>(result);
 
             var viewResult = (ViewResult)result;
-            Assert.True(viewResult.ViewName != "AccessDenied");
+            Assert.True(viewResult.ViewName == "AccessDenied");
         }
     }
 }
