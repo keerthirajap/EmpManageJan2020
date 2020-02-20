@@ -9,48 +9,50 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using CompName.ManageStocks.WebAppMVC.Models;
+    using Microsoft.AspNetCore.Http;
 
     public class HomeController : Controller
     {
         #region Private Variables
 
         private readonly ILogger<HomeController> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         #endregion Private Variables
 
         #region Constructor
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
         {
             this._logger = logger;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
         #endregion Constructor
 
         #region Public Methods
 
-        public IActionResult Index()
+        public async ValueTask<IActionResult> Index()
         {
             this._logger.LogInformation("Hello, this is the index!");
-            return this.View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return this.View();
+            return await Task.Run(() => this.View());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public async ValueTask<IActionResult> Error()
         {
-            this.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier, RequestTime = DateTime.Now });
+            this._httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            var errorVM = new ErrorViewModel();
+            errorVM.RequestId = this._httpContextAccessor.HttpContext.TraceIdentifier;
+            errorVM.RequestTime = DateTime.Now;
+            return await Task.Run(() => this.View(errorVM));
         }
 
         [HttpGet("AccessDenied")]
-        public IActionResult AccessDenied()
+        public async ValueTask<IActionResult> AccessDenied()
         {
-            return this.View();
+            return await Task.Run(() => this.View());
         }
 
         #endregion Public Methods

@@ -79,7 +79,6 @@ namespace WebAppMVC.Test
                 ))
                 .ReturnsAsync(true);
 
-            // Arrange
             this._userManagementController = new UserManagementController(
                                        this._mapper
                                        , this._appSetting.Object
@@ -90,7 +89,7 @@ namespace WebAppMVC.Test
         #region Get All Users
 
         [Fact]
-        public async Task CanGetAllUserAccountsViewAsync()
+        public async ValueTask CanGetAllUserAccountsViewAsync()
         {
             var result = await this._userManagementController.GetAllUserAccountsViewAsync();
 
@@ -99,7 +98,7 @@ namespace WebAppMVC.Test
         }
 
         [Fact]
-        public async Task CanGetAllUserAccountsDataAsync()
+        public async ValueTask CanGetAllUserAccountsDataAsync()
         {
             var result = await this._userManagementController.GetAllUserAccountsDataAsync();
 
@@ -113,7 +112,7 @@ namespace WebAppMVC.Test
         #region Manage User
 
         [Fact]
-        public async Task CanEditUserAccountDetailsAsync()
+        public async ValueTask CanEditUserAccountDetailsAsync()
         {
             var result = await this._userManagementController.EditUserAccountDetailsAsync(5);
 
@@ -128,7 +127,7 @@ namespace WebAppMVC.Test
         }
 
         [Fact]
-        public async Task CanUpdateUserAccountDetailsAsync()
+        public async ValueTask CanUpdateUserAccountDetailsAsync()
         {
             UpdateUserAccountViewModel updateUserAccountViewModel = new UpdateUserAccountViewModel();
             var result = await this._userManagementController.UpdateUserAccountDetailsAsync(updateUserAccountViewModel);
@@ -142,7 +141,7 @@ namespace WebAppMVC.Test
         }
 
         [Fact]
-        public async Task CanUpdateUserAccountActiveStatus()
+        public async ValueTask CanUpdateUserAccountActiveStatus()
         {
             var result = await this._userManagementController.UpdateUserAccountActiveStatusAsync(5, true);
 
