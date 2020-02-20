@@ -63,7 +63,7 @@
             this._httpContextAccessor.HttpContext.Response.Cookies.Delete("EmployeeManage.AuthCookie");
 
             RegisterUserViewModel registerUserViewModel = new RegisterUserViewModel();
-            return await Task.Run(() => this.View(registerUserViewModel));
+            return await Task.Run(() => this.View("RegisterUser", registerUserViewModel));
         }
 
         [HttpPost("RegisterUser")]
