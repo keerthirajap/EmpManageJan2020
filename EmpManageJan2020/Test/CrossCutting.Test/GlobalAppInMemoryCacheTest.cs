@@ -8,10 +8,15 @@ namespace CrossCutting.Test
     [TestClass]
     public class GlobalAppInMemoryCacheTest
     {
-        [TestInitialize]
-        public void Setup()
+        #region Constructor
+
+        public GlobalAppInMemoryCacheTest()
         {
         }
+
+        #endregion Constructor
+
+        #region Public Methods
 
         [TestMethod]
         public void CaAddValue()
@@ -25,5 +30,7 @@ namespace CrossCutting.Test
             //Assert
             Assert.AreEqual("Test", "Test");
         }
+
+        #endregion Public Methods
     }
 }

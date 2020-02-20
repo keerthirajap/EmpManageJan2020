@@ -37,10 +37,9 @@ namespace Service.Test
 
         #endregion Private Variables
 
-        #region TestInitialize
+        #region Constructor
 
-        [TestInitialize]
-        public void Setup()
+        public UserManagementServiceTest()
         {
             this._userManagementRepository = new Mock<IUserManagementRepository>(MockBehavior.Strict);
             this._appSetting = Builder<AppSetting>.CreateListOfSize(1).Build().ToList().FirstOrDefault();
@@ -52,7 +51,7 @@ namespace Service.Test
             this.UserTitles = Builder<UserTitle>.CreateListOfSize(10).Build().ToList();
         }
 
-        #endregion TestInitialize
+        #endregion Constructor
 
         #region Public Methods
 

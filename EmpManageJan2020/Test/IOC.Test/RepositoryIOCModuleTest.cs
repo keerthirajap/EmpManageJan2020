@@ -12,6 +12,7 @@ using CompName.ManageStocks.CrossCutting.Logging;
 using CompName.ManageStocks.ServiceInterface;
 using CompName.ManageStocks.CrossCutting.Configuration;
 using System.Diagnostics.CodeAnalysis;
+using Moq;
 
 namespace IOC.Test
 {
@@ -19,30 +20,41 @@ namespace IOC.Test
     [TestClass]
     public class RepositoryIOCModuleTest
     {
+        #region Private Variables
+
         protected IContainer _containerInstancePerLifetimeScope { get; private set; }
 
         protected IContainer _containerNone { get; private set; }
 
-        private readonly NLog.Logger logger;
+        private Mock<NLog.Logger> _logger { get; set; }
 
-        [TestInitialize]
-        public void Setup()
+        #endregion Private Variables
+
+        #region Constructor
+
+        public RepositoryIOCModuleTest()
         {
             //Arrange
+            this._logger = new Mock<NLog.Logger>();
+
             var containerBuilderInstancePerLifetimeScope = new ContainerBuilder();
 
-            containerBuilderInstancePerLifetimeScope.Register(c => new LogInterceptor(this.logger)).SingleInstance();
+            containerBuilderInstancePerLifetimeScope.Register(c => new LogInterceptor(this._logger.Object)).SingleInstance();
             containerBuilderInstancePerLifetimeScope.RegisterModule(new RepositoryIOCModule("", "InstancePerLifetimeScope"));
 
             this._containerInstancePerLifetimeScope = containerBuilderInstancePerLifetimeScope.Build();
 
             var containerBuilderNone = new ContainerBuilder();
 
-            containerBuilderNone.Register(c => new LogInterceptor(this.logger)).SingleInstance();
+            containerBuilderNone.Register(c => new LogInterceptor(this._logger.Object)).SingleInstance();
             containerBuilderNone.RegisterModule(new RepositoryIOCModule("", ""));
 
             this._containerNone = containerBuilderNone.Build();
         }
+
+        #endregion Constructor
+
+        #region Public Methods
 
         [TestMethod]
         public void ValidateRepositoryRegistrations_InstancePerLifetimeScope()
@@ -81,5 +93,7 @@ namespace IOC.Test
             //Assert
             Assert.IsNotNull(_productManagementRepository, "IProductManagementRepository is not registered");
         }
+
+        #endregion Public Methods
     }
 }
