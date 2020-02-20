@@ -82,28 +82,6 @@ namespace WebAppMVC.Test
             this.UserRoles = Builder<UserRole>.CreateListOfSize(5).Build().ToList();
 
             this._authenticationService = new Mock<CompName.ManageStocks.ServiceInterface.IAuthenticationService>(MockBehavior.Strict);
-
-            this._authenticationService
-            .Setup(m => m.RegisterUserAsync(It.IsAny<User>()))
-            .ReturnsAsync(this.Users.FirstOrDefault());
-
-            this._authenticationService
-            .Setup(m => m.ValidateUserLoginAsync(It.IsAny<UserLogin>()))
-            .ReturnsAsync((this.UserLogin, this.UserRoles));
-
-            this._authenticationService
-             .Setup(m => m.IsUserNameExistsAsync(It.IsAny<string>()))
-             .ReturnsAsync(true);
-
-            this._authenticationService
-             .Setup(m => m.IsEmailIdExistsAsync(It.IsAny<string>()))
-             .ReturnsAsync(true);
-
-            this._authController = new AuthController(
-                 this._mapper
-                 , this._httpContextAccessor.Object
-                , this._appSetting
-                , this._authenticationService.Object);
         }
 
         #endregion Constructor
@@ -115,8 +93,17 @@ namespace WebAppMVC.Test
         [Fact]
         public async Task CanGetRegisterUserViewAsync()
         {
+            //Arrange
+            this._authController = new AuthController(
+                 this._mapper
+                 , this._httpContextAccessor.Object
+                , this._appSetting
+                , this._authenticationService.Object);
+
+            //Act
             var result = await this._authController.RegisterUserAsync();
 
+            //Assert
             Assert.IsType<ViewResult>(result);
 
             var viewResult = (ViewResult)result;
@@ -128,8 +115,25 @@ namespace WebAppMVC.Test
         [Fact]
         public async Task CanRegisterUserAsync()
         {
+            //Arrange
+            this._authenticationService
+                     .Setup(m => m.RegisterUserAsync(It.IsAny<User>()))
+                     .ReturnsAsync(this.Users.FirstOrDefault());
+
+            this._authenticationService
+                 .Setup(m => m.ValidateUserLoginAsync(It.IsAny<UserLogin>()))
+                 .ReturnsAsync((this.UserLogin, this.UserRoles));
+
+            this._authController = new AuthController(
+                 this._mapper
+                 , this._httpContextAccessor.Object
+                , this._appSetting
+                , this._authenticationService.Object);
+
+            //Act
             var result = await this._authController.RegisterUserAsync(new RegisterUserViewModel());
 
+            //Assert
             Assert.IsType<JsonResult>(result);
 
             var jsonResult = ((JsonResult)result).Value.ToString();
@@ -141,8 +145,21 @@ namespace WebAppMVC.Test
         [Fact]
         public async Task IsUserNameExistsAsync()
         {
+            //Arrange
+            this._authenticationService
+            .Setup(m => m.IsUserNameExistsAsync(It.IsAny<string>()))
+            .ReturnsAsync(true);
+
+            this._authController = new AuthController(
+                 this._mapper
+                 , this._httpContextAccessor.Object
+                , this._appSetting
+                , this._authenticationService.Object);
+
+            //Act
             var result = await this._authController.IsUserNameExistsAsync("");
 
+            //Assert
             Assert.IsType<JsonResult>(result);
 
             var jsonResult = (bool)((JsonResult)result).Value;
@@ -153,8 +170,21 @@ namespace WebAppMVC.Test
         [Fact]
         public async Task IsEmailIdExistsAsync()
         {
+            //Arrange
+            this._authenticationService
+            .Setup(m => m.IsEmailIdExistsAsync(It.IsAny<string>()))
+            .ReturnsAsync(true);
+
+            this._authController = new AuthController(
+                 this._mapper
+                 , this._httpContextAccessor.Object
+                , this._appSetting
+                , this._authenticationService.Object);
+
+            //Act
             var result = await this._authController.IsEmailIdExistsAsync("");
 
+            //Assert
             Assert.IsType<JsonResult>(result);
 
             var jsonResult = (bool)((JsonResult)result).Value;
@@ -169,8 +199,17 @@ namespace WebAppMVC.Test
         [Fact]
         public async Task CanGetLoginViewAsync()
         {
+            //Arrange
+            this._authController = new AuthController(
+                 this._mapper
+                 , this._httpContextAccessor.Object
+                , this._appSetting
+                , this._authenticationService.Object);
+
+            //Act
             var result = await this._authController.LoginAsync();
 
+            //Assert
             Assert.IsType<ViewResult>(result);
 
             var viewResult = (ViewResult)result;
@@ -182,8 +221,21 @@ namespace WebAppMVC.Test
         [Fact]
         public async Task CanLoginAsync()
         {
+            //Arrange
+            this._authenticationService
+                .Setup(m => m.ValidateUserLoginAsync(It.IsAny<UserLogin>()))
+                .ReturnsAsync((this.UserLogin, this.UserRoles));
+
+            this._authController = new AuthController(
+                 this._mapper
+                 , this._httpContextAccessor.Object
+                , this._appSetting
+                , this._authenticationService.Object);
+
+            //Act
             var result = await this._authController.LoginAsync(new LoginViewModel());
 
+            //Assert
             Assert.IsType<JsonResult>(result);
 
             var jsonResult = ((JsonResult)result).Value.ToString();
@@ -199,10 +251,19 @@ namespace WebAppMVC.Test
         {
             try
             {
+                //Arrange
+                this._authController = new AuthController(
+                     this._mapper
+                     , this._httpContextAccessor.Object
+                    , this._appSetting
+                    , this._authenticationService.Object);
+
+                //Act
                 var result = await this._authController.LogOutAsync();
             }
             catch (Exception ex)
             {
+                //Assert
                 Assert.IsType<ArgumentNullException>(ex);
             }
         }
@@ -210,8 +271,17 @@ namespace WebAppMVC.Test
         [Fact]
         public async Task CanLoadLoggedUserDetailsPartialViewAsync()
         {
+            //Arrange
+            this._authController = new AuthController(
+                 this._mapper
+                 , this._httpContextAccessor.Object
+                , this._appSetting
+                , this._authenticationService.Object);
+
+            //Act
             var result = await this._authController.LoadLoggedUserDetailsPartialViewAsync(5);
 
+            //Assert
             Assert.IsType<PartialViewResult>(result);
 
             var viewResult = (PartialViewResult)result;

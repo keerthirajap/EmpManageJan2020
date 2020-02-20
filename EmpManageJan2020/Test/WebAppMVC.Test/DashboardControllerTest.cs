@@ -31,6 +31,8 @@ namespace WebAppMVC.Test
     [ExcludeFromCodeCoverage]
     public class DashboardControllerTest
     {
+        #region Private Variables
+
         private Mock<IHttpContextAccessor> _httpContextAccessor { get; set; }
 
         private Mock<AppSetting> _appSetting { get; set; }
@@ -38,6 +40,10 @@ namespace WebAppMVC.Test
         private IMapper _mapper { get; set; }
 
         private DashboardController _dashboardController { get; set; }
+
+        #endregion Private Variables
+
+        #region Constructor
 
         public DashboardControllerTest()
         {
@@ -58,15 +64,23 @@ namespace WebAppMVC.Test
             this._dashboardController = new DashboardController();
         }
 
+        #endregion Constructor
+
+        #region Public Test Methods
+
         [Fact]
         public async Task CanRunIndex()
         {
+            //Act
             var result = await this._dashboardController.Index();
 
+            //Assert
             Assert.IsType<ViewResult>(result);
 
             var viewResult = (ViewResult)result;
             Assert.True(viewResult.ViewName == "Index");
         }
+
+        #endregion Public Test Methods
     }
 }

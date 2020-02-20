@@ -16,10 +16,13 @@ namespace CrossCutting.Test
         [TestMethod]
         public void CaAddValue()
         {
+            //Arrange
             GlobalAppInMemoryCache.Instance.AddValue("Test");
 
+            //Act
             var value = GlobalAppInMemoryCache.Instance.GetValue();
 
+            //Assert
             Assert.AreEqual("Test", "Test");
         }
     }

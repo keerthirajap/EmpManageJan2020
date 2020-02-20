@@ -31,6 +31,7 @@
         [TestMethod]
         public void CanGetLoggedInUserDetails()
         {
+            //Arrange
             UserAuthentication userAuthenticationModel = new UserAuthentication();
             userAuthenticationModel = Builder<UserAuthentication>.CreateListOfSize(1).Build().ToList().FirstOrDefault();
             string userData = JsonConvert.SerializeObject(userAuthenticationModel);
@@ -51,8 +52,10 @@
 
             ClaimsPrincipal principal = new ClaimsPrincipal(identityClaims);
 
+            //Act
             var userAuthentication = WebAppMVCExtensions.GetLoggedInUserDetails(principal);
 
+            //Assert
             Assert.AreEqual(userAuthenticationModel.UserName, userAuthentication.UserName);
         }
     }

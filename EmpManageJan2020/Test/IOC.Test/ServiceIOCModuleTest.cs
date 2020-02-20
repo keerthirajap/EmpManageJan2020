@@ -27,6 +27,8 @@ namespace IOC.Test
         [TestInitialize]
         public void Setup()
         {
+            //Arrange
+
             var containerBuilderInstancePerLifetimeScope = new ContainerBuilder();
 
             containerBuilderInstancePerLifetimeScope.Register(c => new AppSetting()).SingleInstance();
@@ -47,26 +49,38 @@ namespace IOC.Test
         [TestMethod]
         public void ValidateServiceRegistrations_InstancePerLifetimeScope()
         {
+            //Act
             var _userManagementService = _containerInstancePerLifetimeScope.Resolve<IUserManagementService>();
+            //Assert
             Assert.IsNotNull(_userManagementService, "UserManagementService is not registered");
 
+            //Act
             var _authenticationService = _containerInstancePerLifetimeScope.Resolve<IAuthenticationService>();
+            //Assert
             Assert.IsNotNull(_authenticationService, "IAuthenticationService is not registered");
 
+            //Act
             var _productManagementService = _containerInstancePerLifetimeScope.Resolve<IProductManagementService>();
+            //Assert
             Assert.IsNotNull(_productManagementService, "IProductManagementService is not registered");
         }
 
         [TestMethod]
         public void ValidateServiceRegistrations_None()
         {
+            //Act
             var _userManagementService = _containerNone.Resolve<IUserManagementService>();
+            //Assert
             Assert.IsNotNull(_userManagementService, "UserManagementService is not registered");
 
+            //Act
             var _authenticationService = _containerNone.Resolve<IAuthenticationService>();
+            //Assert
             Assert.IsNotNull(_authenticationService, "IAuthenticationService is not registered");
 
+            //Act
             var _productManagementService = _containerNone.Resolve<IProductManagementService>();
+            //Assert
             Assert.IsNotNull(_productManagementService, "IProductManagementService is not registered");
         }
     }

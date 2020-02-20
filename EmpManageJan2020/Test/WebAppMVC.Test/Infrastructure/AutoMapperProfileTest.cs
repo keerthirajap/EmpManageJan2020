@@ -17,11 +17,13 @@
         [TestMethod]
         public void CanConfigureAutoMapperProfileAsync()
         {
+            //Act
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AutoMapperProfile());
             }).CreateMapper();
 
+            //Assert
             Assert.IsNotNull(mapperConfiguration);
         }
     }

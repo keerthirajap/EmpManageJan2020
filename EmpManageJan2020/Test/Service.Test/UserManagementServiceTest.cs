@@ -59,36 +59,47 @@ namespace Service.Test
         [TestMethod]
         public async Task CanGetAllUserAccountsAsync()
         {
+            //Arrange
             this._userManagementRepository.Setup(m => m.GetAllUserAccountsAsync()).ReturnsAsync(this.Users);
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             List<User> users = await this._userManagementService.GetAllUserAccountsAsync();
 
+            //Assert
             Assert.IsTrue(users.Count >= 1);
         }
 
         [TestMethod]
         public async Task CanGetAllUserGenderDetailsAsync()
         {
+            //Arrange
             this._userManagementRepository.Setup(m => m.GetAllUserGenderDetailsAsync()).ReturnsAsync(this.UserGenders);
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             List<UserGender> userGenders = await this._userManagementService.GetAllUserGenderDetailsAsync();
+
+            //Assert
             Assert.IsTrue(userGenders.Count >= 1);
         }
 
         [TestMethod]
         public async Task CanGetAllUserTitleDetailsAsync()
         {
+            //Arrange
             this._userManagementRepository
                .Setup(m => m.GetAllUserTitleDetailsAsync())
                .ReturnsAsync(this.UserTitles);
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             List<UserTitle> userTitles = await this._userManagementService.GetAllUserTitleDetailsAsync();
+
+            //Assert
             Assert.IsTrue(userTitles.Count >= 1);
         }
 
@@ -97,6 +108,7 @@ namespace Service.Test
         [TestMethod]
         public async Task CanGetUserAccountDetailsAsync()
         {
+            //Arrange
             User userDetails = null;
 
             this._userManagementRepository
@@ -105,64 +117,78 @@ namespace Service.Test
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             userDetails = await this._userManagementService.GetUserAccountDetailsAsync(5);
 
+            //Assert
             Assert.IsTrue(userDetails != null);
         }
 
         [TestMethod]
         public async Task CanUpdateUserAccountDetailsAsync()
         {
+            //Arrange
             this._userManagementRepository
                .Setup(m => m.UpdateUserAccountDetailsAsync(this.Users.FirstOrDefault()))
                .ReturnsAsync(true);
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             var canUpdateUserAccountDetailsAsync = await this._userManagementService.UpdateUserAccountDetailsAsync(this.Users.FirstOrDefault());
 
+            //Assert
             Assert.IsTrue(canUpdateUserAccountDetailsAsync == true);
         }
 
         [TestMethod]
         public async Task CanUpdateUserAccountActiveStatusAsync()
         {
+            //Arrange
             this._userManagementRepository
                   .Setup(m => m.UpdateUserAccountActiveStatusAsync(It.IsAny<long>(), It.IsAny<bool>(), It.IsAny<long>()))
                   .ReturnsAsync(true);
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             var canUpdateUserAccountActiveStatusAsync = await this._userManagementService.UpdateUserAccountActiveStatusAsync(5, true, 5);
 
+            //Assert
             Assert.IsTrue(canUpdateUserAccountActiveStatusAsync == true);
         }
 
         [TestMethod]
         public async Task CanUpdateUserAccountLockedStatusAsync()
         {
+            //Arrange
             this._userManagementRepository
              .Setup(m => m.UpdateUserAccountLockedStatusAsync(It.IsAny<long>(), It.IsAny<bool>(), It.IsAny<long>()))
              .ReturnsAsync(true);
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             var canUpdateUserAccountLockedStatusAsync = await this._userManagementService.UpdateUserAccountLockedStatusAsync(5, true, 5);
 
+            //Assert
             Assert.IsTrue(canUpdateUserAccountLockedStatusAsync == true);
         }
 
         [TestMethod]
         public async Task CanChangeUserAccountPasswordAsync()
         {
+            //Arrange
             this._userManagementRepository
            .Setup(m => m.ChangeUserAccountPasswordAsync(this.Users.FirstOrDefault()))
            .ReturnsAsync(true);
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             var canChangeUserAccountPasswordAsync = await this._userManagementService.ChangeUserAccountPasswordAsync(this.Users.FirstOrDefault());
 
+            //Assert
             Assert.IsTrue(canChangeUserAccountPasswordAsync == true);
         }
 
@@ -173,28 +199,34 @@ namespace Service.Test
         [TestMethod]
         public async Task CanGetUserLoginHistoryAsync()
         {
+            //Arrange
             this._userManagementRepository
-         .Setup(m => m.GetUserLoginHistoryAsync(It.IsAny<long>()))
-         .ReturnsAsync(this.UserLogins);
+                     .Setup(m => m.GetUserLoginHistoryAsync(It.IsAny<long>()))
+                     .ReturnsAsync(this.UserLogins);
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             var userLogins = await this._userManagementService.GetUserLoginHistoryAsync(5);
 
+            //Assert
             Assert.IsTrue(userLogins.Count > 1);
         }
 
         [TestMethod]
         public async Task CanGetUserInCorrectLoginHistoryAsync()
         {
+            //Arrange
             this._userManagementRepository
-     .Setup(m => m.GetUserInCorrectLoginHistoryAsync(It.IsAny<long>()))
-     .ReturnsAsync(this.UserLogins);
+                     .Setup(m => m.GetUserInCorrectLoginHistoryAsync(It.IsAny<long>()))
+                     .ReturnsAsync(this.UserLogins);
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             var userLogins = await this._userManagementService.GetUserInCorrectLoginHistoryAsync(5);
 
+            //Assert
             Assert.IsTrue(userLogins.Count > 1);
         }
 
@@ -205,28 +237,34 @@ namespace Service.Test
         [TestMethod]
         public async Task CanGetUserRolesAsync()
         {
+            //Arrange
             this._userManagementRepository
-         .Setup(m => m.GetUserRolesAsync(It.IsAny<long>()))
-         .ReturnsAsync(this.UserRoles);
+                 .Setup(m => m.GetUserRolesAsync(It.IsAny<long>()))
+                 .ReturnsAsync(this.UserRoles);
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             var userRoles = await this._userManagementService.GetUserRolesAsync(5);
 
+            //Assert
             Assert.IsTrue(userRoles.Count > 1);
         }
 
         [TestMethod]
         public async Task CanEditUserRolesAsync()
         {
+            //Arrange
             this._userManagementRepository
-         .Setup(m => m.EditUserRolesAsync(It.IsAny<List<UserRole>>(), It.IsAny<long>()))
-         .ReturnsAsync(true);
+                     .Setup(m => m.EditUserRolesAsync(It.IsAny<List<UserRole>>(), It.IsAny<long>()))
+                     .ReturnsAsync(true);
 
             _userManagementService = new UserManagementService(this._appSetting, this._userManagementRepository.Object);
 
+            //Act
             var canEditUserRolesAsync = await this._userManagementService.EditUserRolesAsync(new List<UserRole>(), 5);
 
+            //Assert
             Assert.IsTrue(canEditUserRolesAsync == true);
         }
 

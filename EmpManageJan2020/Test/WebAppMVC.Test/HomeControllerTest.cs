@@ -30,15 +30,23 @@ namespace WebAppMVC.Test
     [ExcludeFromCodeCoverage]
     public class HomeControllerTest
     {
+        #region Private Variables
+
         private Mock<ILogger<HomeController>> _logger;
 
         private Mock<IHttpContextAccessor> _httpContextAccessor { get; set; }
+
+        private DefaultHttpContext _defaultHttpContext { get; set; }
 
         private Mock<AppSetting> _appSetting { get; set; }
 
         private IMapper _mapper { get; set; }
 
         private HomeController _homeController { get; set; }
+
+        #endregion Private Variables
+
+        #region Constructor
 
         public HomeControllerTest()
         {
@@ -52,19 +60,22 @@ namespace WebAppMVC.Test
 
             _logger = new Mock<ILogger<HomeController>>();
             _httpContextAccessor = new Mock<IHttpContextAccessor>();
-
-            var context = new DefaultHttpContext();
-            context.TraceIdentifier = Guid.NewGuid().ToString();
-            _httpContextAccessor.Setup(_ => _.HttpContext).Returns(context);
-
-            this._homeController = new HomeController(_logger.Object, _httpContextAccessor.Object);
         }
+
+        #endregion Constructor
+
+        #region Public Test Methods
 
         [Fact]
         public async Task CanRunIndex()
         {
+            //Arrange
+            this._homeController = new HomeController(_logger.Object, _httpContextAccessor.Object);
+
+            //Act
             var result = await this._homeController.Index();
 
+            //Assert
             Assert.IsType<ViewResult>(result);
 
             var viewResult = (ViewResult)result;
@@ -74,8 +85,17 @@ namespace WebAppMVC.Test
         [Fact]
         public async Task CanRunError()
         {
+            //Arrange
+            _defaultHttpContext = new DefaultHttpContext();
+            _defaultHttpContext.TraceIdentifier = Guid.NewGuid().ToString();
+            _httpContextAccessor.Setup(_ => _.HttpContext).Returns(_defaultHttpContext);
+
+            this._homeController = new HomeController(_logger.Object, _httpContextAccessor.Object);
+
+            //Act
             var result = await this._homeController.Error();
 
+            //Assert
             Assert.IsType<ViewResult>(result);
 
             var viewResult = (ViewResult)result;
@@ -87,12 +107,19 @@ namespace WebAppMVC.Test
         [Fact]
         public async Task CanRunAccessDenied()
         {
+            //Arrange
+            this._homeController = new HomeController(_logger.Object, _httpContextAccessor.Object);
+
+            //Act
             var result = await this._homeController.AccessDenied();
 
+            //Assert
             Assert.IsType<ViewResult>(result);
 
             var viewResult = (ViewResult)result;
             Assert.True(viewResult.ViewName == "AccessDenied");
         }
+
+        #endregion Public Test Methods
     }
 }

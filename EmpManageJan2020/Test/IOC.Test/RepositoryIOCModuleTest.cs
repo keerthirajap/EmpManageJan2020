@@ -28,6 +28,7 @@ namespace IOC.Test
         [TestInitialize]
         public void Setup()
         {
+            //Arrange
             var containerBuilderInstancePerLifetimeScope = new ContainerBuilder();
 
             containerBuilderInstancePerLifetimeScope.Register(c => new LogInterceptor(this.logger)).SingleInstance();
@@ -46,26 +47,38 @@ namespace IOC.Test
         [TestMethod]
         public void ValidateRepositoryRegistrations_InstancePerLifetimeScope()
         {
+            //Act
             var _userManagementRepository = _containerInstancePerLifetimeScope.Resolve<IUserManagementRepository>();
+            //Assert
             Assert.IsNotNull(_userManagementRepository, "UserManagementRepository is not registered");
 
+            //Act
             var _authenticationRepository = _containerInstancePerLifetimeScope.Resolve<IAuthenticationRepository>();
+            //Assert
             Assert.IsNotNull(_authenticationRepository, "IAuthenticationRepository is not registered");
 
+            //Act
             var _productManagementRepository = _containerInstancePerLifetimeScope.Resolve<IProductManagementRepository>();
+            //Assert
             Assert.IsNotNull(_productManagementRepository, "IProductManagementRepository is not registered");
         }
 
         [TestMethod]
         public void ValidateRepositoryRegistrations_None()
         {
+            //Act
             var _userManagementRepository = _containerNone.Resolve<IUserManagementRepository>();
+            //Assert
             Assert.IsNotNull(_userManagementRepository, "UserManagementRepository is not registered");
 
+            //Act
             var _authenticationRepository = _containerNone.Resolve<IAuthenticationRepository>();
+            //Assert
             Assert.IsNotNull(_authenticationRepository, "IAuthenticationRepository is not registered");
 
+            //Act
             var _productManagementRepository = _containerNone.Resolve<IProductManagementRepository>();
+            //Assert
             Assert.IsNotNull(_productManagementRepository, "IProductManagementRepository is not registered");
         }
     }

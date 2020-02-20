@@ -14,7 +14,7 @@ namespace Repository.Test
 {
     [ExcludeFromCodeCoverage]
     [TestClass]
-    public class UserManagementRepository
+    public class UserManagementRepositoryTest
     {
         private Mock<IUserManagementRepository> _userManagementRepository { get; set; }
 
