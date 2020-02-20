@@ -12,6 +12,7 @@ using CompName.ManageStocks.ServiceConcrete;
 using CompName.ManageStocks.ServiceInterface;
 using CompName.ManageStocks.WebAppMVC.Areas.Admin.Controllers;
 using CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement;
+using CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models.Auth;
 using CompName.ManageStocks.WebAppMVC.Infrastructure.AutoMapper;
 using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,10 @@ namespace WebAppMVC.Test
         private List<UserGender> UserGenders { get; set; }
         private List<UserTitle> UserTitles { get; set; }
 
+        private List<UserLogin> UserLogins { get; set; }
+
+        private List<UserRole> UserRoles { get; set; }
+
         public UserManagementControllerTest()
         {
             var mockMapper = new MapperConfiguration(cfg =>
@@ -43,13 +48,15 @@ namespace WebAppMVC.Test
                 cfg.AddProfile(new AutoMapperProfile());
             });
 
-            this._userManagementService = new Mock<IUserManagementService>(MockBehavior.Strict);
+            this._userManagementService = new Mock<IUserManagementService>(MockBehavior.Loose);
             this._appSetting = new Mock<AppSetting>();
             this._mapper = mockMapper.CreateMapper();
 
             this.Users = Builder<User>.CreateListOfSize(100).Build().ToList();
             this.UserGenders = Builder<UserGender>.CreateListOfSize(10).Build().ToList();
             this.UserTitles = Builder<UserTitle>.CreateListOfSize(10).Build().ToList();
+            this.UserLogins = Builder<UserLogin>.CreateListOfSize(10).Build().ToList();
+            this.UserRoles = Builder<UserRole>.CreateListOfSize(10).Build().ToList();
 
             this._userManagementService
               .Setup(m => m.GetAllUserAccountsAsync())
@@ -72,12 +79,40 @@ namespace WebAppMVC.Test
                 .ReturnsAsync(true);
 
             this._userManagementService
+                .Setup(m => m.UpdateUserAccountLockedStatusAsync(It.IsAny<long>(), It.IsAny<bool>(), It.IsAny<long>()))
+                .ReturnsAsync(true);
+
+            this._userManagementService
                 .Setup(m => m.UpdateUserAccountActiveStatusAsync(
                                 It.IsAny<long>()
                                 , It.IsAny<bool>()
                                  , It.IsAny<long>()
                 ))
                 .ReturnsAsync(true);
+
+            this._userManagementService
+               .Setup(m => m.ChangeUserAccountPasswordAsync(It.IsAny<User>()))
+               .ReturnsAsync(true);
+
+            this._userManagementService
+               .Setup(m => m.GetUserAccountDetailsAsync(It.IsAny<long>()))
+               .ReturnsAsync(this.Users.FirstOrDefault());
+
+            this._userManagementService
+              .Setup(m => m.GetUserLoginHistoryAsync(It.IsAny<long>()))
+              .ReturnsAsync(this.UserLogins);
+
+            this._userManagementService
+              .Setup(m => m.GetUserRolesAsync(It.IsAny<long>()))
+              .ReturnsAsync(this.UserRoles);
+
+            this._userManagementService
+                  .Setup(m => m.GetUserInCorrectLoginHistoryAsync(It.IsAny<long>()))
+                  .ReturnsAsync(this.UserLogins);
+
+            this._userManagementService
+                  .Setup(m => m.EditUserRolesAsync(this.UserRoles, It.IsAny<long>()))
+                  .ReturnsAsync(true);
 
             this._userManagementController = new UserManagementController(
                                        this._mapper
@@ -86,25 +121,30 @@ namespace WebAppMVC.Test
                                         );
         }
 
+        #region Public Test Methods
+
         #region Get All Users
 
         [Fact]
-        public async ValueTask CanGetAllUserAccountsViewAsync()
+        public async Task CanGetAllUserAccountsViewAsync()
         {
             var result = await this._userManagementController.GetAllUserAccountsViewAsync();
 
-            var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.True(result != null);
+            Assert.IsType<ViewResult>(result);
+
+            var viewResult = (ViewResult)result;
+            Assert.True(viewResult.ViewName == "GetAllUserAccounts", "View name is incorrect");
         }
 
         [Fact]
-        public async ValueTask CanGetAllUserAccountsDataAsync()
+        public async Task CanGetAllUserAccountsDataAsync()
         {
             var result = await this._userManagementController.GetAllUserAccountsDataAsync();
 
-            var jsonResult = Assert.IsType<JsonResult>(result);
+            Assert.IsType<JsonResult>(result);
 
-            Assert.True(jsonResult.Value != null);
+            var jsonResult = ((JsonResult)result).Value;
+            Assert.True(jsonResult != null);
         }
 
         #endregion Get All Users
@@ -112,22 +152,23 @@ namespace WebAppMVC.Test
         #region Manage User
 
         [Fact]
-        public async ValueTask CanEditUserAccountDetailsAsync()
+        public async Task CanEditUserAccountDetailsAsync()
         {
             var result = await this._userManagementController.EditUserAccountDetailsAsync(5);
 
-            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.IsType<ViewResult>(result);
+
+            var viewResult = (ViewResult)result;
 
             var updateUserAccountViewModel = Assert.IsType<UpdateUserAccountViewModel>(viewResult.Model);
-
-            Assert.True(viewResult != null);
+            Assert.True(viewResult.ViewName == "EditUserAccountDetails", "View name is incorrect");
             Assert.True(updateUserAccountViewModel != null);
             Assert.True(updateUserAccountViewModel.UserGenders.Count > 1);
             Assert.True(updateUserAccountViewModel.UserTitles.Count > 1);
         }
 
         [Fact]
-        public async ValueTask CanUpdateUserAccountDetailsAsync()
+        public async Task CanUpdateUserAccountDetailsAsync()
         {
             UpdateUserAccountViewModel updateUserAccountViewModel = new UpdateUserAccountViewModel();
             var result = await this._userManagementController.UpdateUserAccountDetailsAsync(updateUserAccountViewModel);
@@ -141,7 +182,7 @@ namespace WebAppMVC.Test
         }
 
         [Fact]
-        public async ValueTask CanUpdateUserAccountActiveStatus()
+        public async Task CanUpdateUserAccountActiveStatus()
         {
             var result = await this._userManagementController.UpdateUserAccountActiveStatusAsync(5, true);
 
@@ -154,6 +195,119 @@ namespace WebAppMVC.Test
             Assert.Equal(jsonResultStatus, "Success");
         }
 
+        [Fact]
+        public async Task CanUpdateUserAccountLockedStatusAsync()
+        {
+            var result = await this._userManagementController.UpdateUserAccountLockedStatusAsync(5, true);
+
+            Assert.IsType<JsonResult>(result);
+
+            var jsonResult = ((JsonResult)result).Value.ToString();
+            var jsonResultDeserializeObject = JsonConvert.DeserializeObject<dynamic>(jsonResult);
+            var jsonResultStatus = jsonResultDeserializeObject.Status.Value;
+
+            Assert.Equal(jsonResultStatus, "Success");
+        }
+
+        [Fact]
+        public async Task CanLoadChangePasswordPartialViewAsync()
+        {
+            var result = await this._userManagementController.LoadChangePasswordPartialViewAsync(5, "");
+
+            Assert.IsType<PartialViewResult>(result);
+
+            var viewResult = (PartialViewResult)result;
+            Assert.True(viewResult.ViewName == "_ChangeUserAccountPassword", "PartialView name is incorrect");
+            Assert.IsType<ChangeUserAccountPasswordViewModel>(viewResult.Model);
+            Assert.True(viewResult.Model != null);
+        }
+
+        [Fact]
+        public async Task CanChangeUserAccountPasswordAsync()
+        {
+            var result = await this._userManagementController.ChangeUserAccountPasswordAsync(new ChangeUserAccountPasswordViewModel());
+
+            Assert.IsType<JsonResult>(result);
+
+            var jsonResult = ((JsonResult)result).Value.ToString();
+            var jsonResultDeserializeObject = JsonConvert.DeserializeObject<dynamic>(jsonResult);
+            var jsonResultStatus = jsonResultDeserializeObject.Status.Value;
+
+            Assert.Equal(jsonResultStatus, "Success");
+        }
+
         #endregion Manage User
+
+        #region User Login History
+
+        [Fact]
+        public async Task CanGetUserLoginHistoryViewAsync()
+        {
+            var result = await this._userManagementController.GetUserLoginHistoryViewAsync(5);
+
+            Assert.IsType<ViewResult>(result);
+
+            var viewResult = (ViewResult)result;
+
+            var results = Assert.IsType<(UserAccountViewModel, List<UserLoginViewModel>)>(viewResult.Model);
+            Assert.True(viewResult.ViewName == "UserLoginHistory", "View name is incorrect");
+
+            Assert.True(results.Item1 != null);
+            Assert.True(results.Item2.Count > 1);
+        }
+
+        [Fact]
+        public async Task CanGetUserInCorrectLoginHistoryViewAsync()
+        {
+            var result = await this._userManagementController.GetUserInCorrectLoginHistoryViewAsync(5);
+
+            Assert.IsType<ViewResult>(result);
+
+            var viewResult = (ViewResult)result;
+
+            var results = Assert.IsType<(UserAccountViewModel, List<UserLoginViewModel>)>(viewResult.Model);
+            Assert.True(viewResult.ViewName == "UserInCorrectLoginHistory", "View name is incorrect");
+
+            Assert.True(results.Item1 != null);
+            Assert.True(results.Item2.Count > 1);
+        }
+
+        #endregion User Login History
+
+        #region Manage User Roles
+
+        [Fact]
+        public async Task CanGetEditUserRolesViewAsync()
+        {
+            var result = await this._userManagementController.GetEditUserRolesViewAsync(5);
+
+            Assert.IsType<ViewResult>(result);
+
+            var viewResult = (ViewResult)result;
+
+            var results = Assert.IsType<(UserAccountViewModel, List<UserRoleViewModel>)>(viewResult.Model);
+            Assert.True(viewResult.ViewName == "EditUserRoles", "View name is incorrect");
+
+            Assert.True(results.Item1 != null);
+            Assert.True(results.Item2.Count > 1);
+        }
+
+        [Fact]
+        public async Task CanEditUserRolesAsync()
+        {
+            var result = await this._userManagementController.EditUserRolesAsync(new List<UserRoleViewModel>());
+
+            Assert.IsType<JsonResult>(result);
+
+            var jsonResult = ((JsonResult)result).Value.ToString();
+            var jsonResultDeserializeObject = JsonConvert.DeserializeObject<dynamic>(jsonResult);
+            var jsonResultStatus = jsonResultDeserializeObject.Status.Value;
+
+            Assert.Equal(jsonResultStatus, "Success");
+        }
+
+        #endregion Manage User Roles
+
+        #endregion Public Test Methods
     }
 }

@@ -87,8 +87,16 @@
             List<UserRole> userRoles = new List<UserRole>();
 
             var resultSets = await this._authenticationRepository.GetUserDetailsForLoginValidationAsync(userLogin.UserName);
-            userDetailsForLoginValidation = resultSets.Set1.FirstOrDefault();
-            userRoles = resultSets.Set2.ToList();
+
+            if (resultSets.Set1 != null)
+            {
+                userDetailsForLoginValidation = resultSets.Set1.FirstOrDefault();
+            }
+
+            if (resultSets.Set2 != null)
+            {
+                userRoles = resultSets.Set2.ToList();
+            }
 
             if (userDetailsForLoginValidation != null)
             {

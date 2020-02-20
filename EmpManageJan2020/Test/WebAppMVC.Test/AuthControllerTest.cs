@@ -197,9 +197,27 @@ namespace WebAppMVC.Test
         [Fact]
         public async Task CanLogOutAsync()
         {
-            var result = await this._authController.LogOutAsync();
+            try
+            {
+                var result = await this._authController.LogOutAsync();
+            }
+            catch (Exception ex)
+            {
+                Assert.IsType<ArgumentNullException>(ex);
+            }
+        }
 
-            Assert.IsType<Exception>(result);
+        [Fact]
+        public async Task CanLoadLoggedUserDetailsPartialViewAsync()
+        {
+            var result = await this._authController.LoadLoggedUserDetailsPartialViewAsync(5);
+
+            Assert.IsType<PartialViewResult>(result);
+
+            var viewResult = (PartialViewResult)result;
+            Assert.True(viewResult.ViewName == "_LoggedUserDetails", "PartialView name is incorrect");
+            Assert.IsType<UserAccountViewModel>(viewResult.Model);
+            Assert.True(viewResult.Model != null);
         }
 
         #endregion Public Test Methods

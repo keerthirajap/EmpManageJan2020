@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -238,6 +239,7 @@
 
         #region Private Methods
 
+        [ExcludeFromCodeCoverage]
         private async ValueTask AuthenticateUserWithCookieAsync(UserLogin userLogin, List<UserRoleViewModel> userRolesVM)
         {
             var option = new CookieOptions();

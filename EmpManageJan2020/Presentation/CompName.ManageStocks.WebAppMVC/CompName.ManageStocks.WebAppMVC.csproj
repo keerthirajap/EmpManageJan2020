@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\UserManagement\DTOs\" />
     <Folder Include="Areas\Authentication\Data\" />
     <Folder Include="Areas\Home\Data\" />
     <Folder Include="Areas\Home\Models\" />

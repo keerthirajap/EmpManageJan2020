@@ -11,7 +11,6 @@
     using CompName.ManageStocks.Domain.Authentication;
     using CompName.ManageStocks.ServiceInterface;
     using CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement;
-    using CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement.DTOs;
     using CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models.Auth;
     using CompName.ManageStocks.WebAppMVC.Infrastructure.Extensions;
     using CompName.ManageStocks.WebAppMVC.Infrastructure.Security;
@@ -108,7 +107,7 @@
             updateUserAccountViewModel.UserTitles = userTitlesViewModel;
             updateUserAccountViewModel.UserGenders = userGendersViewModel;
 
-            return await Task.Run(() => this.View(updateUserAccountViewModel));
+            return await Task.Run(() => this.View("EditUserAccountDetails", updateUserAccountViewModel));
         }
 
         [HttpPost]

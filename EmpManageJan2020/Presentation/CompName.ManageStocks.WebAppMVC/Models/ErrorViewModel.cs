@@ -7,7 +7,5 @@ namespace CompName.ManageStocks.WebAppMVC.Models
         public string RequestId { get; set; }
 
         public DateTime RequestTime { get; set; }
-
-        public bool ShowRequestId => !string.IsNullOrEmpty(this.RequestId);
     }
 }

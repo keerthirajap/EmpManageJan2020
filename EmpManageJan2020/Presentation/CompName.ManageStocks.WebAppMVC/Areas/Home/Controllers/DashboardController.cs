@@ -25,9 +25,9 @@
         #region Public Methods
 
         [Route("")]
-        public IActionResult Index()
+        public async ValueTask<IActionResult> Index()
         {
-            return this.View();
+            return await Task.Run(() => this.View("Index"));
         }
 
         #endregion Public Methods
