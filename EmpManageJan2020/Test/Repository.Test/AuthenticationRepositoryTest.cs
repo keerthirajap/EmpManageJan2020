@@ -29,10 +29,9 @@ namespace Repository.Test
 
         #endregion Private Variables
 
-        #region TestInitialize
+        #region Constructor
 
-        [TestInitialize]
-        public void Setup()
+        public AuthenticationRepositoryTest()
         {
             this._authenticationRepository = new Mock<IAuthenticationRepository>();
             this.Users = Builder<User>.CreateListOfSize(100).Build().ToList();
@@ -40,7 +39,7 @@ namespace Repository.Test
             this.UserRoles = Builder<UserRole>.CreateListOfSize(100).Build().ToList();
         }
 
-        #endregion TestInitialize
+        #endregion Constructor
 
         #region Public Methods
 

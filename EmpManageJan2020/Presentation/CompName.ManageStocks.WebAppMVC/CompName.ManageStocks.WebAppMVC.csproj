@@ -20,7 +20,7 @@
     <Folder Include="Areas\Authentication\Data\" />
     <Folder Include="Areas\Home\Data\" />
     <Folder Include="Areas\Home\Models\" />
-    <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\lib\bootstrap\https.bootstrap.build\" />
   </ItemGroup>
 
   <ItemGroup>

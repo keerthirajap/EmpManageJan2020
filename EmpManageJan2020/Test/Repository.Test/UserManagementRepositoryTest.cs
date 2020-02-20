@@ -16,6 +16,8 @@ namespace Repository.Test
     [TestClass]
     public class UserManagementRepositoryTest
     {
+        #region Private Variables
+
         private Mock<IUserManagementRepository> _userManagementRepository { get; set; }
 
         private List<User> Users { get; set; }
@@ -24,26 +26,21 @@ namespace Repository.Test
 
         private List<UserRole> UserRoles { get; set; }
 
-        [TestInitialize]
-        public void Setup()
+        #endregion Private Variables
+
+        #region Constructor
+
+        public UserManagementRepositoryTest()
         {
             this._userManagementRepository = new Mock<IUserManagementRepository>();
             this.Users = Builder<User>.CreateListOfSize(100).Build().ToList();
             this.UserLogins = Builder<UserLogin>.CreateListOfSize(100).Build().ToList();
             this.UserRoles = Builder<UserRole>.CreateListOfSize(100).Build().ToList();
-
-            this._userManagementRepository.Setup(m => m.UpdateUserAccountActiveStatusAsync(
-                                                          It.IsAny<long>()
-                                                          , It.IsAny<bool>()
-                                                           , It.IsAny<long>()
-                                                      )).ReturnsAsync(true);
-
-            this._userManagementRepository.Setup(m => m.UpdateUserAccountLockedStatusAsync(
-                                                It.IsAny<long>()
-                                                , It.IsAny<bool>()
-                                                 , It.IsAny<long>()
-                                            )).ReturnsAsync(true);
         }
+
+        #endregion Constructor
+
+        #region Public Methods
 
         [TestMethod]
         public async Task CanGetAllUserAccountsAsync()
@@ -97,6 +94,12 @@ namespace Repository.Test
         [TestMethod]
         public async Task CanUpdateUserAccountLockedStatusAsync()
         {
+            this._userManagementRepository.Setup(m => m.UpdateUserAccountLockedStatusAsync(
+                                             It.IsAny<long>()
+                                             , It.IsAny<bool>()
+                                              , It.IsAny<long>()
+                                         )).ReturnsAsync(true);
+
             bool canUpdateUserAccountLockedStatusAsync = await this
                                                        ._userManagementRepository
                                                        .Object
@@ -111,6 +114,12 @@ namespace Repository.Test
         [TestMethod]
         public async Task CanUpdateUserAccountActiveStatusAsync()
         {
+            this._userManagementRepository.Setup(m => m.UpdateUserAccountActiveStatusAsync(
+                                                          It.IsAny<long>()
+                                                          , It.IsAny<bool>()
+                                                           , It.IsAny<long>()
+                                                      )).ReturnsAsync(true);
+
             bool canUpdateUserAccountActiveStatusAsync = await this
                                                         ._userManagementRepository
                                                         .Object
@@ -172,5 +181,7 @@ namespace Repository.Test
         }
 
         #endregion Manage User Roles
+
+        #endregion Public Methods
     }
 }
