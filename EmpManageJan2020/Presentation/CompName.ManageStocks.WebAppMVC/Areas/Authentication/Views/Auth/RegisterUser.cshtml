@@ -68,8 +68,11 @@
     </div>
     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
     </div>
-    <script src="~/jsControllers/Authentication/authController.js"></script>
+    <script src="~/jsControllers/Authentication/AuthController.js"></script>
     <script>
+
+        var authController = new AuthController();
+
         $(window).on("load", function () {
             sharedController.navActiveColorChange("nav-item-RegisterUser");
             sharedController.hideLoadingIndicator();

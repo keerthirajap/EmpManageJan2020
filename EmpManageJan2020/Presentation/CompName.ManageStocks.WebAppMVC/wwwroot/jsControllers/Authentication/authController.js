@@ -1,75 +1,75 @@
-﻿(
-    function (publicMethod, $) {
-        // #region Register User
+﻿class AuthController {
+    constructor() {
+      
+    }
 
-        publicMethod.registerUserOnBegin = function (xhr, data) {
-            sharedController.showLoadingIndicator();
+    registerUserOnBegin (xhr, data) {
+        sharedController.showLoadingIndicator();
+    }
+
+      registerUserOnComplete  (xhr, data) {
+        sharedController.hideLoadingIndicator();
+    }
+
+     registerUserOnSuccess  (data, status, xhr) {
+        if (jQuery.type(data.Status) === "undefined") {
         }
 
-        publicMethod.registerUserOnComplete = function (xhr, data) {
-            sharedController.hideLoadingIndicator();
+        else {
+            swalWithBootstrapButtons.fire({
+                icon: 'success',
+                title: data.Title,
+                text: data.Message,
+                timer: 4000,
+                timerProgressBar: true,
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                onBeforeOpen: () => {
+                },
+                onClose: () => {
+                }
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    sharedController.redirectToHomePage();
+                }
+            })
         }
+    }
 
-        publicMethod.registerUserOnSuccess = function (data, status, xhr) {
-            if (jQuery.type(data.Status) === "undefined") {
-            }
+     registerUserOnfailure  (xMLHttpRequest, textStatus, errorThrown) {
+        sharedController.hideLoadingIndicator();
+        sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
+    }
 
-            else {
-                swalWithBootstrapButtons.fire({
-                    icon: 'success',
-                    title: data.Title,
-                    text: data.Message,
-                    timer: 4000,
-                    timerProgressBar: true,
-                    showCancelButton: false,
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    onBeforeOpen: () => {
-                    },
-                    onClose: () => {
-                    }
-                }).then((result) => {
-                    if (result.dismiss === Swal.DismissReason.timer) {
-                        sharedController.redirectToHomePage();
-                    }
-                })
-            }
+    // #endregion Register User
+
+    // #region login User
+
+     loginOnBegin (xhr, data) {
+        sharedController.showLoadingIndicator();
+    }
+
+      loginOnComplete  (xhr, data) {
+        sharedController.hideLoadingIndicator();
+    }
+
+      loginOnSuccess (data, status, xhr) {
+        if (jQuery.type(data.Status) === "undefined") {
         }
-
-        publicMethod.registerUserOnfailure = function (xMLHttpRequest, textStatus, errorThrown) {
-            sharedController.hideLoadingIndicator();
-            sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
+        else if (data.Status == "Warning") {
+            $('#modalMessageShowPopUpHeaderTitle').text(data.Title);
+            $('#modalMessageShowPopUpMessage').text(data.Message);
+            $('#modalMessageShowPopUp').modal('show');
         }
-
-        // #endregion Register User
-
-        // #region login User
-
-        publicMethod.loginOnBegin = function (xhr, data) {
-            sharedController.showLoadingIndicator();
+        else if (data.Status == "Success") {
+            sharedController.redirectToHomePage();
         }
+    }
 
-        publicMethod.loginOnComplete = function (xhr, data) {
-            sharedController.hideLoadingIndicator();
-        }
+     loginOnfailure (xMLHttpRequest, textStatus, errorThrown) {
+        sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
+    }
 
-        publicMethod.loginOnSuccess = function (data, status, xhr) {
-            if (jQuery.type(data.Status) === "undefined") {
-            }
-            else if (data.Status == "Warning") {
-                $('#modalMessageShowPopUpHeaderTitle').text(data.Title);
-                $('#modalMessageShowPopUpMessage').text(data.Message);
-                $('#modalMessageShowPopUp').modal('show');
-            }
-            else if (data.Status == "Success") {
-                sharedController.redirectToHomePage();
-            }
-        }
+};
 
-        publicMethod.loginOnfailure = function (xMLHttpRequest, textStatus, errorThrown) {
-            sharedController.showAjaxErrorMessagePopUp(xMLHttpRequest, textStatus, errorThrown);
-        }
-
-        // #endregion login User
-    }(window.authController = window.authController || {}, jQuery)
-);

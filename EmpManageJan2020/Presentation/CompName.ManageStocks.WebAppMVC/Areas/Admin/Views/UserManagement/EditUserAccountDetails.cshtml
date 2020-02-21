@@ -40,7 +40,6 @@
                                                     <input type="text" asp-for="UserId"
                                                            class="form-control" id="txtUserId"
                                                            readonly>
-
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
@@ -202,9 +201,11 @@
 </div>
 <div id="loadChangePasswordPartialView">
 </div>
-<script src="~/jsControllers/Admin/userManagementController.js"></script>
+<script src="~/jsControllers/Admin/UserManagementController.js"></script>
 
 <script>
+    var userManagementController = new UserManagementController();
+
     var updateUserAccountActiveStatusURL = '@Url.Action("UpdateUserAccountActiveStatus", "UserManagement", new { Area = "Admin" })';
     var updateUserAccountLockedStatusURL = '@Url.Action("UpdateUserAccountLockedStatus", "UserManagement", new { Area = "Admin" })';
     var loadChangePasswordPartialViewURL = '@Url.Action("LoadChangePasswordPartialView", "UserManagement", new { Area = "Admin" })';
