@@ -74,6 +74,11 @@ namespace IOC.Test
             var _productManagementService = _containerInstancePerLifetimeScope.Resolve<IProductManagementService>();
             //Assert
             Assert.IsNotNull(_productManagementService, "IProductManagementService is not registered");
+
+            //Act
+            var _sharedService = _containerInstancePerLifetimeScope.Resolve<ISharedService>();
+            //Assert
+            Assert.IsNotNull(_sharedService, "ISharedService is not registered");
         }
 
         [TestMethod]
@@ -93,6 +98,11 @@ namespace IOC.Test
             var _productManagementService = _containerNone.Resolve<IProductManagementService>();
             //Assert
             Assert.IsNotNull(_productManagementService, "IProductManagementService is not registered");
+
+            //Act
+            var _sharedService = _containerNone.Resolve<ISharedService>();
+            //Assert
+            Assert.IsNotNull(_sharedService, "ISharedService is not registered");
         }
 
         #endregion Public Methods

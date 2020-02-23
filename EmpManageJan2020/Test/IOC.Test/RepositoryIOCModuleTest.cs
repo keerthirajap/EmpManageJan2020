@@ -73,6 +73,11 @@ namespace IOC.Test
             var _productManagementRepository = _containerInstancePerLifetimeScope.Resolve<IProductManagementRepository>();
             //Assert
             Assert.IsNotNull(_productManagementRepository, "IProductManagementRepository is not registered");
+
+            //Act
+            var _sharedRepository = _containerInstancePerLifetimeScope.Resolve<ISharedRepository>();
+            //Assert
+            Assert.IsNotNull(_sharedRepository, "ISharedRepository is not registered");
         }
 
         [TestMethod]
@@ -92,6 +97,11 @@ namespace IOC.Test
             var _productManagementRepository = _containerNone.Resolve<IProductManagementRepository>();
             //Assert
             Assert.IsNotNull(_productManagementRepository, "IProductManagementRepository is not registered");
+
+            //Act
+            var _sharedRepository = _containerNone.Resolve<ISharedRepository>();
+            //Assert
+            Assert.IsNotNull(_sharedRepository, "ISharedRepository is not registered");
         }
 
         #endregion Public Methods

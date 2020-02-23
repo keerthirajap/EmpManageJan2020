@@ -20,6 +20,9 @@
     <Folder Include="Areas\Authentication\Data\" />
     <Folder Include="Areas\Home\Data\" />
     <Folder Include="Areas\Home\Models\" />
+    <Folder Include="Areas\Manufacturer\Controllers\" />
+    <Folder Include="Areas\Manufacturer\Data\" />
+    <Folder Include="Areas\Manufacturer\Views\" />
     <Folder Include="wwwroot\lib\bootstrap\https.bootstrap.build\" />
   </ItemGroup>
 
@@ -40,6 +43,7 @@
     </PackageReference>   
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0-preview1.19506.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0-preview1-19509-03" />
+    <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NLog" Version="4.6.8" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />

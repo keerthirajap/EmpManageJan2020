@@ -5,6 +5,7 @@ namespace CompName.ManageStocks.WebAppMVC
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Diagnostics.CodeAnalysis;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http.Features;
@@ -29,7 +30,8 @@ namespace CompName.ManageStocks.WebAppMVC
     using WebMarkupMin.AspNetCore3;
     using Newtonsoft.Json.Serialization;
     using CompName.ManageStocks.CrossCutting.InMemoryCaching;
-    using System.Diagnostics.CodeAnalysis;
+    using StackExchange.Profiling.Storage;
+    using Autofac.Extras.DynamicProxy;
 
     [ExcludeFromCodeCoverage]
     public class Startup
@@ -38,8 +40,6 @@ namespace CompName.ManageStocks.WebAppMVC
 
         public Startup(IConfiguration configuration)
         {
-            GlobalAppInMemoryCache.Instance.AddValue("Hello");
-
             this.Configuration = configuration;
         }
 
@@ -100,12 +100,12 @@ namespace CompName.ManageStocks.WebAppMVC
             services.AddElmah();
 
             services.AddControllersWithViews(options =>
-            {
-                options.Filters.Add(typeof(LoggingActionFilter));
-            }).AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-            });
+        {
+            options.Filters.Add(typeof(LoggingActionFilter));
+        }).AddNewtonsoftJson(options =>
+        {
+            options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+        });
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
@@ -116,6 +116,11 @@ namespace CompName.ManageStocks.WebAppMVC
         {
             builder.RegisterInstance(this.AppSetting).SingleInstance();
             builder.Register(c => new LogInterceptor(this.logger)).SingleInstance();
+            builder.Register(c => new GlobalAppInMemoryCache(this.AppSetting.DatabaseSetting.SqlDbConnection))
+                   .As<IGlobalAppInMemoryCache>().SingleInstance()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(LogInterceptor));
+
             builder.RegisterModule(new RepositoryIOCModule(this.AppSetting.DatabaseSetting.SqlDbConnection, "InstancePerLifetimeScope"));
             builder.RegisterModule(new ServiceIOCModule("InstancePerLifetimeScope"));
         }
@@ -185,6 +190,8 @@ namespace CompName.ManageStocks.WebAppMVC
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
+
                 endpoints.MapControllerRoute(
                    name: "areas",
                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
