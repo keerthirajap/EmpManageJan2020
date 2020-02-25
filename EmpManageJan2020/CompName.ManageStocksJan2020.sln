@@ -30,6 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DBScripts", "DBScripts", "{
 	ProjectSection(SolutionItems) = preProject
 		Database\DBScripts\script14_02_2020.sql = Database\DBScripts\script14_02_2020.sql
 		Database\DBScripts\script16_02_2020.sql = Database\DBScripts\script16_02_2020.sql
+		Database\DBScripts\script25_02_2020.sql = Database\DBScripts\script25_02_2020.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompName.ManageStocks.RepositoryInterface", "Repository\CompName.ManageStocks.RepositoryInterface\CompName.ManageStocks.RepositoryInterface.csproj", "{43FDE141-2A96-46AA-AC9B-6B46C406EF3A}"

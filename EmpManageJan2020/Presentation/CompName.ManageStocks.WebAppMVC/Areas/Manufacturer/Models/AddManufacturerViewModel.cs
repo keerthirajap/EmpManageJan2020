@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
+    using CompName.ManageStocks.WebAppMVC.Models.Geography;
 
     public class AddManufacturerViewModel
     {
@@ -34,7 +35,11 @@
         [Display(Name = "Manufacturer Address2 *")]
         public string ManufacturerAddress2 { get; set; }
 
+        [Required(ErrorMessage = "The Manufacturer Country field is required.")]
+        [Display(Name = "Country *")]
         public long ManufacturerCountryId { get; set; }
+
+        public List<CountryViewModel> CountriesVM { get; set; }
 
         public long ManufacturerCityId { get; set; }
 

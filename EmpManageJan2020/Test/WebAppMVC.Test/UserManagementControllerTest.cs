@@ -13,6 +13,7 @@ using CompName.ManageStocks.ServiceInterface;
 using CompName.ManageStocks.WebAppMVC.Areas.Admin.Controllers;
 using CompName.ManageStocks.WebAppMVC.Areas.Admin.Models.UserManagement;
 using CompName.ManageStocks.WebAppMVC.Areas.Authentication.Models.Auth;
+using CompName.ManageStocks.WebAppMVC.Areas.Manufacturer.Controllers;
 using CompName.ManageStocks.WebAppMVC.Infrastructure.AutoMapper;
 using FizzWare.NBuilder;
 using Microsoft.AspNetCore.Mvc;

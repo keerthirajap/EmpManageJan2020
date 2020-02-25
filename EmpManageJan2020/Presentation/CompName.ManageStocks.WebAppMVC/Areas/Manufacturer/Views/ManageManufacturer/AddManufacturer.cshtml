@@ -1,0 +1,72 @@
+﻿@model CompName.ManageStocks.WebAppMVC.Areas.Manufacturer.Models.AddManufacturerViewModel
+@{
+    ViewData["Title"] = "Add Manufacturer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card bg-primary  mb-3">
+    <div class="card-header  text-white"> <h3>Add New Manufacturer</h3></div>
+    <form method="post">
+        <div class="card-body bg-light text-left">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-2">
+                    <div class="form-group">
+                        <label asp-for="@Model.ManufacturerName"></label>
+                        <input type="text" asp-for="@Model.ManufacturerName"
+                               class="form-control" id="txtAddManufacturerVM.ManufacturerName"
+                               placeholder="Enter Name">
+                        <span asp-validation-for="@Model.ManufacturerName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-2">
+                    <div class="form-group">
+                        <label asp-for="@Model.ManufacturerEmailId"></label>
+                        <input type="text" asp-for="@Model.ManufacturerEmailId"
+                               class="form-control" id="txtAddManufacturerVM.ManufacturerEmailId"
+                               placeholder="Enter Email Id">
+                        <span asp-validation-for="@Model.ManufacturerEmailId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-2">
+                    <div class="form-group">
+                        <label asp-for="@Model.ManufacturerWebSite"></label>
+                        <input type="text" asp-for="@Model.ManufacturerWebSite"
+                               class="form-control" id="txtAddManufacturerVM.ManufacturerWebSite"
+                               placeholder="Enter WebSite">
+                        <span asp-validation-for="@Model.ManufacturerWebSite" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-2">
+                    <div class="form-group">
+
+                        <label>Country</label>
+                        <select class="form-control" asp-for="@Model.ManufacturerCountryId" id="selectAddManufacturerVM.ManufacturerCountryId"
+                                asp-items="@(new SelectList(@Model.CountriesVM,"CountryId","CountryName"))">
+                        </select>
+                        <span asp-validation-for="@Model.ManufacturerCountryId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer bg-light text-center">
+            <button type="submit" class="btn btn-primary mr-3">
+                <i class="fas fa-user-plus"></i>Add
+            </button>
+            <button type="button" class="btn btn-info" onclick="sharedController.redirectToUrl('Login')">
+                <i class="fas fa-sign-in-alt"></i>Clear
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    $(window).on("load", function () {
+        sharedController.navActiveColorChange("nav-item-Manufacturer");
+        sharedController.hideLoadingIndicator();
+    });
+</script>

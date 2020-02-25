@@ -20,9 +20,8 @@
     <Folder Include="Areas\Authentication\Data\" />
     <Folder Include="Areas\Home\Data\" />
     <Folder Include="Areas\Home\Models\" />
-    <Folder Include="Areas\Manufacturer\Controllers\" />
     <Folder Include="Areas\Manufacturer\Data\" />
-    <Folder Include="Areas\Manufacturer\Views\" />
+    <Folder Include="Areas\Manufacturer\Pages\Manage\" />
     <Folder Include="wwwroot\lib\bootstrap\https.bootstrap.build\" />
   </ItemGroup>
 
