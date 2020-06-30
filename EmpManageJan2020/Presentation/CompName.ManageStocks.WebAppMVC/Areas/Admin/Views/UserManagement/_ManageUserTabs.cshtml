@@ -3,7 +3,7 @@
 <ul class="nav nav-tabs pt-2 pl-2">
     <li class="nav-item">
         <a class="nav-link " id="tab-EditUserDetails"
-           href="@Url.Action("EditUserAccountDetails", "UserManagement", new { Area="Admin"})?userId=@Model.userId">
+           href="@Url.Action("GetUserAccountDetails", "UserManagement", new { Area="Admin"})?userId=@Model.userId">
             <i class="fas fa-user-edit"></i>Edit Details
         </a>
     </li>
@@ -27,7 +27,7 @@
     </li>
 </ul>
 <script>
-    $(window).on("load", function () {     
+    $(window).on("load", function () {
         $("#" + "@Model.tabName").addClass('active');
     });
 </script>

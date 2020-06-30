@@ -2,14 +2,18 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+
 using CompName.ManageStocks.CrossCutting.Configuration;
 using CompName.ManageStocks.Domain.Admin;
 using CompName.ManageStocks.Domain.Authentication;
 using CompName.ManageStocks.RepositoryInterface;
 using CompName.ManageStocks.ServiceConcrete;
 using CompName.ManageStocks.ServiceInterface;
+
 using FizzWare.NBuilder;
+
 using Insight.Database;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
@@ -88,6 +92,23 @@ namespace Service.Test
         }
 
         [TestMethod]
+        public async Task CanRunIsUserNameExistsAsync_Negative()
+        {
+            //Arrange
+            this._authenticationRepository
+             .Setup(m => m.GetUserNameForNewUserValidationAsync(It.IsAny<string>()))
+             .ReturnsAsync(new List<string>());
+
+            _authenticationService = new AuthenticationService(this._appSetting, this._authenticationRepository.Object);
+
+            //Act
+            var isUserNameExistsAsync = await this._authenticationService.IsUserNameExistsAsync(this.Users.FirstOrDefault().UserName);
+
+            //Assert
+            Assert.IsFalse(isUserNameExistsAsync);
+        }
+
+        [TestMethod]
         public async Task CanRunIsEmailIdExistsAsync()
         {
             //Arrange
@@ -104,12 +125,51 @@ namespace Service.Test
             Assert.IsTrue(isEmailIdExistsAsync == true);
         }
 
+        [TestMethod]
+        public async Task CanRunIsEmailIdExistsAsync_Negative()
+        {
+            //Arrange
+            this._authenticationRepository
+             .Setup(m => m.GetEmailIdForNewUserValidationAsync(It.IsAny<string>()))
+             .ReturnsAsync(new List<string>());
+
+            _authenticationService = new AuthenticationService(this._appSetting, this._authenticationRepository.Object);
+
+            //Act
+            var isEmailIdExistsAsync = await this._authenticationService.IsEmailIdExistsAsync(this.Users.FirstOrDefault().EmailId);
+
+            //Assert
+            Assert.IsFalse(isEmailIdExistsAsync);
+        }
+
         #endregion Register User
 
         #region User Login
 
         [TestMethod]
         public async Task CanValidateUserLoginAsync()
+        {
+            //Arrange
+            this._authenticationRepository
+             .Setup(m => m.GetUserDetailsForLoginValidationAsync(It.IsAny<string>()))
+             .ReturnsAsync(new Results<User, UserRole>());
+
+            this._authenticationRepository
+             .Setup(m => m.SaveUserLoggingDetailsAsync(this.UserLogins.FirstOrDefault(), It.IsAny<bool>()))
+             ;
+
+            _authenticationService = new AuthenticationService(this._appSetting, this._authenticationRepository.Object);
+
+            //Act
+            var actResults = await this._authenticationService.ValidateUserLoginAsync(this.UserLogins.FirstOrDefault());
+
+            //Assert
+            Assert.IsTrue(actResults.userLogin.UserId == 0);
+            Assert.IsTrue(actResults.userRoles.Count == 0);
+        }
+
+        [TestMethod]
+        public async Task CanValidateUserLoginAsync_Negative()
         {
             //Arrange
             this._authenticationRepository

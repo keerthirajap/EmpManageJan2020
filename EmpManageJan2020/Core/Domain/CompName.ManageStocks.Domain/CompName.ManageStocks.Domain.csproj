@@ -4,6 +4,8 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyVersion>1.1.10.31140</AssemblyVersion>
     <FileVersion>1.1.10.31140</FileVersion>
+    <DebugType>Full</DebugType>
+
   </PropertyGroup>
 
   <ItemGroup>
